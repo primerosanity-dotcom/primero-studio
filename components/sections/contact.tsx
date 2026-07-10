@@ -54,7 +54,7 @@ export function Contact({ contact }: { contact: ContactConfig }) {
   const contacts = [
     contact.phoneHref && contact.phoneDisplay
       ? {
-          icon: Icons.email,
+          icon: Icons.phone,
           label: "Telefon",
           lines: [contact.phoneDisplay],
           href: contact.phoneHref,
@@ -79,7 +79,7 @@ export function Contact({ contact }: { contact: ContactConfig }) {
     },
     contact.email
       ? {
-          icon: Icons.phone,
+          icon: Icons.email,
           label: "E-mail",
           lines: [contact.email],
           href: `mailto:${contact.email}`,

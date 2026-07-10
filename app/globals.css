@@ -24,7 +24,11 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
+    /* In-page anchor scrolling is smoothed by Lenis (SmoothScroll). CSS
+       smooth-scroll would fight it, so it's removed. scroll-padding-top
+       keeps anchor targets clear of the fixed header on the reduced-motion
+       (no-Lenis) path. */
+    scroll-padding-top: 88px;
   }
 
   body {
@@ -66,6 +70,14 @@
     radial-gradient(115% 90% at 72% 16%, rgba(160, 44, 58, 0.55), transparent 56%),
     radial-gradient(90% 70% at 16% 94%, rgba(14, 3, 6, 0.95), transparent 60%),
     linear-gradient(125deg, #180509 0%, #3c1019 46%, #0f0306 100%);
+}
+
+/* Before/after "before" — a dull, matte, desaturated panel */
+.ba-before {
+  background:
+    radial-gradient(90% 70% at 30% 20%, rgba(120, 108, 96, 0.25), transparent 60%),
+    linear-gradient(125deg, #322c27 0%, #453d36 50%, #29231f 100%);
+  filter: saturate(0.65) brightness(0.92);
 }
 
 /* Light variant — a glossy cream/champagne panel */

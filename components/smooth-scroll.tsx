@@ -15,7 +15,13 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     <MotionConfig reducedMotion="user">
       <ReactLenis
         root
-        options={{ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 }}
+        options={{
+          lerp: 0.085,
+          smoothWheel: true,
+          wheelMultiplier: 0.9,
+          // Smoothly scroll in-page anchor links, offset for the fixed header.
+          anchors: { offset: -88 },
+        }}
       >
         {children}
       </ReactLenis>
