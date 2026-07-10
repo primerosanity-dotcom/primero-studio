@@ -45,7 +45,10 @@ export function Reviews() {
         </div>
 
         {/* Gallery — horizontal swipe on mobile, offset bento on desktop */}
-        <div className="-mx-6 mt-10 flex snap-x snap-mandatory items-start gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:mt-14">
+        <div
+          id="realizacje"
+          className="-mx-6 mt-10 scroll-mt-24 flex snap-x snap-mandatory items-start gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:mt-14"
+        >
           {GALLERY.map((g, i) => (
             <Reveal
               key={g.caption}

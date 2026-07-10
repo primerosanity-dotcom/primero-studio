@@ -52,7 +52,7 @@ export function Effect() {
 
           <Reveal delay={0.2}>
             <ArrowButton
-              href="#opinie"
+              href="#realizacje"
               tone="dark"
               className="mt-10 w-full sm:w-auto"
             >

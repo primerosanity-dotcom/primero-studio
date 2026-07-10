@@ -205,7 +205,13 @@ export function Contact({ contact }: { contact: ContactConfig }) {
         {/* Right — lead form */}
         <div className="lg:col-span-5 lg:col-start-8">
           <Reveal delay={0.15} className="lg:sticky lg:top-24">
-            <LeadForm />
+            <LeadForm
+              deliveryEnabled={contact.leadDeliveryEnabled}
+              fallbackUrl={contact.whatsappUrl ?? contact.instagramUrl}
+              fallbackLabel={
+                contact.whatsappUrl ? "Napisz na WhatsApp" : "Napisz na Instagramie"
+              }
+            />
           </Reveal>
         </div>
       </div>

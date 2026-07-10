@@ -7,6 +7,7 @@ export type ContactConfig = {
   email: string | null;
   addressLines: string[];
   mapsUrl: string | null;
+  leadDeliveryEnabled: boolean;
 };
 
 function optional(value: string | undefined): string | null {
@@ -46,5 +47,6 @@ export function getContactConfig(): ContactConfig {
     email: optional(process.env.CONTACT_EMAIL),
     addressLines: address,
     mapsUrl: optional(process.env.CONTACT_MAPS_URL),
+    leadDeliveryEnabled: Boolean(optional(process.env.LEAD_WEBHOOK_URL)),
   };
 }

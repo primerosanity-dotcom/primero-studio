@@ -93,7 +93,7 @@ export function Services() {
                         tone="light"
                         onClick={() => dispatchLeadPrefill({ service: s.id })}
                       >
-                        Szczegóły
+                        Wybierz usługę
                       </TextLink>
                     </div>
                   </div>
@@ -103,7 +103,7 @@ export function Services() {
                       tone="light"
                       onClick={() => dispatchLeadPrefill({ service: s.id })}
                     >
-                      Szczegóły
+                      Wybierz usługę
                     </TextLink>
                   </div>
                 </div>
