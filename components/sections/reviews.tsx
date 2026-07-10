@@ -18,10 +18,10 @@ export function Reviews() {
       data-section-theme="light"
       className="relative overflow-hidden bg-cream text-ink"
     >
-      <div className="mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-36">
+      <div className="mx-auto max-w-[1500px] px-6 pb-12 pt-20 lg:px-12 lg:pb-24 lg:pt-36">
         <div className="max-w-4xl">
           <Reveal>
-            <SectionLabel index="06" tone="ink">
+            <SectionLabel index="07" tone="ink">
               Efekty i opinie
             </SectionLabel>
           </Reveal>
@@ -44,10 +44,14 @@ export function Reviews() {
           </Reveal>
         </div>
 
-        {/* Gallery — offset bento */}
-        <div className="mt-14 grid grid-cols-1 items-start gap-4 sm:grid-cols-3">
+        {/* Gallery — horizontal swipe on mobile, offset bento on desktop */}
+        <div className="-mx-6 mt-10 flex snap-x snap-mandatory items-start gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:mt-14">
           {GALLERY.map((g, i) => (
-            <Reveal key={g.caption} delay={0.05 + i * 0.1}>
+            <Reveal
+              key={g.caption}
+              delay={0.05 + i * 0.1}
+              className="w-[74%] shrink-0 snap-start sm:w-auto sm:shrink"
+            >
               {/* Podmień: <MediaSlot src="/images/gallery-N.jpg" ... /> */}
               <MediaSlot
                 caption={g.caption}
@@ -59,7 +63,7 @@ export function Reviews() {
 
         {/* Testimonial — wine card */}
         <Reveal delay={0.15}>
-          <figure className="mt-16 overflow-hidden rounded-2xl border border-champagne/25 bg-wine px-7 py-10 sm:px-12 sm:py-14">
+          <figure className="mt-10 overflow-hidden rounded-2xl border border-champagne/25 bg-wine px-6 py-8 sm:px-12 sm:py-14 lg:mt-16">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-10">
               <span
                 aria-hidden
@@ -87,14 +91,14 @@ export function Reviews() {
           <ArrowButton
             href="#kontakt"
             tone="light"
-            className="mt-12 w-full justify-between"
+            className="mt-8 w-full justify-between lg:mt-12"
           >
             Zobacz realizacje
           </ArrowButton>
         </Reveal>
       </div>
 
-      <NextCue index="07" label="Kontakt" href="#kontakt" tone="light" />
+      <NextCue index="08" label="Kontakt" href="#kontakt" tone="light" />
     </section>
   );
 }

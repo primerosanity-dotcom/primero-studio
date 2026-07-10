@@ -1,8 +1,7 @@
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
-import { MediaSlot } from "@/components/ui/media-slot";
-import { ArrowButton } from "@/components/ui/arrow-button";
 import { Monogram } from "@/components/ui/monogram";
+import { LeadForm } from "@/components/lead-form";
 import { Reveal } from "@/components/reveal";
 
 const S = { stroke: "currentColor", strokeWidth: 1.3, fill: "none" } as const;
@@ -85,11 +84,11 @@ export function Contact() {
         <Monogram className="h-[80vh] w-auto" />
       </div>
 
-      <div className="relative z-10 mx-auto grid max-w-[1500px] grid-cols-1 gap-14 px-6 pb-16 pt-28 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:pb-20 lg:pt-36">
+      <div className="relative z-10 mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-6 pb-12 pt-20 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:pb-20 lg:pt-32">
         {/* Left — heading + contacts */}
         <div className="lg:col-span-7">
           <Reveal>
-            <SectionLabel index="07">Kontakt</SectionLabel>
+            <SectionLabel index="08">Kontakt</SectionLabel>
           </Reveal>
 
           <Reveal delay={0.05}>
@@ -109,7 +108,7 @@ export function Contact() {
           </Reveal>
 
           {/* Contact timeline */}
-          <ul className="relative mt-12 max-w-md">
+          <ul className="relative mt-8 max-w-md lg:mt-12">
             <span
               aria-hidden
               className="absolute bottom-6 left-[19px] top-6 w-px bg-cream/12"
@@ -140,25 +139,12 @@ export function Contact() {
             ))}
           </ul>
 
-          <Reveal delay={0.5}>
-            <ArrowButton
-              href="#kontakt"
-              tone="dark"
-              className="mt-11 w-full sm:w-auto"
-            >
-              Umów wizytę
-            </ArrowButton>
-          </Reveal>
         </div>
 
-        {/* Right — media */}
+        {/* Right — lead form */}
         <div className="lg:col-span-5 lg:col-start-8">
-          <Reveal delay={0.15}>
-            {/* Podmień: <MediaSlot src="/images/contact.jpg" ... /> */}
-            <MediaSlot
-              caption="Primero · Warszawa"
-              className="aspect-[4/5] w-full lg:aspect-auto lg:h-[70vh]"
-            />
+          <Reveal delay={0.15} className="lg:sticky lg:top-24">
+            <LeadForm />
           </Reveal>
         </div>
       </div>

@@ -21,7 +21,7 @@ export function Effect() {
         }}
       />
 
-      <div className="relative z-10 mx-auto grid max-w-[1500px] grid-cols-1 items-center gap-14 px-6 pb-16 pt-28 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:pb-24 lg:pt-36">
+      <div className="relative z-10 mx-auto grid max-w-[1500px] grid-cols-1 items-center gap-10 px-6 pb-12 pt-20 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:pb-24 lg:pt-36">
         {/* Left — copy */}
         <div className="lg:col-span-6">
           <Reveal>
@@ -67,7 +67,7 @@ export function Effect() {
             {/* Podmień: <MediaSlot src="/images/effect.jpg" ... /> */}
             <MediaSlot
               caption="Głęboki połysk"
-              className="aspect-[4/5] w-full sm:aspect-[16/11] lg:aspect-auto lg:h-[64vh]"
+              className="aspect-[16/10] w-full lg:aspect-auto lg:h-[64vh]"
             />
           </Reveal>
         </div>

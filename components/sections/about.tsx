@@ -18,7 +18,7 @@ export function About() {
       data-section-theme="light"
       className="relative overflow-hidden bg-cream text-ink"
     >
-      <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-14 px-6 pb-16 pt-28 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:pb-24 lg:pt-36">
+      <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-6 pb-12 pt-20 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:pb-24 lg:pt-36">
         {/* Left — copy + capabilities */}
         <div className="lg:col-span-7">
           <Reveal>
@@ -50,10 +50,10 @@ export function About() {
             </p>
           </Reveal>
 
-          <ul className="mt-12">
+          <ul className="mt-8 lg:mt-12">
             {CAPABILITIES.map((c, i) => (
               <Reveal as="li" key={c} delay={0.2 + i * 0.08}>
-                <div className="group flex items-center gap-6 border-b border-ink/10 py-5">
+                <div className="group flex items-center gap-6 border-b border-ink/10 py-4 lg:py-5">
                   <span className="font-display text-lg font-medium text-ink/25">
                     0{i + 1}
                   </span>
@@ -73,7 +73,7 @@ export function About() {
             <MediaSlot
               tone="light"
               caption="Detal · Studio"
-              className="aspect-[4/5] w-full lg:aspect-auto lg:h-[62vh]"
+              className="aspect-[16/10] w-full lg:aspect-auto lg:h-[62vh]"
             />
           </Reveal>
         </div>

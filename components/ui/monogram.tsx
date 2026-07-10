@@ -1,6 +1,7 @@
 import { cn } from "@/lib/cn";
 
-// Angular "P" monogram — a folded-ribbon interpretation, geometric and sharp.
+// The PRIMERO mark — vectorized from the client's brand asset
+// (angular "P" with 45° facet cuts). Tintable via currentColor.
 export function Monogram({ className }: { className?: string }) {
   return (
     <svg
@@ -9,11 +10,7 @@ export function Monogram({ className }: { className?: string }) {
       className={cn("block", className)}
       aria-hidden
     >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M24 12H80L104 36V52L80 76H46V108H24V12ZM46 32H74L86 44V46L74 58H46V32Z"
-      />
+      <path d="M35.3 0L11.4 23.9L48.1 23.9L27.8 53.7L27.5 120L53.9 93.3L53.4 23.7L85.9 23.2L69.4 40.4L69 78.6L108.6 39.1L108.6 14.8L93.5 0Z" />
     </svg>
   );
 }

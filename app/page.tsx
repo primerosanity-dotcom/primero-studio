@@ -6,6 +6,7 @@ import { About } from "@/components/sections/about";
 import { Process } from "@/components/sections/process";
 import { Effect } from "@/components/sections/effect";
 import { Services } from "@/components/sections/services";
+import { Pricing } from "@/components/sections/pricing";
 import { Reviews } from "@/components/sections/reviews";
 import { Contact } from "@/components/sections/contact";
 
@@ -20,6 +21,7 @@ export default function Home() {
         <Process />
         <Effect />
         <Services />
+        <Pricing />
         <Reviews />
         <Contact />
       </main>

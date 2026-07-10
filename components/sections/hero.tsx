@@ -135,7 +135,7 @@ export function Hero() {
           className="mx-auto flex max-w-[1500px] items-center justify-between px-6 pb-4 lg:px-12"
         >
           <span className="font-sans text-[11px] tracking-[0.3em] text-cream/60">
-            01 <span className="text-cream/30">/ 07</span>
+            01 <span className="text-cream/30">/ 08</span>
           </span>
           <ScrollCue label="Scroll" />
           <span className="hidden w-16 sm:block" />

@@ -12,8 +12,9 @@ const LINKS = [
   { n: "03", label: "Proces", href: "#proces" },
   { n: "04", label: "Efekty", href: "#efekty" },
   { n: "05", label: "Usługi", href: "#uslugi" },
-  { n: "06", label: "Opinie", href: "#opinie" },
-  { n: "07", label: "Kontakt", href: "#kontakt" },
+  { n: "06", label: "Wycena", href: "#wycena" },
+  { n: "07", label: "Opinie", href: "#opinie" },
+  { n: "08", label: "Kontakt", href: "#kontakt" },
 ];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -154,7 +155,7 @@ export function Nav() {
             transition={{ duration: 0.5, ease: EASE }}
             className="fixed inset-0 z-40 bg-wine-deep/95 backdrop-blur-2xl"
           >
-            <div className="mx-auto flex h-full max-w-[1500px] flex-col justify-center px-6 pb-16 pt-28 lg:px-12">
+            <div className="mx-auto flex h-full max-w-[1500px] flex-col justify-center overflow-y-auto px-6 pb-16 pt-24 lg:px-12">
               <nav className="flex flex-col">
                 {LINKS.map((l, i) => (
                   <motion.a

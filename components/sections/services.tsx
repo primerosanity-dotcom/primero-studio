@@ -39,7 +39,7 @@ export function Services() {
       data-section-theme="light"
       className="relative overflow-hidden bg-cream text-ink"
     >
-      <div className="mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-36">
+      <div className="mx-auto max-w-[1500px] px-6 pb-12 pt-20 lg:px-12 lg:pb-24 lg:pt-36">
         <div className="max-w-3xl">
           <Reveal>
             <SectionLabel index="05" tone="ink">
@@ -64,12 +64,12 @@ export function Services() {
           </Reveal>
         </div>
 
-        <div className="mt-14 border-t border-ink/12">
+        <div className="mt-10 border-t border-ink/12 lg:mt-14">
           {SERVICES.map((s, i) => (
             <Reveal key={s.n} delay={0.05 + i * 0.06}>
-              <div className="group border-b border-ink/12 py-8 transition-colors duration-300 hover:bg-ink/[0.02]">
-                <div className="grid grid-cols-[auto_1fr] items-start gap-5 lg:grid-cols-[6rem_1fr_auto] lg:items-center lg:gap-10">
-                  <span className="font-display text-3xl font-semibold text-ink/25 transition-colors duration-300 group-hover:text-champagne lg:text-4xl">
+              <div className="group border-b border-ink/12 py-5 transition-colors duration-300 hover:bg-ink/[0.02] lg:py-8">
+                <div className="grid grid-cols-[auto_1fr] items-start gap-4 lg:grid-cols-[6rem_1fr_auto] lg:items-center lg:gap-10">
+                  <span className="font-display text-2xl font-semibold text-ink/25 transition-colors duration-300 group-hover:text-champagne sm:text-3xl lg:text-4xl">
                     {s.n}
                   </span>
                   <div className="border-l border-ink/15 pl-5 lg:pl-8">
@@ -97,7 +97,7 @@ export function Services() {
         </div>
       </div>
 
-      <NextCue index="06" label="Opinie" href="#opinie" tone="light" />
+      <NextCue index="06" label="Wycena" href="#wycena" tone="light" />
     </section>
   );
 }
