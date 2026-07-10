@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
+import type { MouseEventHandler } from "react";
 
 function Arrow({ className }: { className?: string }) {
   return (
@@ -31,6 +32,7 @@ type Props = {
   tone?: "dark" | "light";
   variant?: "outline" | "solid";
   className?: string;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 };
 
 /**
@@ -43,6 +45,7 @@ export function ArrowButton({
   tone = "dark",
   variant = "outline",
   className,
+  onClick,
 }: Props) {
   const base =
     "group inline-flex items-center justify-between gap-10 px-8 py-5 font-sans text-[0.7rem] font-medium uppercase tracking-[0.28em] transition-colors duration-500 ease-lux";
@@ -51,6 +54,7 @@ export function ArrowButton({
     return (
       <Link
         href={href}
+        onClick={onClick}
         className={cn(
           base,
           "bg-gold text-wine-deep hover:bg-cream-soft",
@@ -69,7 +73,7 @@ export function ArrowButton({
       : "border border-ink/20 text-ink hover:border-champagne hover:text-champagne";
 
   return (
-    <Link href={href} className={cn(base, outline, className)}>
+    <Link href={href} onClick={onClick} className={cn(base, outline, className)}>
       <span>{children}</span>
       <Arrow />
     </Link>

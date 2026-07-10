@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Select } from "@/components/ui/select";
 import { cn } from "@/lib/cn";
+import {
+  LEAD_PREFILL_EVENT,
+  type LeadPrefill,
+} from "@/lib/lead-prefill";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -39,24 +43,75 @@ function Field({
 }
 
 const inputCls =
-  "w-full border-b border-cream/20 bg-transparent pb-3 pt-1 font-sans text-sm text-cream placeholder:text-cream/35 transition-colors duration-300 hover:border-cream/40 focus:border-gold focus:outline-none";
+  "w-full border-b border-cream/20 bg-transparent pb-3 pt-1 font-sans text-sm text-cream placeholder:text-cream/35 transition-colors duration-300 hover:border-cream/40 focus:border-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-wine";
+
+function validPhone(value: string): boolean {
+  if (!/^\+?[\d\s().-]+$/.test(value.trim())) return false;
+  const digits = value.replace(/\D/g, "");
+  return digits.length >= 7 && digits.length <= 15;
+}
 
 export function LeadForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [service, setService] = useState<string | null>(null);
+  const [details, setDetails] = useState("");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [invalidFields, setInvalidFields] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const onPrefill = (event: Event) => {
+      const { service: nextService, details: nextDetails } = (
+        event as CustomEvent<LeadPrefill>
+      ).detail;
+      if (
+        nextService &&
+        SERVICE_OPTIONS.some((option) => option.value === nextService)
+      ) {
+        setService(nextService);
+      }
+      if (nextDetails) setDetails(nextDetails);
+    };
+
+    window.addEventListener(LEAD_PREFILL_EVENT, onPrefill);
+    return () => window.removeEventListener(LEAD_PREFILL_EVENT, onPrefill);
+  }, []);
+
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!name.trim() || phone.trim().replace(/[^\d+]/g, "").length < 7) {
+    if (name.trim().length < 2 || !validPhone(phone)) {
+      setInvalidFields(true);
       setError("Podaj imię i poprawny numer telefonu.");
       return;
     }
+
+    setInvalidFields(false);
     setError(null);
-    // TODO: podłączyć wysyłkę (e-mail / Telegram / CRM)
-    setSent(true);
+    setSending(true);
+
+    const form = e.currentTarget;
+    const website = new FormData(form).get("website");
+
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ name, phone, service, details, website }),
+      });
+      const result = (await response.json()) as { error?: string };
+      if (!response.ok) {
+        setInvalidFields(response.status === 400);
+        setError(result.error ?? "Nie udało się wysłać zgłoszenia.");
+        return;
+      }
+      setSent(true);
+    } catch {
+      setError("Brak połączenia. Sprawdź internet i spróbuj ponownie.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -69,6 +124,8 @@ export function LeadForm() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE }}
             className="flex min-h-[22rem] flex-col items-center justify-center text-center"
+            role="status"
+            aria-live="polite"
           >
             <span className="grid h-14 w-14 place-items-center rounded-full border border-gold/50 text-gold">
               <svg
@@ -98,6 +155,9 @@ export function LeadForm() {
                 setName("");
                 setPhone("");
                 setService(null);
+                setDetails("");
+                setError(null);
+                setInvalidFields(false);
               }}
               className="mt-7 font-sans text-[11px] uppercase tracking-[0.26em] text-champagne transition-colors duration-300 hover:text-gold"
             >
@@ -128,6 +188,9 @@ export function LeadForm() {
                   autoComplete="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  aria-invalid={invalidFields}
+                  aria-describedby={invalidFields ? "lead-error" : undefined}
+                  required
                   placeholder="Jak się do Ciebie zwracać?"
                   className={inputCls}
                 />
@@ -140,6 +203,10 @@ export function LeadForm() {
                   autoComplete="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  aria-invalid={invalidFields}
+                  aria-describedby={invalidFields ? "lead-error" : undefined}
+                  inputMode="tel"
+                  required
                   placeholder="+48 ___ ___ ___"
                   className={inputCls}
                 />
@@ -154,7 +221,28 @@ export function LeadForm() {
                   placeholder="Czego potrzebuje Twoje auto?"
                 />
               </Field>
+
+              <Field label="Uwagi" htmlFor="lead-details">
+                <textarea
+                  id="lead-details"
+                  value={details}
+                  onChange={(e) => setDetails(e.target.value)}
+                  maxLength={1000}
+                  rows={3}
+                  placeholder="Model auta, wybrane usługi lub dogodny termin"
+                  className={cn(inputCls, "resize-y")}
+                />
+              </Field>
             </div>
+
+            <input
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="hidden"
+            />
 
             <AnimatePresence>
               {error && (
@@ -164,6 +252,7 @@ export function LeadForm() {
                   exit={{ opacity: 0, height: 0 }}
                   className="mt-4 font-sans text-xs text-[#e08c8c]"
                   role="alert"
+                  id="lead-error"
                 >
                   {error}
                 </motion.p>
@@ -172,11 +261,13 @@ export function LeadForm() {
 
             <button
               type="submit"
+              disabled={sending}
+              aria-busy={sending}
               className={cn(
-                "group mt-8 inline-flex w-full items-center justify-between gap-10 bg-gold px-8 py-5 font-sans text-[0.7rem] font-medium uppercase tracking-[0.28em] text-wine-deep transition-colors duration-500 ease-lux hover:bg-cream-soft active:scale-[0.99]",
+                "group mt-8 inline-flex w-full items-center justify-between gap-10 bg-gold px-8 py-5 font-sans text-[0.7rem] font-medium uppercase tracking-[0.28em] text-wine-deep transition-colors duration-500 ease-lux hover:bg-cream-soft active:scale-[0.99] disabled:cursor-wait disabled:opacity-60",
               )}
             >
-              <span>Wyślij zgłoszenie</span>
+              <span>{sending ? "Wysyłanie…" : "Wyślij zgłoszenie"}</span>
               <svg
                 width="26"
                 height="12"

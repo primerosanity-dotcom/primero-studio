@@ -67,8 +67,8 @@ export function Process() {
           </ol>
 
           <Reveal delay={0.5}>
-            <TextLink href="#kontakt" tone="light" className="mt-10">
-              Poznaj nasz proces
+            <TextLink href="#wycena" tone="light" className="mt-10">
+              Przejdź do wyceny
             </TextLink>
           </Reveal>
         </div>

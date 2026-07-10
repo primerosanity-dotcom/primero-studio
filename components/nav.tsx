@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { Monogram } from "@/components/ui/monogram";
 import { cn } from "@/lib/cn";
+import type { ContactConfig } from "@/lib/site-config";
 
 const LINKS = [
   { n: "01", label: "Studio", href: "#studio" },
@@ -19,10 +20,12 @@ const LINKS = [
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-export function Nav() {
+export function Nav({ contact }: { contact: ContactConfig }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let raf = 0;
@@ -56,8 +59,53 @@ export function Nav() {
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
+    const main = document.querySelector("main");
+
+    if (!open) {
+      main?.removeAttribute("inert");
+      return () => {
+        document.documentElement.style.overflow = "";
+        main?.removeAttribute("inert");
+      };
+    }
+
+    main?.setAttribute("inert", "");
+    const firstLink = overlayRef.current?.querySelector<HTMLAnchorElement>("a");
+    requestAnimationFrame(() => firstLink?.focus());
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+        requestAnimationFrame(() => menuButtonRef.current?.focus());
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+      const overlayLinks = Array.from(
+        overlayRef.current?.querySelectorAll<HTMLElement>("a[href]") ?? [],
+      );
+      const focusable = [menuButtonRef.current, ...overlayLinks].filter(
+        (item): item is HTMLElement => Boolean(item),
+      );
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
     return () => {
       document.documentElement.style.overflow = "";
+      main?.removeAttribute("inert");
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
 
@@ -112,10 +160,12 @@ export function Nav() {
               Umów wizytę
             </Link>
             <button
+              ref={menuButtonRef}
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Zamknij menu" : "Otwórz menu"}
               aria-expanded={open}
+              aria-controls="main-menu"
               className={cn(
                 "relative z-50 grid h-11 w-11 place-items-center rounded-full border transition-colors duration-500 hover:border-gold/50",
                 dark ? "border-cream/15 text-cream" : "border-ink/15 text-ink",
@@ -149,6 +199,11 @@ export function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
+            ref={overlayRef}
+            id="main-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu główne"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -192,9 +247,20 @@ export function Nav() {
                 transition={{ delay: 0.55, duration: 0.6 }}
                 className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-3 font-sans text-[11px] uppercase tracking-[0.22em] text-cream/45"
               >
-                <span>+48 123 456 789</span>
-                <span className="text-cream/25">·</span>
-                <span>@primero.studio</span>
+                {contact.phoneHref && contact.phoneDisplay && (
+                  <a href={contact.phoneHref} className="hover:text-gold">
+                    {contact.phoneDisplay}
+                  </a>
+                )}
+                {contact.phoneHref && <span className="text-cream/25">·</span>}
+                <a
+                  href={contact.instagramUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-gold"
+                >
+                  {contact.instagramHandle}
+                </a>
                 <span className="text-cream/25">·</span>
                 <span>Warszawa</span>
               </motion.div>

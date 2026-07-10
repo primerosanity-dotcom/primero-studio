@@ -3,18 +3,19 @@ import { Heading } from "@/components/ui/heading";
 import { Monogram } from "@/components/ui/monogram";
 import { LeadForm } from "@/components/lead-form";
 import { Reveal } from "@/components/reveal";
+import type { ContactConfig } from "@/lib/site-config";
 
 const S = { stroke: "currentColor", strokeWidth: 1.3, fill: "none" } as const;
 
 const Icons = {
   phone: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" {...S}>
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden {...S}>
       <rect x="7.5" y="3" width="9" height="18" rx="2.2" />
       <path d="M11 18h2" strokeLinecap="round" />
     </svg>
   ),
   whatsapp: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" {...S}>
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden {...S}>
       <path
         d="M4 20l1.3-3.3A7.2 7.2 0 1 1 8.4 19L4 20z"
         strokeLinejoin="round"
@@ -23,44 +24,86 @@ const Icons = {
     </svg>
   ),
   instagram: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" {...S}>
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden {...S}>
       <rect x="4" y="4" width="16" height="16" rx="4.5" />
       <circle cx="12" cy="12" r="3.4" />
       <circle cx="16.6" cy="7.4" r="0.5" fill="currentColor" stroke="none" />
     </svg>
   ),
+  email: (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden {...S}>
+      <rect x="3.5" y="5.5" width="17" height="13" rx="2" />
+      <path d="m5 7 7 5.5L19 7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
   pin: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" {...S}>
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden {...S}>
       <path d="M12 21s6-4.8 6-10a6 6 0 1 0-12 0c0 5.2 6 10 6 10z" />
       <circle cx="12" cy="11" r="2.1" />
     </svg>
   ),
   clock: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" {...S}>
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden {...S}>
       <circle cx="12" cy="12" r="8" />
       <path d="M12 8v4.2l2.8 1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
 };
 
-const CONTACTS = [
-  { icon: Icons.phone, label: "Telefon", lines: ["+48 123 456 789"] },
-  { icon: Icons.whatsapp, label: "WhatsApp", lines: ["+48 123 456 789"] },
-  { icon: Icons.instagram, label: "Instagram", lines: ["@primero.studio"] },
-  {
-    icon: Icons.pin,
-    label: "Adres",
-    // Podmień na prawdziwy adres w Warszawie
-    lines: ["ul. Przykładowa 12", "00-001 Warszawa"],
-  },
-  {
-    icon: Icons.clock,
-    label: "Godziny pracy",
-    lines: ["Pon – Pt: 9:00 – 19:00", "Sob: 10:00 – 15:00"],
-  },
-];
+export function Contact({ contact }: { contact: ContactConfig }) {
+  const contacts = [
+    contact.phoneHref && contact.phoneDisplay
+      ? {
+          icon: Icons.email,
+          label: "Telefon",
+          lines: [contact.phoneDisplay],
+          href: contact.phoneHref,
+          external: false,
+        }
+      : null,
+    contact.whatsappUrl
+      ? {
+          icon: Icons.whatsapp,
+          label: "WhatsApp",
+          lines: [contact.phoneDisplay ?? "Napisz na WhatsApp"],
+          href: contact.whatsappUrl,
+          external: true,
+        }
+      : null,
+    {
+      icon: Icons.instagram,
+      label: "Instagram",
+      lines: [contact.instagramHandle],
+      href: contact.instagramUrl,
+      external: true,
+    },
+    contact.email
+      ? {
+          icon: Icons.phone,
+          label: "E-mail",
+          lines: [contact.email],
+          href: `mailto:${contact.email}`,
+          external: false,
+        }
+      : null,
+    contact.addressLines.length
+      ? {
+          icon: Icons.pin,
+          label: "Adres",
+          lines: contact.addressLines,
+          href: contact.mapsUrl,
+          external: Boolean(contact.mapsUrl),
+        }
+      : null,
+    {
+      icon: Icons.clock,
+      label: "Godziny pracy",
+      lines: ["Pon – Pt: 9:00 – 19:00", "Sob: 10:00 – 15:00"],
+      href: null,
+      external: false,
+    },
+  ].filter((item): item is NonNullable<typeof item> => Boolean(item));
 
-export function Contact() {
   return (
     <section
       id="kontakt"
@@ -113,7 +156,7 @@ export function Contact() {
               aria-hidden
               className="absolute bottom-6 left-[19px] top-6 w-px bg-cream/12"
             />
-            {CONTACTS.map((c, i) => (
+            {contacts.map((c, i) => (
               <Reveal as="li" key={c.label} delay={0.15 + i * 0.07}>
                 <div className="relative flex items-start gap-5 py-3.5">
                   <span className="relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full border border-cream/15 bg-wine-deep text-gold">
@@ -123,16 +166,34 @@ export function Contact() {
                     <span className="block font-sans text-[10px] uppercase tracking-[0.32em] text-cream/45">
                       {c.label}
                     </span>
-                    <div className="mt-1.5 space-y-0.5">
-                      {c.lines.map((l) => (
-                        <p
-                          key={l}
-                          className="font-sans text-sm text-cream/85 sm:text-base"
-                        >
-                          {l}
-                        </p>
-                      ))}
-                    </div>
+                    {c.href ? (
+                      <a
+                        href={c.href}
+                        target={c.external ? "_blank" : undefined}
+                        rel={c.external ? "noreferrer" : undefined}
+                        className="mt-1.5 block space-y-0.5 text-cream/85 transition-colors hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+                      >
+                        {c.lines.map((line) => (
+                          <span
+                            key={line}
+                            className="block font-sans text-sm sm:text-base"
+                          >
+                            {line}
+                          </span>
+                        ))}
+                      </a>
+                    ) : (
+                      <div className="mt-1.5 space-y-0.5">
+                        {c.lines.map((line) => (
+                          <p
+                            key={line}
+                            className="font-sans text-sm text-cream/85 sm:text-base"
+                          >
+                            {line}
+                          </p>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </Reveal>

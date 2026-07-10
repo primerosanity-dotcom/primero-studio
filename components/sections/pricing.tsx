@@ -14,6 +14,7 @@ import { ArrowButton } from "@/components/ui/arrow-button";
 import { NextCue } from "@/components/ui/next-cue";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/cn";
+import { dispatchLeadPrefill } from "@/lib/lead-prefill";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -423,6 +424,18 @@ export function Pricing() {
                 href="#kontakt"
                 variant="solid"
                 className="mt-5 w-full"
+                onClick={() =>
+                  dispatchLeadPrefill({
+                    service: chosen[0]?.id,
+                    details: [
+                      `Typ auta: ${SIZES.find((item) => item.id === size)?.label}`,
+                      chosen.length
+                        ? `Usługi: ${chosen.map((item) => item.name).join(", ")}`
+                        : "Usługi: do ustalenia",
+                      `Orientacyjna wycena: ${zl(total)} zł`,
+                    ].join("\n"),
+                  })
+                }
               >
                 Umów wizytę
               </ArrowButton>

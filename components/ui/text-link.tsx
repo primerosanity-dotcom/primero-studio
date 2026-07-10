@@ -1,20 +1,24 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
+import type { MouseEventHandler } from "react";
 
 export function TextLink({
   href = "#",
   children,
   tone = "dark",
   className,
+  onClick,
 }: {
   href?: string;
   children: React.ReactNode;
   tone?: "dark" | "light";
   className?: string;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 }) {
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={cn(
         "group inline-flex items-center gap-3 font-sans text-[0.68rem] font-medium uppercase tracking-[0.28em] transition-colors duration-300",
         tone === "dark"

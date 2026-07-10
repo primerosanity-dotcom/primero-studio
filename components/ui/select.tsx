@@ -75,6 +75,14 @@ export function Select({
         e.preventDefault();
         setActive((i) => Math.max(0, i - 1));
         break;
+      case "Home":
+        e.preventDefault();
+        setActive(0);
+        break;
+      case "End":
+        e.preventDefault();
+        setActive(options.length - 1);
+        break;
       case "Enter":
       case " ":
         e.preventDefault();
@@ -95,6 +103,9 @@ export function Select({
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-controls={listboxId}
+        aria-activedescendant={
+          open && active >= 0 ? `${listboxId}-option-${active}` : undefined
+        }
         onClick={() => (open ? setOpen(false) : openList())}
         onKeyDown={onKeyDown}
         className={cn(
@@ -102,7 +113,7 @@ export function Select({
           open
             ? "border-gold"
             : "border-cream/20 hover:border-cream/40 focus:border-gold",
-          "focus:outline-none",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-wine",
         )}
       >
         <span
@@ -148,9 +159,12 @@ export function Select({
             {options.map((o, i) => {
               const isSelected = o.value === value;
               return (
-                <li key={o.value} role="option" aria-selected={isSelected}>
+                <li key={o.value} role="presentation">
                   <button
+                    id={`${listboxId}-option-${i}`}
                     type="button"
+                    role="option"
+                    aria-selected={isSelected}
                     tabIndex={-1}
                     onClick={() => commit(i)}
                     onMouseEnter={() => setActive(i)}

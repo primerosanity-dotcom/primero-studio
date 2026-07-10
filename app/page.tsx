@@ -9,12 +9,15 @@ import { Services } from "@/components/sections/services";
 import { Pricing } from "@/components/sections/pricing";
 import { Reviews } from "@/components/sections/reviews";
 import { Contact } from "@/components/sections/contact";
+import { getContactConfig } from "@/lib/site-config";
 
 export default function Home() {
+  const contact = getContactConfig();
+
   return (
     <SmoothScroll>
       <FilmGrain />
-      <Nav />
+      <Nav contact={contact} />
       <main>
         <Hero />
         <About />
@@ -23,7 +26,7 @@ export default function Home() {
         <Services />
         <Pricing />
         <Reviews />
-        <Contact />
+        <Contact contact={contact} />
       </main>
     </SmoothScroll>
   );

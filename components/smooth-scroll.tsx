@@ -1,25 +1,24 @@
 "use client";
 
-import { ReactLenis, useLenis } from "lenis/react";
-import { useEffect, type ReactNode } from "react";
-
-// Dev aid: expose the Lenis instance for programmatic scrolling in preview.
-function LenisExpose() {
-  const lenis = useLenis();
-  useEffect(() => {
-    (window as unknown as { __lenis?: unknown }).__lenis = lenis;
-  }, [lenis]);
-  return null;
-}
+import { ReactLenis } from "lenis/react";
+import { MotionConfig, useReducedMotion } from "motion/react";
+import type { ReactNode } from "react";
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return <MotionConfig reducedMotion="always">{children}</MotionConfig>;
+  }
+
   return (
-    <ReactLenis
-      root
-      options={{ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 }}
-    >
-      <LenisExpose />
-      {children}
-    </ReactLenis>
+    <MotionConfig reducedMotion="user">
+      <ReactLenis
+        root
+        options={{ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 }}
+      >
+        {children}
+      </ReactLenis>
+    </MotionConfig>
   );
 }

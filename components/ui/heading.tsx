@@ -7,7 +7,7 @@ import type { ElementType, ReactNode } from "react";
  * (gold-on-dark vs ink-on-cream); the actual color is supplied by the caller.
  */
 export function Heading({
-  variant: _variant,
+  variant,
   as: Tag = "h2",
   className,
   children,
@@ -19,6 +19,7 @@ export function Heading({
 }) {
   return (
     <Tag
+      data-variant={variant}
       className={cn(
         "font-display font-bold uppercase leading-[0.94] tracking-[-0.01em]",
         className,

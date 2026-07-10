@@ -1,31 +1,39 @@
+"use client";
+
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { TextLink } from "@/components/ui/text-link";
 import { NextCue } from "@/components/ui/next-cue";
 import { Reveal } from "@/components/reveal";
+import { dispatchLeadPrefill } from "@/lib/lead-prefill";
 
 const SERVICES = [
   {
+    id: "mycie",
     n: "01",
     title: "Mycie detailingowe",
     desc: "Dokładne mycie zewnętrzne i bezpieczne przygotowanie auta.",
   },
   {
+    id: "korekta",
     n: "02",
     title: "Korekta lakieru",
     desc: "Usuwanie zmatowień, hologramów i drobnych rys.",
   },
   {
+    id: "ceramika",
     n: "03",
     title: "Powłoki ceramiczne",
     desc: "Ochrona lakieru, głębia koloru i łatwiejsza pielęgnacja.",
   },
   {
+    id: "ppf",
     n: "04",
     title: "Ochrona PPF",
     desc: "Folia ochronna na najbardziej narażone elementy auta.",
   },
   {
+    id: "wnetrze",
     n: "05",
     title: "Detailing wnętrza",
     desc: "Czyszczenie, pielęgnacja skóry i dopracowanie detali.",
@@ -80,13 +88,21 @@ export function Services() {
                       {s.desc}
                     </p>
                     <div className="mt-4 lg:hidden">
-                      <TextLink href="#kontakt" tone="light">
+                      <TextLink
+                        href="#kontakt"
+                        tone="light"
+                        onClick={() => dispatchLeadPrefill({ service: s.id })}
+                      >
                         Szczegóły
                       </TextLink>
                     </div>
                   </div>
                   <div className="hidden lg:block">
-                    <TextLink href="#kontakt" tone="light">
+                    <TextLink
+                      href="#kontakt"
+                      tone="light"
+                      onClick={() => dispatchLeadPrefill({ service: s.id })}
+                    >
                       Szczegóły
                     </TextLink>
                   </div>

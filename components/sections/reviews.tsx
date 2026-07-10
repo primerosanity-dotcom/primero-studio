@@ -93,7 +93,7 @@ export function Reviews() {
             tone="light"
             className="mt-8 w-full justify-between lg:mt-12"
           >
-            Zobacz realizacje
+            Umów wizytę
           </ArrowButton>
         </Reveal>
       </div>
