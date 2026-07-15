@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "motion/react";
-import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { ScrollCue } from "@/components/ui/scroll-cue";
@@ -55,25 +55,16 @@ export function Hero() {
         }}
       />
 
-      {/* Vertical edge label */}
-      <span className="absolute left-6 top-1/2 z-10 hidden -translate-y-1/2 rotate-180 font-sans text-[10px] uppercase tracking-[0.5em] text-cream/40 [writing-mode:vertical-rl] xl:block">
-        Premium Auto Detailing
-      </span>
-
       {/* ── Content ───────────────────────────────────────── */}
-      <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-[1500px] items-center px-6 pb-32 pt-28 lg:px-12">
+      <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-[1500px] items-center px-6 pb-36 pt-28 lg:px-12">
         <div className="max-w-3xl">
-          <motion.div custom={0} variants={rise} initial="hidden" animate="show">
-            <SectionLabel index="01">Studio · Warszawa</SectionLabel>
-          </motion.div>
-
           <Heading
             as="h1"
             variant="elegant"
-            className="mt-8 text-[clamp(1.6rem,7.4vw,4.25rem)] text-gold"
+            className="text-[clamp(1.75rem,7.6vw,4.5rem)] text-gold"
           >
             <motion.span
-              custom={1}
+              custom={0}
               variants={rise}
               initial="hidden"
               animate="show"
@@ -82,7 +73,7 @@ export function Hero() {
               Pielęgnacja aut
             </motion.span>
             <motion.span
-              custom={2}
+              custom={1}
               variants={rise}
               initial="hidden"
               animate="show"
@@ -93,7 +84,7 @@ export function Hero() {
           </Heading>
 
           <motion.div
-            custom={3}
+            custom={2}
             variants={rise}
             initial="hidden"
             animate="show"
@@ -101,44 +92,52 @@ export function Hero() {
           />
 
           <motion.p
-            custom={4}
+            custom={3}
             variants={rise}
             initial="hidden"
             animate="show"
-            className="mt-7 max-w-md font-sans text-base leading-relaxed text-cream/75"
+            className="mt-7 max-w-sm font-sans text-base leading-relaxed text-cream/75"
           >
             Profesjonalny detailing, ochrona lakieru i pielęgnacja wnętrz
-            w&nbsp;Warszawie. Traktujemy Twoje auto jak własne — z obsesją na
-            punkcie każdego detalu.
+            w&nbsp;Warszawie.
           </motion.p>
 
           <motion.div
-            custom={5}
+            custom={4}
             variants={rise}
             initial="hidden"
             animate="show"
             className="mt-10"
           >
-            <ArrowButton href="#kontakt" tone="dark" className="w-full sm:w-auto">
+            <ArrowButton href="#kontakt" tone="dark" className="gap-8">
               Umów wizytę
             </ArrowButton>
           </motion.div>
         </div>
       </div>
 
-      {/* ── Bottom: counter + scroll, then keyword strip ── */}
+      {/* ── Bottom: counter · scroll, then keyword strip ── */}
       <div className="absolute inset-x-0 bottom-0 z-10">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className="mx-auto flex max-w-[1500px] items-center justify-between px-6 pb-4 lg:px-12"
+          className="mx-auto grid max-w-[1500px] grid-cols-[1fr_auto_1fr] items-center px-6 pb-5 lg:px-12"
         >
-          <span className="font-sans text-[11px] tracking-[0.3em] text-cream/60">
-            01 <span className="text-cream/30">/ 08</span>
-          </span>
-          <ScrollCue label="Scroll" />
-          <span className="hidden w-16 sm:block" />
+          <div className="flex items-center gap-6">
+            <span className="font-sans text-[11px] tracking-[0.3em] text-cream/60">
+              01 <span className="text-cream/30">/ 08</span>
+            </span>
+            <span aria-hidden className="h-9 w-px bg-cream/20" />
+          </div>
+          <Link
+            href="#o-nas"
+            aria-label="Przewiń do następnej sekcji"
+            className="transition-opacity duration-300 hover:opacity-80"
+          >
+            <ScrollCue label="Scroll" />
+          </Link>
+          <span aria-hidden />
         </motion.div>
 
         <motion.div

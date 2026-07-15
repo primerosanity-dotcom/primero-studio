@@ -109,33 +109,26 @@
   }
 }
 
-/* ── Scroll cue line ───────────────────────────────────── */
-@keyframes cue {
-  0% {
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-  40% {
-    transform: scaleY(1);
-    transform-origin: top;
-  }
-  60% {
-    transform: scaleY(1);
-    transform-origin: bottom;
-  }
+/* ── Scroll cue chevron ────────────────────────────────── */
+@keyframes cue-bounce {
+  0%,
   100% {
-    transform: scaleY(0);
-    transform-origin: bottom;
+    transform: translate3d(0, 0, 0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(0, 3px, 0);
+    opacity: 1;
   }
 }
 
-.cue-line {
-  animation: cue 2.6s var(--ease-glide) infinite;
+.cue-bounce {
+  animation: cue-bounce 2.2s var(--ease-glide) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .media-sheen,
-  .cue-line {
+  .cue-bounce {
     animation: none;
   }
   html {

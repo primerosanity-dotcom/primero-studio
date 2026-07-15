@@ -2,9 +2,10 @@ import { cn } from "@/lib/cn";
 import type { ElementType, ReactNode } from "react";
 
 /**
- * All headings use the heavy display grotesque (Clash Bold), uppercase.
- * `variant` is kept only as a semantic hint for the section context
- * (gold-on-dark vs ink-on-cream); the actual color is supplied by the caller.
+ * One heading voice across the whole site: the thin neutral grotesque
+ * (Satoshi Light), uppercase — same as the hero on screen 01.
+ * `variant` is kept as a semantic hint for the section context
+ * (gold-on-dark vs ink-on-cream); color + size come from `className`.
  */
 export function Heading({
   variant,
@@ -21,7 +22,7 @@ export function Heading({
     <Tag
       data-variant={variant}
       className={cn(
-        "font-display font-bold uppercase leading-[0.94] tracking-[-0.01em]",
+        "font-sans font-light uppercase leading-[1.06] tracking-[0.015em]",
         className,
       )}
     >

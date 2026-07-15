@@ -71,45 +71,40 @@ const zl = (n: number) => n.toLocaleString("pl-PL");
 
 /* ── Thin line-art car silhouettes ────────────────────────── */
 
+/**
+ * Faceted side-view silhouettes echoing the angular monogram. All four share
+ * one viewBox, so the footprint really grows S → XL and the size class reads
+ * at a glance.
+ */
 function CarIcon({ type, className }: { type: SizeId; className?: string }) {
-  const bodies: Record<SizeId, { body: string; window: string; w: [number, number] }> = {
-    s: {
-      body: "M9 33v-5c0-4 4-6 12-7l12-9c6-4 18-4 25-2l10 5c8 2 14 6 16 11v7",
-      window: "M31 20l6-7 17-1 8 4",
-      w: [27, 71],
-    },
-    m: {
-      body: "M5 33v-4c0-4 3-6 10-7l14-9c6-4 20-5 28-3l10 5 12 3c8 2 12 6 12 11v4",
-      window: "M27 21l6-7 20-2 11 5",
-      w: [25, 75],
-    },
-    l: {
-      body: "M8 33v-6c0-5 4-8 11-9l9-8c5-4 25-4 33-2l10 5c9 2 15 6 17 12v8",
-      window: "M26 17l5-7 25-1 9 5",
-      w: [27, 71],
-    },
-    xl: {
-      body: "M9 33V14c0-4 3-6 9-6h40c8 0 16 2 21 7 4 4 7 10 8 18",
-      window: "M62 9c7 2 13 6 17 11M40 8v10",
-      w: [27, 71],
-    },
+  const shapes: Record<
+    SizeId,
+    { body: string; wheels: [number, number]; r: number }
+  > = {
+    // Compact hatchback — short overhangs, steep tailgate
+    s: { body: "M18 31v-6h10l8-9h13l5 9h8v6", wheels: [27, 53], r: 5 },
+    // Sedan / estate — longer body, distinct boot
+    m: { body: "M10 31v-6h18l8-9h14l6 9h16v6", wheels: [24, 62], r: 5 },
+    // SUV — taller cabin, higher body, bigger wheels
+    l: { body: "M10 31v-8h14l7-10h20l7 10h16v8", wheels: [25, 63], r: 6 },
+    // Van / XL — short nose, long flat roof, vertical rear
+    xl: { body: "M8 31v-9l5-6 6-7h55v22", wheels: [23, 64], r: 5.5 },
   };
-  const { body, window: win, w } = bodies[type];
+  const { body, wheels, r } = shapes[type];
   return (
     <svg
-      viewBox="0 0 96 44"
+      viewBox="0 0 82 42"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.4"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
       aria-hidden
     >
       <path d={body} />
-      <path d={win} />
-      <circle cx={w[0]} cy="33" r="5.5" />
-      <circle cx={w[1]} cy="33" r="5.5" />
+      <circle cx={wheels[0]} cy="33" r={r} />
+      <circle cx={wheels[1]} cy="33" r={r} />
     </svg>
   );
 }

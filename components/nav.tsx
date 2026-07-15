@@ -149,16 +149,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
             </span>
           </Link>
 
-          <div className="flex items-center gap-6">
-            <Link
-              href="#kontakt"
-              className={cn(
-                "hidden font-sans text-[11px] uppercase tracking-[0.28em] transition-colors duration-300 hover:text-gold md:block",
-                dark ? "text-cream/70" : "text-ink/70",
-              )}
-            >
-              Umów wizytę
-            </Link>
+          <div className="flex items-center">
             <button
               ref={menuButtonRef}
               type="button"
@@ -167,8 +158,8 @@ export function Nav({ contact }: { contact: ContactConfig }) {
               aria-expanded={open}
               aria-controls="main-menu"
               className={cn(
-                "relative z-50 grid h-11 w-11 place-items-center rounded-full border transition-colors duration-500 hover:border-gold/50",
-                dark ? "border-cream/15 text-cream" : "border-ink/15 text-ink",
+                "relative z-50 -mr-2 grid h-11 w-11 place-items-center transition-colors duration-500 hover:text-gold",
+                dark ? "text-cream" : "text-ink",
               )}
             >
               <span className="relative block h-3 w-5">
