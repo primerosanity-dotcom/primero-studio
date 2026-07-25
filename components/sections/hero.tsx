@@ -28,20 +28,30 @@ export function Hero() {
       data-section-theme="dark"
       className="relative min-h-[100dvh] overflow-hidden bg-wine-deep text-cream"
     >
-      {/* ── Full-bleed background photo ────────────────────── */}
+      {/* ── Full-bleed background photo (art-directed) ─────── */}
       <motion.div
         initial={{ scale: 1.08, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.6, ease: EASE }}
         className="absolute inset-0"
       >
+        {/* Desktop / tablet — landscape crop */}
         <Image
-          src="/images/hero.png"
-          alt="Auto klasy premium po detailingu w Primero Studio"
+          src="/images/hero-porsche.png"
+          alt="Porsche 911 po detailingu w Primero Studio"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[68%_center]"
+          className="hidden object-cover object-center sm:block"
+        />
+        {/* Mobile — dedicated portrait crop */}
+        <Image
+          src="/images/hero-porsche-mobile.png"
+          alt="Porsche 911 po detailingu w Primero Studio"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[center_top] sm:hidden"
         />
       </motion.div>
 

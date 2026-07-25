@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
+import { useLenis } from "lenis/react";
 import { Monogram } from "@/components/ui/monogram";
 import { cn } from "@/lib/cn";
 import type { ContactConfig } from "@/lib/site-config";
@@ -26,6 +27,31 @@ export function Nav({ contact }: { contact: ContactConfig }) {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const lenis = useLenis();
+
+  // Close the menu, then scroll to the target once scroll is unlocked again.
+  // Doing it explicitly avoids the Lenis-vs-scroll-lock race that made
+  // in-menu links look "broken" on desktop.
+  const goTo = useCallback(
+    (href: string) => (event: React.MouseEvent) => {
+      if (!href.startsWith("#")) return;
+      event.preventDefault();
+      setOpen(false);
+      const target = document.querySelector(href);
+      if (!target) return;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (lenis)
+            lenis.scrollTo(target as HTMLElement, {
+              offset: -88,
+              force: true,
+            });
+          else target.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+    },
+    [lenis],
+  );
 
   useEffect(() => {
     let raf = 0;
@@ -58,16 +84,17 @@ export function Nav({ contact }: { contact: ContactConfig }) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.overflow = open ? "hidden" : "";
     const main = document.querySelector("main");
 
     if (!open) {
       main?.removeAttribute("inert");
-      return () => {
-        document.documentElement.style.overflow = "";
-        main?.removeAttribute("inert");
-      };
+      return;
     }
+
+    // Lock scroll. Prefer Lenis (no scrollbar jump, no overflow conflict);
+    // fall back to overflow:hidden when Lenis isn't mounted (reduced motion).
+    if (lenis) lenis.stop();
+    else document.documentElement.style.overflow = "hidden";
 
     main?.setAttribute("inert", "");
     const firstLink = overlayRef.current?.querySelector<HTMLAnchorElement>("a");
@@ -103,11 +130,12 @@ export function Nav({ contact }: { contact: ContactConfig }) {
 
     document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.documentElement.style.overflow = "";
+      if (lenis) lenis.start();
+      else document.documentElement.style.overflow = "";
       main?.removeAttribute("inert");
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [open, lenis]);
 
   // When the menu is open the overlay is dark, so force the light-on-dark look.
   const dark = open || theme === "dark";
@@ -127,7 +155,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
         <div className="mx-auto flex max-w-[1500px] items-center justify-between px-6 py-5 lg:px-12">
           <Link
             href="#studio"
-            onClick={() => setOpen(false)}
+            onClick={goTo("#studio")}
             className={cn(
               "flex items-center gap-3 transition-colors duration-500",
               dark ? "text-cream" : "text-ink",
@@ -207,7 +235,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
                   <motion.a
                     key={l.href}
                     href={l.href}
-                    onClick={() => setOpen(false)}
+                    onClick={goTo(l.href)}
                     initial={{ y: 44, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 20, opacity: 0 }}

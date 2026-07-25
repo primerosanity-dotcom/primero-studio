@@ -2,15 +2,15 @@
 
 @theme {
   /* ── Palette ─────────────────────────────────────────── */
-  --color-wine: #2a0a11;
-  --color-wine-deep: #120306;
-  --color-wine-mid: #4c1622;
-  --color-wine-glow: #7c2030;
-  --color-cream: #f2ebdd;
-  --color-cream-soft: #e6dbc6;
+  --color-wine: #2d070a;
+  --color-wine-deep: #1a0406;
+  --color-wine-mid: #4c1620;
+  --color-wine-glow: #7c1f2a;
+  --color-cream: #f7ebe4;
+  --color-cream-soft: #efe1d5;
   --color-champagne: #b9975a;
   --color-gold: #d9b872;
-  --color-ink: #1e0b0d;
+  --color-ink: #24080a;
 
   /* ── Type ────────────────────────────────────────────── */
   --font-display: var(--font-clash), "Arial Narrow", sans-serif;

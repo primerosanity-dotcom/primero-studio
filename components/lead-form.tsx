@@ -54,11 +54,9 @@ function validPhone(value: string): boolean {
 export function LeadForm({
   deliveryEnabled,
   fallbackUrl,
-  fallbackLabel,
 }: {
   deliveryEnabled: boolean;
   fallbackUrl: string;
-  fallbackLabel: string;
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -97,10 +95,38 @@ export function LeadForm({
 
     setInvalidFields(false);
     setError(null);
-    setSending(true);
 
     const form = e.currentTarget;
     const website = new FormData(form).get("website");
+
+    // No server delivery configured → hand the lead off to WhatsApp/Instagram
+    // with a pre-filled message so nothing is lost.
+    if (!deliveryEnabled) {
+      if (website) {
+        setSent(true);
+        return;
+      }
+      const label = SERVICE_OPTIONS.find((o) => o.value === service)?.label;
+      const text = encodeURIComponent(
+        [
+          "Zgłoszenie z primero.studio",
+          `Imię: ${name}`,
+          `Telefon: ${phone}`,
+          label ? `Usługa: ${label}` : null,
+          details ? `Uwagi: ${details}` : null,
+        ]
+          .filter(Boolean)
+          .join("\n"),
+      );
+      const url = fallbackUrl.includes("wa.me")
+        ? `${fallbackUrl}?text=${text}`
+        : fallbackUrl;
+      window.open(url, "_blank", "noopener");
+      setSent(true);
+      return;
+    }
+
+    setSending(true);
 
     try {
       const response = await fetch("/api/leads", {
@@ -121,34 +147,6 @@ export function LeadForm({
       setSending(false);
     }
   };
-
-  if (!deliveryEnabled) {
-    return (
-      <div className="rounded-2xl border border-champagne/25 bg-wine px-6 py-8 sm:px-8 sm:py-10">
-        <span className="font-sans text-[11px] uppercase tracking-[0.32em] text-cream/50">
-          Umów wizytę
-        </span>
-        <p className="mt-4 font-display text-2xl font-semibold uppercase leading-tight text-gold">
-          Porozmawiajmy o Twoim aucie.
-        </p>
-        <p className="mt-4 font-sans text-sm leading-relaxed text-cream/65">
-          Napisz do nas bezpośrednio. Doradzimy zakres prac, przygotujemy wycenę
-          i zaproponujemy dogodny termin.
-        </p>
-        <a
-          href={fallbackUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="group mt-8 inline-flex w-full items-center justify-between gap-8 bg-gold px-8 py-5 font-sans text-[0.7rem] font-medium uppercase tracking-[0.24em] text-wine-deep transition-colors duration-300 hover:bg-cream-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
-        >
-          <span>{fallbackLabel}</span>
-          <span aria-hidden className="transition-transform group-hover:translate-x-1">
-            →
-          </span>
-        </a>
-      </div>
-    );
-  }
 
   return (
     <div className="overflow-hidden rounded-2xl border border-champagne/25 bg-wine px-6 py-7 sm:px-8 sm:py-8">

@@ -208,9 +208,6 @@ export function Contact({ contact }: { contact: ContactConfig }) {
             <LeadForm
               deliveryEnabled={contact.leadDeliveryEnabled}
               fallbackUrl={contact.whatsappUrl ?? contact.instagramUrl}
-              fallbackLabel={
-                contact.whatsappUrl ? "Napisz na WhatsApp" : "Napisz na Instagramie"
-              }
             />
           </Reveal>
         </div>
