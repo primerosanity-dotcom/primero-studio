@@ -9,7 +9,6 @@ import { Services } from "@/components/sections/services";
 import { Pricing } from "@/components/sections/pricing";
 import { Reviews } from "@/components/sections/reviews";
 import { Contact } from "@/components/sections/contact";
-import { SectionTransition } from "@/components/ui/section-transition";
 import { getContactConfig } from "@/lib/site-config";
 
 export default function Home() {
@@ -23,7 +22,6 @@ export default function Home() {
         <Hero />
         <About />
         <Process />
-        <SectionTransition />
         <Effect />
         <Services />
         <Pricing />
