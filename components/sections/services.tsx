@@ -157,12 +157,12 @@ export function Services() {
                         transition={{ duration: 0.45, ease: EASE }}
                         className="overflow-hidden"
                       >
-                        <div className="grid gap-4 pb-7 pl-9 pr-2 sm:grid-cols-[1fr_auto] sm:items-end sm:gap-8 lg:pl-16">
+                        <div className="grid gap-3 pb-6 pl-9 pr-2 sm:grid-cols-[1fr_auto] sm:items-end sm:gap-8 lg:pl-16">
                           <p className="max-w-xl font-sans text-sm leading-relaxed text-ink/65 sm:text-base">
                             {s.desc}
                           </p>
-                          <div className="flex items-center gap-6 sm:flex-col sm:items-end sm:gap-3">
-                            <span className="font-display text-2xl font-semibold text-ink sm:hidden">
+                          <div className="flex items-center justify-between gap-6 sm:justify-end">
+                            <span className="whitespace-nowrap font-sans text-base font-semibold text-ink sm:hidden">
                               {s.price}
                             </span>
                             <TextLink
