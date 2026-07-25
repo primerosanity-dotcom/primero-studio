@@ -24,7 +24,7 @@ export default function Home() {
         <Process />
         <Effect />
         <Services />
-        <Pricing />
+        <Pricing contact={contact} />
         <Reviews />
         <Contact contact={contact} />
       </main>

@@ -244,12 +244,12 @@ export function Nav({ contact }: { contact: ContactConfig }) {
                       delay: 0.1 + i * 0.07,
                       ease: EASE,
                     }}
-                    className="group flex items-baseline gap-5 border-b border-cream/10 py-3.5 lg:gap-8 lg:py-4"
+                    className="group flex items-baseline gap-5 border-b border-cream/10 py-3 lg:gap-8 lg:py-4"
                   >
                     <span className="font-sans text-[11px] tracking-[0.3em] text-gold/70">
                       {l.n}
                     </span>
-                    <span className="font-display text-4xl font-medium uppercase leading-none tracking-tight text-cream/80 transition-colors duration-500 group-hover:text-gold sm:text-5xl lg:text-6xl">
+                    <span className="font-display text-[1.6rem] font-medium uppercase leading-none tracking-tight text-cream/80 transition-colors duration-500 group-hover:text-gold sm:text-4xl lg:text-5xl">
                       {l.label}
                     </span>
                     <span className="ml-auto -translate-x-3 self-center text-gold opacity-0 transition-all duration-500 ease-lux group-hover:translate-x-0 group-hover:opacity-100">

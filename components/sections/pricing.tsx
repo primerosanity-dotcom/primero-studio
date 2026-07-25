@@ -10,11 +10,11 @@ import {
 } from "motion/react";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
-import { ArrowButton } from "@/components/ui/arrow-button";
 import { NextCue } from "@/components/ui/next-cue";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/cn";
-import { dispatchLeadPrefill } from "@/lib/lead-prefill";
+import { BookingModal } from "@/components/booking-modal";
+import type { ContactConfig } from "@/lib/site-config";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -127,11 +127,12 @@ function StepHeader({ n, children }: { n: string; children: React.ReactNode }) {
 
 /* ── Section ──────────────────────────────────────────────── */
 
-export function Pricing() {
+export function Pricing({ contact }: { contact: ContactConfig }) {
   const [size, setSize] = useState<SizeId>("m");
   const [selected, setSelected] = useState<Set<string>>(
     () => new Set(["mycie", "ceramika"]),
   );
+  const [modalOpen, setModalOpen] = useState(false);
 
   const idx = SIZE_INDEX[size];
   const chosen = SERVICES.filter((s) => selected.has(s.id));
@@ -415,31 +416,48 @@ export function Pricing() {
                 auta w studio.
               </p>
 
-              <ArrowButton
-                href="#kontakt"
-                variant="solid"
-                className="mt-5 w-full"
-                onClick={() =>
-                  dispatchLeadPrefill({
-                    service: chosen[0]?.id,
-                    details: [
-                      `Typ auta: ${SIZES.find((item) => item.id === size)?.label}`,
-                      chosen.length
-                        ? `Usługi: ${chosen.map((item) => item.name).join(", ")}`
-                        : "Usługi: do ustalenia",
-                      `Orientacyjna wycena: ${zl(total)} zł`,
-                    ].join("\n"),
-                  })
-                }
+              <button
+                type="button"
+                onClick={() => setModalOpen(true)}
+                className="group mt-5 inline-flex w-full items-center justify-between gap-8 bg-gold px-8 py-5 font-sans text-[0.7rem] font-medium uppercase tracking-[0.28em] text-wine-deep transition-colors duration-500 ease-lux hover:bg-cream-soft active:scale-[0.99]"
               >
-                Umów wizytę
-              </ArrowButton>
+                <span>Umów wizytę</span>
+                <svg
+                  width="26"
+                  height="12"
+                  viewBox="0 0 26 12"
+                  fill="none"
+                  aria-hidden
+                  className="transition-transform duration-500 ease-lux group-hover:translate-x-1"
+                >
+                  <path
+                    d="M0 6h24M19 1l5 5-5 5"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
             </div>
           </Reveal>
         </div>
       </div>
 
       <NextCue index="07" label="Opinie" href="#opinie" tone="dark" />
+
+      <BookingModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        deliveryEnabled={contact.leadDeliveryEnabled}
+        fallbackUrl={contact.whatsappUrl ?? contact.instagramUrl}
+        summary={{
+          sizeLabel: SIZES.find((s) => s.id === size)?.label ?? "",
+          items: chosen.map((s) => ({ name: s.name, price: s.prices[idx] })),
+          discount: discountValue,
+          total,
+        }}
+      />
     </section>
   );
 }

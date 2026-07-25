@@ -54,9 +54,18 @@ function validPhone(value: string): boolean {
 export function LeadForm({
   deliveryEnabled,
   fallbackUrl,
+  hideService = false,
+  extraDetails,
+  compact = false,
 }: {
   deliveryEnabled: boolean;
   fallbackUrl: string;
+  /** Hide the service picker (e.g. when it was already chosen in the calculator). */
+  hideService?: boolean;
+  /** Extra text prepended to the submitted details (e.g. the calculator summary). */
+  extraDetails?: string;
+  /** Drop the card chrome + intro copy when embedded inside a modal. */
+  compact?: boolean;
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -99,6 +108,11 @@ export function LeadForm({
     const form = e.currentTarget;
     const website = new FormData(form).get("website");
 
+    const serviceToSend = hideService ? null : service;
+    const detailsToSend = [extraDetails, details.trim()]
+      .filter(Boolean)
+      .join("\n\n");
+
     // No server delivery configured → hand the lead off to WhatsApp/Instagram
     // with a pre-filled message so nothing is lost.
     if (!deliveryEnabled) {
@@ -106,14 +120,14 @@ export function LeadForm({
         setSent(true);
         return;
       }
-      const label = SERVICE_OPTIONS.find((o) => o.value === service)?.label;
+      const label = SERVICE_OPTIONS.find((o) => o.value === serviceToSend)?.label;
       const text = encodeURIComponent(
         [
           "Zgłoszenie z primero.studio",
           `Imię: ${name}`,
           `Telefon: ${phone}`,
           label ? `Usługa: ${label}` : null,
-          details ? `Uwagi: ${details}` : null,
+          detailsToSend || null,
         ]
           .filter(Boolean)
           .join("\n"),
@@ -132,7 +146,13 @@ export function LeadForm({
       const response = await fetch("/api/leads", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name, phone, service, details, website }),
+        body: JSON.stringify({
+          name,
+          phone,
+          service: serviceToSend,
+          details: detailsToSend,
+          website,
+        }),
       });
       const result = (await response.json()) as { error?: string };
       if (!response.ok) {
@@ -149,7 +169,12 @@ export function LeadForm({
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-champagne/25 bg-wine px-6 py-7 sm:px-8 sm:py-8">
+    <div
+      className={cn(
+        !compact &&
+          "overflow-hidden rounded-2xl border border-champagne/25 bg-wine px-6 py-7 sm:px-8 sm:py-8",
+      )}
+    >
       <AnimatePresence mode="wait" initial={false}>
         {sent ? (
           <motion.div
@@ -157,7 +182,10 @@ export function LeadForm({
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE }}
-            className="flex min-h-[22rem] flex-col items-center justify-center text-center"
+            className={cn(
+              "flex flex-col items-center justify-center text-center",
+              compact ? "min-h-[16rem]" : "min-h-[22rem]",
+            )}
             role="status"
             aria-live="polite"
           >
@@ -207,14 +235,18 @@ export function LeadForm({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE }}
           >
-            <span className="font-sans text-[11px] uppercase tracking-[0.32em] text-cream/50">
-              Zostaw zgłoszenie
-            </span>
-            <p className="mt-3 font-sans text-sm leading-relaxed text-cream/60">
-              Oddzwonimy, doradzimy i zarezerwujemy termin.
-            </p>
+            {!compact && (
+              <>
+                <span className="font-sans text-[11px] uppercase tracking-[0.32em] text-cream/50">
+                  Zostaw zgłoszenie
+                </span>
+                <p className="mt-3 font-sans text-sm leading-relaxed text-cream/60">
+                  Oddzwonimy, doradzimy i zarezerwujemy termin.
+                </p>
+              </>
+            )}
 
-            <div className="mt-7 space-y-6">
+            <div className={cn("space-y-6", !compact && "mt-7")}>
               <Field label="Imię" htmlFor="lead-name">
                 <input
                   id="lead-name"
@@ -246,15 +278,17 @@ export function LeadForm({
                 />
               </Field>
 
-              <Field label="Usługa" htmlFor="lead-service">
-                <Select
-                  id="lead-service"
-                  options={SERVICE_OPTIONS}
-                  value={service}
-                  onChange={setService}
-                  placeholder="Czego potrzebuje Twoje auto?"
-                />
-              </Field>
+              {!hideService && (
+                <Field label="Usługa" htmlFor="lead-service">
+                  <Select
+                    id="lead-service"
+                    options={SERVICE_OPTIONS}
+                    value={service}
+                    onChange={setService}
+                    placeholder="Czego potrzebuje Twoje auto?"
+                  />
+                </Field>
+              )}
 
               <Field label="Uwagi" htmlFor="lead-details">
                 <textarea
@@ -262,8 +296,8 @@ export function LeadForm({
                   value={details}
                   onChange={(e) => setDetails(e.target.value)}
                   maxLength={1000}
-                  rows={3}
-                  placeholder="Model auta, wybrane usługi lub dogodny termin"
+                  rows={hideService ? 2 : 3}
+                  placeholder="Model auta lub dogodny termin"
                   className={cn(inputCls, "resize-y")}
                 />
               </Field>
