@@ -1,7 +1,6 @@
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
-import { NextCue } from "@/components/ui/next-cue";
 import { Reveal } from "@/components/reveal";
 
 const CAPABILITIES = [
@@ -18,7 +17,7 @@ export function About() {
       data-section-theme="light"
       className="relative overflow-hidden bg-cream text-ink"
     >
-      <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-6 pb-12 pt-20 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:pb-24 lg:pt-36">
+      <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-6 pb-16 pt-28 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:pb-24 lg:pt-40">
         {/* Left — copy + capabilities */}
         <div className="lg:col-span-7">
           <Reveal>
@@ -78,8 +77,6 @@ export function About() {
           </Reveal>
         </div>
       </div>
-
-      <NextCue index="03" label="Proces" href="#proces" tone="light" />
     </section>
   );
 }

@@ -1,9 +1,9 @@
 const SERVICES = new Set([
-  "mycie",
-  "korekta",
-  "ceramika",
-  "ppf",
-  "wnetrze",
+  "essential",
+  "protect",
+  "restore",
+  "ceramic",
+  "signature",
   "inne",
 ]);
 

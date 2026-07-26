@@ -2,7 +2,6 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { BeforeAfter } from "@/components/ui/before-after";
 import { ArrowButton } from "@/components/ui/arrow-button";
-import { NextCue } from "@/components/ui/next-cue";
 import { Reveal } from "@/components/reveal";
 
 const CASES = [
@@ -27,12 +26,12 @@ export function Effect() {
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-[1500px] px-6 pb-12 pt-20 lg:px-12 lg:pb-24 lg:pt-36">
+      <div className="relative z-10 mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-40">
         {/* Heading block */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
             <Reveal>
-              <SectionLabel index="04">Efekty</SectionLabel>
+              <SectionLabel index="05">Efekty</SectionLabel>
             </Reveal>
 
             <Reveal delay={0.05}>
@@ -56,7 +55,7 @@ export function Effect() {
 
           <div className="lg:col-span-4 lg:flex lg:justify-end">
             <Reveal delay={0.15}>
-              <ArrowButton href="#realizacje" tone="dark" className="w-full sm:w-auto">
+              <ArrowButton href="#galeria" tone="dark" className="w-full sm:w-auto">
                 Zobacz realizacje
               </ArrowButton>
             </Reveal>
@@ -92,7 +91,6 @@ export function Effect() {
         </div>
       </div>
 
-      <NextCue index="05" label="Usługi" href="#uslugi" tone="dark" />
     </section>
   );
 }

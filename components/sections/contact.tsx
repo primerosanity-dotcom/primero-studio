@@ -115,7 +115,7 @@ export function Contact({ contact }: { contact: ContactConfig }) {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(100% 80% at 85% 12%, rgba(124,32,48,0.32), transparent 55%), linear-gradient(180deg, #150406 0%, #100305 100%)",
+            "radial-gradient(100% 80% at 85% 12%, rgba(124,32,48,0.32), transparent 55%), #150406",
         }}
       />
 
@@ -127,11 +127,11 @@ export function Contact({ contact }: { contact: ContactConfig }) {
         <Monogram className="h-[80vh] w-auto" />
       </div>
 
-      <div className="relative z-10 mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-6 pb-12 pt-20 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:pb-20 lg:pt-32">
+      <div className="relative z-10 mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-6 pb-14 pt-28 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:pb-20 lg:pt-40">
         {/* Left — heading + contacts */}
         <div className="lg:col-span-7">
           <Reveal>
-            <SectionLabel index="08">Kontakt</SectionLabel>
+            <SectionLabel index="07">Kontakt</SectionLabel>
           </Reveal>
 
           <Reveal delay={0.05}>
@@ -210,19 +210,6 @@ export function Contact({ contact }: { contact: ContactConfig }) {
               fallbackUrl={contact.whatsappUrl ?? contact.instagramUrl}
             />
           </Reveal>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="relative z-10 border-t border-cream/10">
-        <div className="mx-auto flex max-w-[1500px] flex-col items-center gap-6 px-6 py-8 sm:flex-row sm:justify-between lg:px-12">
-          <span className="font-display text-xs font-medium tracking-[0.22em] text-cream/60">
-            PRIMERO.STUDIO
-          </span>
-          <Monogram className="h-6 w-6 text-gold/80" />
-          <span className="font-sans text-[10px] uppercase tracking-[0.34em] text-cream/40">
-            Premium Auto Detailing
-          </span>
         </div>
       </div>
     </section>

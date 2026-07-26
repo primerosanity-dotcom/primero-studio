@@ -1,8 +1,6 @@
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
-import { MediaSlot } from "@/components/ui/media-slot";
 import { ArrowButton } from "@/components/ui/arrow-button";
-import { NextCue } from "@/components/ui/next-cue";
 import { Reveal } from "@/components/reveal";
 
 // Podmień na link do profilu Google Twojej firmy
@@ -10,12 +8,6 @@ const GOOGLE_URL =
   "https://www.google.com/maps/search/?api=1&query=Primero+Studio+Warszawa";
 const RATING = "5,0";
 const REVIEW_COUNT = 48;
-
-const GALLERY = [
-  { caption: "Lakier", cls: "sm:mt-10 aspect-[4/5]" },
-  { caption: "Felga", cls: "aspect-[3/4.4]" },
-  { caption: "Wnętrze", cls: "sm:mt-10 aspect-[4/5]" },
-];
 
 const REVIEWS = [
   {
@@ -76,18 +68,18 @@ const Stars = ({ small }: { small?: boolean }) => (
   </span>
 );
 
-export function Reviews() {
+export function Reviews({ index = "06" }: { index?: string }) {
   return (
     <section
       id="opinie"
       data-section-theme="light"
       className="relative overflow-hidden bg-cream text-ink"
     >
-      <div className="mx-auto max-w-[1500px] px-6 pb-12 pt-20 lg:px-12 lg:pb-24 lg:pt-36">
+      <div className="mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-40">
         <div className="max-w-4xl">
           <Reveal>
-            <SectionLabel index="07" tone="ink">
-              Efekty i opinie
+            <SectionLabel index={index} tone="ink">
+              Opinie
             </SectionLabel>
           </Reveal>
 
@@ -96,39 +88,20 @@ export function Reviews() {
               variant="strong"
               className="mt-8 text-[clamp(2rem,4.6vw,4rem)] text-ink"
             >
-              Efekty, które widać. Opinie, które budują zaufanie.
+              Opinie, które budują zaufanie.
             </Heading>
           </Reveal>
 
           <Reveal delay={0.1}>
             <p className="mt-8 max-w-xl font-sans text-base leading-relaxed text-ink/65">
-              Perfekcja tkwi w detalach, a efekty mówią same za siebie. Zobacz
-              realizacje i przeczytaj, co piszą o nas klienci w Google.
+              Nie musisz wierzyć nam na słowo — przeczytaj, co piszą o nas
+              klienci w Google.
             </p>
           </Reveal>
         </div>
 
-        {/* Gallery */}
-        <div
-          id="realizacje"
-          className="-mx-6 mt-10 scroll-mt-24 flex snap-x snap-mandatory items-start gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:mt-14"
-        >
-          {GALLERY.map((g, i) => (
-            <Reveal
-              key={g.caption}
-              delay={0.05 + i * 0.1}
-              className="w-[74%] shrink-0 snap-start sm:w-auto sm:shrink"
-            >
-              <MediaSlot
-                caption={g.caption}
-                className={`w-full rounded-lg ${g.cls}`}
-              />
-            </Reveal>
-          ))}
-        </div>
-
-        {/* ── Google reviews ────────────────────────────── */}
-        <div className="mt-16 lg:mt-24">
+        {/* Google summary */}
+        <div className="mt-14 lg:mt-16">
           <Reveal>
             <div className="flex flex-col gap-6 border-b border-ink/12 pb-8 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-4">
@@ -208,7 +181,7 @@ export function Reviews() {
 
         <Reveal delay={0.1}>
           <ArrowButton
-            href="#kontakt"
+            href="/kontakt"
             tone="light"
             className="mt-12 w-full justify-between lg:mt-16"
           >
@@ -216,8 +189,6 @@ export function Reviews() {
           </ArrowButton>
         </Reveal>
       </div>
-
-      <NextCue index="08" label="Kontakt" href="#kontakt" tone="light" />
     </section>
   );
 }

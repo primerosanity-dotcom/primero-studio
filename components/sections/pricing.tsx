@@ -1,167 +1,165 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  AnimatePresence,
-  animate,
-  motion,
-  useMotionValue,
-  useTransform,
-} from "motion/react";
+import { useState } from "react";
+import Link from "next/link";
+import { motion } from "motion/react";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
-import { NextCue } from "@/components/ui/next-cue";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/cn";
-import { BookingModal } from "@/components/booking-modal";
+import { BookingModal, type BookingSummary } from "@/components/booking-modal";
+import { SERVICES, type Service } from "@/lib/services";
 import type { ContactConfig } from "@/lib/site-config";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/* ── Data ─────────────────────────────────────────────────── */
-
-type SizeId = "s" | "m" | "l" | "xl";
-
-const SIZES: { id: SizeId; label: string; hint: string }[] = [
-  { id: "s", label: "Kompakt", hint: "np. Golf, Mini" },
-  { id: "m", label: "Sedan / Kombi", hint: "np. A6, E-Klasa" },
-  { id: "l", label: "SUV / Crossover", hint: "np. Cayenne, X5" },
-  { id: "xl", label: "Van / XL", hint: "np. V-Klasa" },
-];
-
-const SIZE_INDEX: Record<SizeId, number> = { s: 0, m: 1, l: 2, xl: 3 };
-
-const SERVICES = [
-  {
-    id: "mycie",
-    name: "Mycie detailingowe",
-    desc: "Dokładne mycie i bezpieczne przygotowanie auta.",
-    prices: [300, 350, 400, 500],
-  },
-  {
-    id: "korekta",
-    name: "Korekta lakieru",
-    desc: "Usuwanie zmatowień, hologramów i drobnych rys.",
-    prices: [1200, 1400, 1700, 2000],
-  },
-  {
-    id: "ceramika",
-    name: "Powłoka ceramiczna",
-    desc: "Ochrona lakieru i głębia koloru na lata.",
-    prices: [2200, 2500, 2900, 3400],
-  },
-  {
-    id: "ppf",
-    name: "Ochrona PPF — przód",
-    desc: "Folia ochronna na najbardziej narażone elementy.",
-    prices: [4500, 5200, 6000, 7000],
-  },
-  {
-    id: "wnetrze",
-    name: "Detailing wnętrza",
-    desc: "Czyszczenie, pielęgnacja skóry i dopracowanie detali.",
-    prices: [600, 700, 850, 1000],
-  },
-];
-
-const PACKAGE_MIN = 3;
-const PACKAGE_DISCOUNT = 0.1;
-
-const zl = (n: number) => n.toLocaleString("pl-PL");
-
-/* ── Thin line-art car silhouettes ────────────────────────── */
-
-/**
- * Faceted side-view silhouettes echoing the angular monogram. All four share
- * one viewBox, so the footprint really grows S → XL and the size class reads
- * at a glance.
- */
-function CarIcon({ type, className }: { type: SizeId; className?: string }) {
-  const shapes: Record<
-    SizeId,
-    { body: string; wheels: [number, number]; r: number }
-  > = {
-    // Compact hatchback — short overhangs, steep tailgate
-    s: { body: "M18 31v-6h10l8-9h13l5 9h8v6", wheels: [27, 53], r: 5 },
-    // Sedan / estate — longer body, distinct boot
-    m: { body: "M10 31v-6h18l8-9h14l6 9h16v6", wheels: [24, 62], r: 5 },
-    // SUV — taller cabin, higher body, bigger wheels
-    l: { body: "M10 31v-8h14l7-10h20l7 10h16v8", wheels: [25, 63], r: 6 },
-    // Van / XL — short nose, long flat roof, vertical rear
-    xl: { body: "M8 31v-9l5-6 6-7h55v22", wheels: [23, 64], r: 5.5 },
+function toSummary(s: Service): BookingSummary {
+  return {
+    name: s.name,
+    tagline: s.tagline,
+    price: s.price,
+    cycle: s.cycle,
+    duration: s.duration,
+    includes: s.includes,
+    prefill: s.prefill,
   };
-  const { body, wheels, r } = shapes[type];
+}
+
+function Arrow({ className }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 82 42"
+      width="24"
+      height="11"
+      viewBox="0 0 26 12"
       fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
       aria-hidden
+      className={className}
     >
-      <path d={body} />
-      <circle cx={wheels[0]} cy="33" r={r} />
-      <circle cx={wheels[1]} cy="33" r={r} />
+      <path
+        d="M0 6h24M19 1l5 5-5 5"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
-/* ── Step header ──────────────────────────────────────────── */
-
-function StepHeader({ n, children }: { n: string; children: React.ReactNode }) {
+function PackageCard({
+  service,
+  onBook,
+}: {
+  service: Service;
+  onBook: (s: Service) => void;
+}) {
+  const featured = service.popular;
   return (
-    <div className="flex items-center gap-4">
-      <span className="font-display text-base font-semibold text-champagne">
-        {n}
+    <div
+      className={cn(
+        "group relative flex h-full flex-col rounded-2xl border p-7 transition-colors duration-500 ease-lux sm:p-8",
+        featured
+          ? "border-gold/50 bg-gold/[0.05]"
+          : "border-cream/12 bg-wine/40 hover:border-champagne/40",
+      )}
+    >
+      {featured && (
+        <span className="absolute -top-3 left-7 rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
+          Najczęściej wybierany
+        </span>
+      )}
+
+      <div className="flex items-center justify-between">
+        <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
+          {service.n}
+        </span>
+        <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-cream/40">
+          {service.cycle}
+        </span>
+      </div>
+
+      <h3
+        className={cn(
+          "mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em]",
+          featured ? "text-gold" : "text-cream",
+        )}
+      >
+        {service.name}
+      </h3>
+      <p className="mt-2 font-sans text-sm leading-relaxed text-cream/55">
+        {service.tagline}
+      </p>
+
+      <div className="mt-6 flex items-baseline gap-2">
+        <span className="font-display text-3xl font-bold text-cream">
+          {service.price}
+        </span>
+      </div>
+      <span className="mt-1 font-sans text-[11px] uppercase tracking-[0.18em] text-cream/40">
+        Czas: {service.duration}
       </span>
-      <span className="font-sans text-[11px] uppercase tracking-[0.3em] text-cream/70">
-        {children}
-      </span>
-      <span className="h-px flex-1 bg-cream/10" />
+
+      <ul className="mt-6 flex-1 space-y-2.5 border-t border-cream/10 pt-6">
+        {service.includes.map((item) => (
+          <li key={item} className="flex items-start gap-2.5">
+            <svg
+              viewBox="0 0 16 16"
+              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="M3 8.5 6.5 12 13 4.5" />
+            </svg>
+            <span className="font-sans text-[13px] leading-snug text-cream/80">
+              {item}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-7 flex items-center gap-3">
+        <button
+          type="button"
+          onClick={() => onBook(service)}
+          className={cn(
+            "group/btn inline-flex flex-1 items-center justify-between gap-6 px-6 py-4 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] transition-colors duration-500 ease-lux active:scale-[0.99]",
+            featured
+              ? "bg-gold text-wine-deep hover:bg-cream-soft"
+              : "border border-cream/25 text-cream hover:border-gold hover:text-gold",
+          )}
+        >
+          <span>Umów</span>
+          <Arrow className="transition-transform duration-500 ease-lux group-hover/btn:translate-x-1" />
+        </button>
+        <Link
+          href={`/uslugi/${service.slug}`}
+          className="shrink-0 font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-cream/45 transition-colors duration-300 hover:text-champagne"
+        >
+          Szczegóły
+        </Link>
+      </div>
     </div>
   );
 }
 
-/* ── Section ──────────────────────────────────────────────── */
-
 export function Pricing({ contact }: { contact: ContactConfig }) {
-  const [size, setSize] = useState<SizeId>("m");
-  const [selected, setSelected] = useState<Set<string>>(
-    () => new Set(["mycie", "ceramika"]),
-  );
   const [modalOpen, setModalOpen] = useState(false);
+  const [active, setActive] = useState<Service>(
+    () => SERVICES.find((s) => s.popular) ?? SERVICES[0],
+  );
 
-  const idx = SIZE_INDEX[size];
-  const chosen = SERVICES.filter((s) => selected.has(s.id));
-  const subtotal = chosen.reduce((acc, s) => acc + s.prices[idx], 0);
-  const hasDiscount = chosen.length >= PACKAGE_MIN;
-  const discountValue = hasDiscount
-    ? Math.round(subtotal * PACKAGE_DISCOUNT)
-    : 0;
-  const total = subtotal - discountValue;
-
-  // Animated count-up for the total
-  const mv = useMotionValue(0);
-  const totalText = useTransform(mv, (v) => zl(Math.round(v)));
-  useEffect(() => {
-    const controls = animate(mv, total, { duration: 0.8, ease: EASE });
-    return () => controls.stop();
-  }, [total, mv]);
-
-  const toggle = (id: string) =>
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+  const book = (s: Service) => {
+    setActive(s);
+    setModalOpen(true);
+  };
 
   return (
     <section
-      id="wycena"
+      id="cennik"
       data-section-theme="dark"
       className="relative overflow-hidden bg-wine-deep text-cream"
     >
@@ -170,293 +168,95 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(90% 70% at 12% 10%, rgba(124,32,48,0.3), transparent 55%), radial-gradient(80% 60% at 90% 90%, rgba(76,22,34,0.35), transparent 60%), linear-gradient(180deg, #140406 0%, #100305 100%)",
+            "radial-gradient(90% 70% at 12% 8%, rgba(124,32,48,0.3), transparent 55%), radial-gradient(80% 55% at 90% 80%, rgba(76,22,34,0.32), transparent 60%), #150406",
         }}
       />
 
-      <div className="relative z-10 mx-auto grid max-w-[1500px] grid-cols-1 gap-8 px-6 pb-10 pt-20 lg:grid-cols-12 lg:gap-12 lg:px-12 lg:pb-12 lg:pt-28">
-        {/* ── Left: configurator ─────────────────────────── */}
-        <div className="lg:col-span-7">
+      <div className="relative z-10 mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-40">
+        <div className="max-w-3xl">
           <Reveal>
-            <SectionLabel index="06">Wycena</SectionLabel>
+            <SectionLabel index="04">Cennik</SectionLabel>
           </Reveal>
-
           <Reveal delay={0.05}>
             <Heading
               variant="elegant"
-              className="mt-5 text-[clamp(1.7rem,3.2vw,2.6rem)] text-gold"
+              className="mt-8 text-[clamp(2rem,4.5vw,3.6rem)] text-gold"
             >
-              Skomponuj swoją wycenę.
+              Pakiety detailingu.
             </Heading>
           </Reveal>
-
           <Reveal delay={0.1}>
-            <p className="mt-3 max-w-2xl font-sans text-sm leading-relaxed text-cream/60">
-              Wybierz typ auta i usługi, które Cię interesują. Ceny są
-              orientacyjne — ostateczną wycenę potwierdzamy po ocenie stanu
-              auta.
+            <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-cream/60">
+              Pięć kompleksowych pakietów — od regularnej pielęgnacji po pełną
+              renowację i ochronę. Ceny orientacyjne, ostateczną wycenę
+              potwierdzamy po ocenie stanu auta.
             </p>
           </Reveal>
-
-          {/* Step 1 — car type */}
-          <Reveal delay={0.15}>
-            <div className="mt-8">
-              <StepHeader n="01">Typ auta</StepHeader>
-              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {SIZES.map((s) => {
-                  const active = size === s.id;
-                  return (
-                    <button
-                      key={s.id}
-                      type="button"
-                      data-size={s.id}
-                      onClick={() => setSize(s.id)}
-                      aria-pressed={active}
-                      className={cn(
-                        "group flex flex-col items-center gap-1.5 rounded-lg border px-2 py-3 transition-all duration-500 ease-lux",
-                        active
-                          ? "border-gold/70 bg-gold/[0.07] text-gold"
-                          : "border-cream/12 text-cream/60 hover:border-cream/30 hover:text-cream/90",
-                      )}
-                    >
-                      <CarIcon type={s.id} className="h-8 w-16" />
-                      <span className="font-sans text-[9.5px] font-medium uppercase tracking-[0.16em]">
-                        {s.label}
-                      </span>
-                      <span
-                        className={cn(
-                          "font-sans text-[8.5px] tracking-[0.06em] transition-colors duration-500",
-                          active ? "text-gold/60" : "text-cream/35",
-                        )}
-                      >
-                        {s.hint}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Step 2 — services */}
-          <Reveal delay={0.2}>
-            <div className="mt-8">
-              <StepHeader n="02">Usługi</StepHeader>
-              <div className="mt-1">
-                {SERVICES.map((s) => {
-                  const active = selected.has(s.id);
-                  return (
-                    <button
-                      key={s.id}
-                      type="button"
-                      data-service={s.id}
-                      onClick={() => toggle(s.id)}
-                      aria-pressed={active}
-                      className="group flex w-full items-center gap-4 border-b border-cream/10 py-3 text-left transition-colors duration-300 hover:bg-cream/[0.02]"
-                    >
-                      {/* toggle indicator */}
-                      <span
-                        className={cn(
-                          "grid h-5 w-5 shrink-0 place-items-center rounded-full border transition-all duration-500 ease-lux",
-                          active
-                            ? "border-gold bg-gold text-wine-deep"
-                            : "border-cream/25 text-cream/40 group-hover:border-cream/50",
-                        )}
-                      >
-                        {active ? (
-                          <svg
-                            viewBox="0 0 12 12"
-                            className="h-2.5 w-2.5"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M2 6.5 4.8 9 10 3.5" />
-                          </svg>
-                        ) : (
-                          <svg
-                            viewBox="0 0 12 12"
-                            className="h-2.5 w-2.5"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.4"
-                            strokeLinecap="round"
-                          >
-                            <path d="M6 2v8M2 6h8" />
-                          </svg>
-                        )}
-                      </span>
-
-                      <span className="min-w-0 flex-1">
-                        <span
-                          className={cn(
-                            "block font-sans text-[13px] font-medium uppercase tracking-[0.16em] transition-colors duration-300",
-                            active ? "text-gold" : "text-cream/85",
-                          )}
-                        >
-                          {s.name}
-                        </span>
-                        <span className="mt-0.5 block font-sans text-[11px] leading-snug text-cream/45">
-                          {s.desc}
-                        </span>
-                      </span>
-
-                      <motion.span
-                        key={size}
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, ease: EASE }}
-                        className={cn(
-                          "shrink-0 font-sans text-xs tracking-[0.12em]",
-                          active ? "text-gold" : "text-cream/55",
-                        )}
-                      >
-                        od {zl(s.prices[idx])} zł
-                      </motion.span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </Reveal>
         </div>
 
-        {/* ── Right: sticky summary ──────────────────────── */}
-        <div className="lg:col-span-5">
-          <Reveal delay={0.2} className="lg:sticky lg:top-24">
-            <div className="overflow-hidden rounded-2xl border border-champagne/25 bg-wine px-6 py-6 sm:px-8 sm:py-7">
-              <div className="flex items-baseline justify-between gap-4">
-                <span className="font-sans text-[11px] uppercase tracking-[0.32em] text-cream/50">
-                  Twoja wycena
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+          {SERVICES.map((s, i) => (
+            <Reveal key={s.slug} delay={0.05 + i * 0.05}>
+              <PackageCard service={s} onBook={book} />
+            </Reveal>
+          ))}
+
+          {/* Consultation card fills the 6th cell */}
+          <Reveal delay={0.05 + SERVICES.length * 0.05}>
+            <div className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-cream/20 bg-transparent p-7 sm:p-8">
+              <div>
+                <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
+                  06
                 </span>
-                <motion.span
-                  key={size}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: EASE }}
-                  className="font-sans text-[11px] uppercase tracking-[0.2em] text-champagne"
-                >
-                  {SIZES.find((s) => s.id === size)?.label}
-                </motion.span>
+                <h3 className="mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em] text-cream">
+                  Nie wiesz,
+                  <br />
+                  który wybrać?
+                </h3>
+                <p className="mt-3 font-sans text-sm leading-relaxed text-cream/55">
+                  Napisz lub zadzwoń — obejrzymy auto, dobierzemy zakres prac i
+                  przygotujemy indywidualną wycenę.
+                </p>
               </div>
-
-              <div className="mt-4 h-px w-full bg-cream/10" />
-
-              {/* Selected services */}
-              <div className="mt-4 min-h-[5.5rem]">
-                {chosen.length === 0 ? (
-                  <p className="font-sans text-sm leading-relaxed text-cream/45">
-                    Zaznacz usługi po lewej stronie, aby zobaczyć wycenę.
-                  </p>
-                ) : (
-                  <ul className="space-y-2">
-                    <AnimatePresence initial={false}>
-                      {chosen.map((s) => (
-                        <motion.li
-                          key={s.id}
-                          layout
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: 10 }}
-                          transition={{ duration: 0.4, ease: EASE }}
-                          className="flex items-baseline justify-between gap-4"
-                        >
-                          <span className="font-sans text-sm text-cream/80">
-                            {s.name}
-                          </span>
-                          <span className="shrink-0 font-sans text-sm text-cream/60">
-                            {zl(s.prices[idx])} zł
-                          </span>
-                        </motion.li>
-                      ))}
-                      {hasDiscount && (
-                        <motion.li
-                          key="discount"
-                          layout
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: 10 }}
-                          transition={{ duration: 0.4, ease: EASE }}
-                          className="flex items-baseline justify-between gap-4"
-                        >
-                          <span className="font-sans text-sm text-gold">
-                            Rabat pakietowy −10%
-                          </span>
-                          <span className="shrink-0 font-sans text-sm text-gold">
-                            −{zl(discountValue)} zł
-                          </span>
-                        </motion.li>
-                      )}
-                    </AnimatePresence>
-                  </ul>
+              <div className="mt-8 flex flex-col gap-3">
+                <Link
+                  href="#kontakt-form"
+                  className="group inline-flex items-center justify-between gap-6 border border-cream/25 px-6 py-4 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-cream transition-colors duration-500 ease-lux hover:border-gold hover:text-gold"
+                >
+                  <span>Umów konsultację</span>
+                  <Arrow className="transition-transform duration-500 ease-lux group-hover:translate-x-1" />
+                </Link>
+                {contact.phoneHref && contact.phoneDisplay && (
+                  <a
+                    href={contact.phoneHref}
+                    className="text-center font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-cream/50 transition-colors duration-300 hover:text-champagne"
+                  >
+                    {contact.phoneDisplay}
+                  </a>
                 )}
               </div>
-
-              <div className="mt-4 h-px w-full bg-cream/10" />
-
-              {/* Total */}
-              <div className="mt-5 flex items-baseline justify-between gap-4">
-                <span className="font-sans text-[11px] uppercase tracking-[0.32em] text-cream/50">
-                  Razem od
-                </span>
-                <span className="flex items-baseline gap-2" data-total>
-                  <motion.span className="font-display text-3xl font-bold text-gold sm:text-4xl">
-                    {totalText}
-                  </motion.span>
-                  <span className="font-sans text-sm uppercase tracking-[0.2em] text-gold/70">
-                    zł
-                  </span>
-                </span>
-              </div>
-
-              <p className="mt-3 font-sans text-[10px] leading-relaxed text-cream/40">
-                Ceny orientacyjne brutto. Ostateczna wycena po ocenie stanu
-                auta w studio.
-              </p>
-
-              <button
-                type="button"
-                onClick={() => setModalOpen(true)}
-                className="group mt-5 inline-flex w-full items-center justify-between gap-8 bg-gold px-8 py-5 font-sans text-[0.7rem] font-medium uppercase tracking-[0.28em] text-wine-deep transition-colors duration-500 ease-lux hover:bg-cream-soft active:scale-[0.99]"
-              >
-                <span>Umów wizytę</span>
-                <svg
-                  width="26"
-                  height="12"
-                  viewBox="0 0 26 12"
-                  fill="none"
-                  aria-hidden
-                  className="transition-transform duration-500 ease-lux group-hover:translate-x-1"
-                >
-                  <path
-                    d="M0 6h24M19 1l5 5-5 5"
-                    stroke="currentColor"
-                    strokeWidth="1.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
             </div>
           </Reveal>
         </div>
-      </div>
 
-      <NextCue index="07" label="Opinie" href="#opinie" tone="dark" />
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="mt-10 font-sans text-[11px] leading-relaxed text-cream/35"
+        >
+          Ceny orientacyjne brutto. Zależą od rozmiaru i stanu auta — ostateczną
+          wycenę potwierdzamy w studio.
+        </motion.p>
+      </div>
 
       <BookingModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         deliveryEnabled={contact.leadDeliveryEnabled}
         fallbackUrl={contact.whatsappUrl ?? contact.instagramUrl}
-        summary={{
-          sizeLabel: SIZES.find((s) => s.id === size)?.label ?? "",
-          items: chosen.map((s) => ({ name: s.name, price: s.prices[idx] })),
-          discount: discountValue,
-          total,
-        }}
+        summary={toSummary(active)}
       />
     </section>
   );

@@ -2,7 +2,6 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
 import { TextLink } from "@/components/ui/text-link";
-import { NextCue } from "@/components/ui/next-cue";
 import { Reveal } from "@/components/reveal";
 
 const STEPS = [
@@ -23,7 +22,7 @@ export function Process() {
         {/* Left — copy + steps */}
         <div className="lg:col-span-7">
           <Reveal>
-            <SectionLabel index="03" tone="ink">
+            <SectionLabel index="—" tone="ink">
               Proces
             </SectionLabel>
           </Reveal>
@@ -67,7 +66,7 @@ export function Process() {
           </ol>
 
           <Reveal delay={0.5}>
-            <TextLink href="#wycena" tone="light" className="mt-10">
+            <TextLink href="/cennik" tone="light" className="mt-10">
               Przejdź do wyceny
             </TextLink>
           </Reveal>
@@ -86,7 +85,6 @@ export function Process() {
         </div>
       </div>
 
-      <NextCue index="04" label="Efekty" href="#efekty" tone="light" />
     </section>
   );
 }

@@ -2,21 +2,23 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { useLenis } from "lenis/react";
 import { Monogram } from "@/components/ui/monogram";
 import { cn } from "@/lib/cn";
 import type { ContactConfig } from "@/lib/site-config";
 
+const MotionLink = motion.create(Link);
+
 const LINKS = [
-  { n: "01", label: "Studio", href: "#studio" },
-  { n: "02", label: "O nas", href: "#o-nas" },
-  { n: "03", label: "Proces", href: "#proces" },
-  { n: "04", label: "Efekty", href: "#efekty" },
-  { n: "05", label: "Usługi", href: "#uslugi" },
-  { n: "06", label: "Wycena", href: "#wycena" },
-  { n: "07", label: "Opinie", href: "#opinie" },
-  { n: "08", label: "Kontakt", href: "#kontakt" },
+  { n: "01", label: "Studio", href: "/" },
+  { n: "02", label: "O nas", href: "/o-nas" },
+  { n: "03", label: "Usługi", href: "/uslugi" },
+  { n: "04", label: "Cennik", href: "/cennik" },
+  { n: "05", label: "Realizacje", href: "/realizacje" },
+  { n: "06", label: "Opinie", href: "/opinie" },
+  { n: "07", label: "Kontakt", href: "/kontakt" },
 ];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -28,52 +30,32 @@ export function Nav({ contact }: { contact: ContactConfig }) {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
+  const pathname = usePathname();
 
-  // Close the menu, then scroll to the target once scroll is unlocked again.
-  // Doing it explicitly avoids the Lenis-vs-scroll-lock race that made
-  // in-menu links look "broken" on desktop.
-  const goTo = useCallback(
-    (href: string) => (event: React.MouseEvent) => {
-      if (!href.startsWith("#")) return;
-      event.preventDefault();
-      setOpen(false);
-      const target = document.querySelector(href);
-      if (!target) return;
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          if (lenis)
-            lenis.scrollTo(target as HTMLElement, {
-              offset: -88,
-              force: true,
-            });
-          else target.scrollIntoView({ behavior: "smooth" });
-        });
-      });
-    },
-    [lenis],
-  );
+  const updateChrome = useCallback(() => {
+    setScrolled(window.scrollY > 32);
+    const probe = 72;
+    const sections = document.querySelectorAll("[data-section-theme]");
+    for (const s of sections) {
+      const r = s.getBoundingClientRect();
+      if (r.top <= probe && r.bottom > probe) {
+        setTheme(
+          s.getAttribute("data-section-theme") === "light" ? "light" : "dark",
+        );
+        return;
+      }
+    }
+    setTheme("dark");
+  }, []);
 
   useEffect(() => {
     let raf = 0;
-    const update = () => {
-      setScrolled(window.scrollY > 32);
-      const probe = 72;
-      const sections = document.querySelectorAll("[data-section-theme]");
-      for (const s of sections) {
-        const r = s.getBoundingClientRect();
-        if (r.top <= probe && r.bottom > probe) {
-          setTheme(
-            s.getAttribute("data-section-theme") === "light" ? "light" : "dark",
-          );
-          break;
-        }
-      }
-    };
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(update);
+      raf = requestAnimationFrame(updateChrome);
     };
-    update();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial probe
+    updateChrome();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     return () => {
@@ -81,7 +63,16 @@ export function Nav({ contact }: { contact: ContactConfig }) {
       window.removeEventListener("resize", onScroll);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [updateChrome]);
+
+  // Re-probe the nav theme after a client-side navigation (DOM swapped).
+  // The menu itself closes via each link's onClick.
+  useEffect(() => {
+    const id = requestAnimationFrame(() =>
+      requestAnimationFrame(updateChrome),
+    );
+    return () => cancelAnimationFrame(id);
+  }, [pathname, updateChrome]);
 
   useEffect(() => {
     const main = document.querySelector("main");
@@ -91,8 +82,6 @@ export function Nav({ contact }: { contact: ContactConfig }) {
       return;
     }
 
-    // Lock scroll. Prefer Lenis (no scrollbar jump, no overflow conflict);
-    // fall back to overflow:hidden when Lenis isn't mounted (reduced motion).
     if (lenis) lenis.stop();
     else document.documentElement.style.overflow = "hidden";
 
@@ -107,7 +96,6 @@ export function Nav({ contact }: { contact: ContactConfig }) {
         requestAnimationFrame(() => menuButtonRef.current?.focus());
         return;
       }
-
       if (event.key !== "Tab") return;
       const overlayLinks = Array.from(
         overlayRef.current?.querySelectorAll<HTMLElement>("a[href]") ?? [],
@@ -116,7 +104,6 @@ export function Nav({ contact }: { contact: ContactConfig }) {
         (item): item is HTMLElement => Boolean(item),
       );
       if (!focusable.length) return;
-
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
       if (event.shiftKey && document.activeElement === first) {
@@ -137,7 +124,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
     };
   }, [open, lenis]);
 
-  // When the menu is open the overlay is dark, so force the light-on-dark look.
+  // Menu overlay is dark, so force the light-on-dark chrome while open.
   const dark = open || theme === "dark";
 
   return (
@@ -154,8 +141,9 @@ export function Nav({ contact }: { contact: ContactConfig }) {
       >
         <div className="mx-auto flex max-w-[1500px] items-center justify-between px-6 py-5 lg:px-12">
           <Link
-            href="#studio"
-            onClick={goTo("#studio")}
+            href="/"
+            onClick={() => setOpen(false)}
+            aria-label="PRIMERO.STUDIO — strona główna"
             className={cn(
               "flex items-center gap-3 transition-colors duration-500",
               dark ? "text-cream" : "text-ink",
@@ -177,7 +165,31 @@ export function Nav({ contact }: { contact: ContactConfig }) {
             </span>
           </Link>
 
-          <div className="flex items-center">
+          <div className="flex items-center gap-6 xl:gap-8">
+            {/* Desktop horizontal menu */}
+            <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
+              {LINKS.filter((l) => l.href !== "/").map((l) => {
+                const active = pathname.startsWith(l.href);
+                return (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "font-sans text-[11px] uppercase tracking-[0.2em] transition-colors duration-300 hover:text-gold",
+                      active
+                        ? "text-gold"
+                        : dark
+                          ? "text-cream/70"
+                          : "text-ink/65",
+                    )}
+                  >
+                    {l.label}
+                  </Link>
+                );
+              })}
+            </nav>
+
             <button
               ref={menuButtonRef}
               type="button"
@@ -186,7 +198,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
               aria-expanded={open}
               aria-controls="main-menu"
               className={cn(
-                "relative z-50 -mr-2 grid h-11 w-11 place-items-center transition-colors duration-500 hover:text-gold",
+                "relative z-50 -mr-2 grid h-11 w-11 place-items-center transition-colors duration-500 hover:text-gold lg:hidden",
                 dark ? "text-cream" : "text-ink",
               )}
             >
@@ -231,32 +243,51 @@ export function Nav({ contact }: { contact: ContactConfig }) {
           >
             <div className="mx-auto flex h-full max-w-[1500px] flex-col justify-center overflow-y-auto px-6 pb-16 pt-24 lg:px-12">
               <nav className="flex flex-col">
-                {LINKS.map((l, i) => (
-                  <motion.a
-                    key={l.href}
-                    href={l.href}
-                    onClick={goTo(l.href)}
-                    initial={{ y: 44, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 20, opacity: 0 }}
-                    transition={{
-                      duration: 0.7,
-                      delay: 0.1 + i * 0.07,
-                      ease: EASE,
-                    }}
-                    className="group flex items-baseline gap-5 border-b border-cream/10 py-3 lg:gap-8 lg:py-4"
-                  >
-                    <span className="font-sans text-[11px] tracking-[0.3em] text-gold/70">
-                      {l.n}
-                    </span>
-                    <span className="font-display text-[1.6rem] font-medium uppercase leading-none tracking-tight text-cream/80 transition-colors duration-500 group-hover:text-gold sm:text-4xl lg:text-5xl">
-                      {l.label}
-                    </span>
-                    <span className="ml-auto -translate-x-3 self-center text-gold opacity-0 transition-all duration-500 ease-lux group-hover:translate-x-0 group-hover:opacity-100">
-                      →
-                    </span>
-                  </motion.a>
-                ))}
+                {LINKS.map((l, i) => {
+                  const active =
+                    l.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(l.href);
+                  return (
+                    <MotionLink
+                      key={l.href}
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      aria-current={active ? "page" : undefined}
+                      initial={{ y: 44, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: 20, opacity: 0 }}
+                      transition={{
+                        duration: 0.7,
+                        delay: 0.1 + i * 0.07,
+                        ease: EASE,
+                      }}
+                      className="group flex items-baseline gap-5 border-b border-cream/10 py-3 lg:gap-8 lg:py-4"
+                    >
+                      <span className="font-sans text-[11px] tracking-[0.3em] text-gold/70">
+                        {l.n}
+                      </span>
+                      <span
+                        className={cn(
+                          "font-display text-[1.6rem] font-medium uppercase leading-none tracking-tight transition-colors duration-500 group-hover:text-gold sm:text-4xl lg:text-5xl",
+                          active ? "text-gold" : "text-cream/80",
+                        )}
+                      >
+                        {l.label}
+                      </span>
+                      <span
+                        className={cn(
+                          "ml-auto self-center text-gold transition-all duration-500 ease-lux",
+                          active
+                            ? "opacity-100"
+                            : "-translate-x-3 opacity-0 group-hover:translate-x-0 group-hover:opacity-100",
+                        )}
+                      >
+                        →
+                      </span>
+                    </MotionLink>
+                  );
+                })}
               </nav>
 
               <motion.div

@@ -119,7 +119,7 @@ export function Hero() {
             animate="show"
             className="mt-10"
           >
-            <ArrowButton href="#kontakt" tone="dark" className="gap-8">
+            <ArrowButton href="/kontakt" tone="dark" className="gap-8">
               Umów wizytę
             </ArrowButton>
           </motion.div>
@@ -136,13 +136,13 @@ export function Hero() {
         >
           <div className="flex items-center gap-6">
             <span className="font-sans text-[11px] tracking-[0.3em] text-cream/60">
-              01 <span className="text-cream/30">/ 08</span>
+              01 <span className="text-cream/30">/ 07</span>
             </span>
             <span aria-hidden className="h-9 w-px bg-cream/20" />
           </div>
           <Link
-            href="#o-nas"
-            aria-label="Przewiń do następnej sekcji"
+            href="#uslugi"
+            aria-label="Przewiń do usług"
             className="transition-opacity duration-300 hover:opacity-80"
           >
             <ScrollCue label="Scroll" />

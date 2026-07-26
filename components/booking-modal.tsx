@@ -6,13 +6,18 @@ import { useLenis } from "lenis/react";
 import { LeadForm } from "@/components/lead-form";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-const zl = (n: number) => n.toLocaleString("pl-PL");
 
 export type BookingSummary = {
-  sizeLabel: string;
-  items: { name: string; price: number }[];
-  discount: number;
-  total: number;
+  /** Package name, e.g. CERAMIC */
+  name: string;
+  tagline: string;
+  /** Display price, e.g. "od 2 990 zł" */
+  price: string;
+  cycle: string;
+  duration: string;
+  includes: string[];
+  /** lead-form service value */
+  prefill: string;
 };
 
 export function BookingModal({
@@ -53,14 +58,11 @@ export function BookingModal({
   }, [open, onClose, lenis]);
 
   const extraDetails = [
-    "Wycena z konfiguratora:",
-    `• Typ auta: ${summary.sizeLabel}`,
-    ...summary.items.map((i) => `• ${i.name} — ${zl(i.price)} zł`),
-    summary.discount > 0 ? `• Rabat pakietowy: −${zl(summary.discount)} zł` : null,
-    `Razem od: ${zl(summary.total)} zł`,
-  ]
-    .filter(Boolean)
-    .join("\n");
+    `Wybrany pakiet: ${summary.name} — ${summary.tagline}`,
+    `Cena: ${summary.price}`,
+    "W pakiecie:",
+    ...summary.includes.map((i) => `• ${i}`),
+  ].join("\n");
 
   return (
     <AnimatePresence>
@@ -122,65 +124,42 @@ export function BookingModal({
 
               {/* Selection summary */}
               <div className="mt-6 rounded-xl border border-cream/10 bg-wine-deep/40 p-5">
-                <div className="flex items-center justify-between gap-4">
-                  <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-cream/45">
-                    Twój wybór
+                <div className="flex items-baseline justify-between gap-4">
+                  <span className="font-display text-lg font-semibold uppercase tracking-[0.14em] text-gold">
+                    {summary.name}
                   </span>
-                  <span className="font-sans text-[11px] uppercase tracking-[0.2em] text-champagne">
-                    {summary.sizeLabel}
+                  <span className="shrink-0 font-display text-xl font-semibold text-cream">
+                    {summary.price}
                   </span>
                 </div>
+                <p className="mt-1.5 font-sans text-[13px] text-cream/60">
+                  {summary.tagline}
+                </p>
 
-                <ul className="mt-4 space-y-2">
-                  {summary.items.length === 0 ? (
-                    <li className="font-sans text-sm text-cream/50">
-                      Nie wybrano usług — doradzimy zakres prac.
-                    </li>
-                  ) : (
-                    summary.items.map((i) => (
-                      <li
-                        key={i.name}
-                        className="flex items-baseline justify-between gap-4"
-                      >
-                        <span className="font-sans text-sm text-cream/80">
-                          {i.name}
-                        </span>
-                        <span className="shrink-0 font-sans text-sm text-cream/60">
-                          {zl(i.price)} zł
-                        </span>
-                      </li>
-                    ))
-                  )}
-                  {summary.discount > 0 && (
-                    <li className="flex items-baseline justify-between gap-4">
-                      <span className="font-sans text-sm text-gold">
-                        Rabat pakietowy −10%
-                      </span>
-                      <span className="shrink-0 font-sans text-sm text-gold">
-                        −{zl(summary.discount)} zł
+                <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-sans text-[11px] uppercase tracking-[0.14em] text-champagne/80">
+                  <span>{summary.cycle}</span>
+                  <span className="text-cream/30">·</span>
+                  <span>{summary.duration}</span>
+                </div>
+
+                <ul className="mt-4 space-y-2 border-t border-cream/10 pt-4">
+                  {summary.includes.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5">
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold" />
+                      <span className="font-sans text-sm leading-snug text-cream/75">
+                        {item}
                       </span>
                     </li>
-                  )}
+                  ))}
                 </ul>
-
-                <div className="mt-4 flex items-baseline justify-between border-t border-cream/10 pt-4">
-                  <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-cream/45">
-                    Razem od
-                  </span>
-                  <span className="font-display text-3xl font-semibold text-gold">
-                    {zl(summary.total)}
-                    <span className="ml-1 font-sans text-sm uppercase tracking-[0.2em] text-gold/70">
-                      zł
-                    </span>
-                  </span>
-                </div>
               </div>
 
-              {/* Lead form — no service picker, summary carried into details */}
+              {/* Lead form — no service picker, package carried into details */}
               <div className="mt-7">
                 <LeadForm
                   compact
                   hideService
+                  presetService={summary.prefill}
                   extraDetails={extraDetails}
                   deliveryEnabled={deliveryEnabled}
                   fallbackUrl={fallbackUrl}

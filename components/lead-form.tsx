@@ -12,12 +12,12 @@ import {
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const SERVICE_OPTIONS = [
-  { value: "mycie", label: "Mycie detailingowe" },
-  { value: "korekta", label: "Korekta lakieru" },
-  { value: "ceramika", label: "Powłoka ceramiczna" },
-  { value: "ppf", label: "Ochrona PPF" },
-  { value: "wnetrze", label: "Detailing wnętrza" },
-  { value: "inne", label: "Inne / nie wiem" },
+  { value: "essential", label: "ESSENTIAL — Regularny detailing" },
+  { value: "protect", label: "PROTECT — Ochrona lakieru" },
+  { value: "restore", label: "RESTORE — Odnowa połysku" },
+  { value: "ceramic", label: "CERAMIC — Powłoka ceramiczna" },
+  { value: "signature", label: "SIGNATURE — Pełny detailing" },
+  { value: "inne", label: "Konsultacja / nie wiem" },
 ];
 
 function Field({
@@ -55,6 +55,7 @@ export function LeadForm({
   deliveryEnabled,
   fallbackUrl,
   hideService = false,
+  presetService,
   extraDetails,
   compact = false,
 }: {
@@ -62,6 +63,8 @@ export function LeadForm({
   fallbackUrl: string;
   /** Hide the service picker (e.g. when it was already chosen in the calculator). */
   hideService?: boolean;
+  /** Service value to submit when the picker is hidden (e.g. a chosen package). */
+  presetService?: string;
   /** Extra text prepended to the submitted details (e.g. the calculator summary). */
   extraDetails?: string;
   /** Drop the card chrome + intro copy when embedded inside a modal. */
@@ -108,7 +111,7 @@ export function LeadForm({
     const form = e.currentTarget;
     const website = new FormData(form).get("website");
 
-    const serviceToSend = hideService ? null : service;
+    const serviceToSend = hideService ? (presetService ?? null) : service;
     const detailsToSend = [extraDetails, details.trim()]
       .filter(Boolean)
       .join("\n\n");
