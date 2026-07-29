@@ -53,8 +53,10 @@ export function MediaSlot({
         />
       )}
 
-      {/* moving specular light */}
-      <div aria-hidden className="media-sheen pointer-events-none absolute inset-0" />
+      {/* moving specular light — only on the placeholder, never real photos */}
+      {!src && (
+        <div aria-hidden className="media-sheen pointer-events-none absolute inset-0" />
+      )}
 
       {vignette && (
         <div
@@ -62,8 +64,8 @@ export function MediaSlot({
           className={cn(
             "pointer-events-none absolute inset-0",
             light
-              ? "bg-gradient-to-t from-cream/60 via-transparent to-cream/5"
-              : "bg-gradient-to-t from-wine-deep/75 via-transparent to-wine-deep/10",
+              ? "bg-gradient-to-t from-cream/40 via-transparent to-transparent"
+              : "bg-gradient-to-t from-wine-deep/70 via-transparent to-transparent",
           )}
         />
       )}

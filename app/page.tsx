@@ -11,7 +11,7 @@ export default function Home() {
       <ServicesShowcase index="02" />
       <HomeExplore />
       <Reviews index="04" />
-      <LeadSection />
+      <LeadSection withLocation />
     </>
   );
 }

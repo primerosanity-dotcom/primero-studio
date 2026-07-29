@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
+import { MediaSlot } from "@/components/ui/media-slot";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/cn";
 import { BookingModal, type BookingSummary } from "@/components/booking-modal";
@@ -57,26 +58,36 @@ function PackageCard({
   return (
     <div
       className={cn(
-        "group relative flex h-full flex-col rounded-2xl border p-7 transition-colors duration-500 ease-lux sm:p-8",
+        "group relative flex h-full flex-col overflow-hidden rounded-2xl border transition-colors duration-500 ease-lux",
         featured
           ? "border-gold/50 bg-gold/[0.05]"
           : "border-cream/12 bg-wine/40 hover:border-champagne/40",
       )}
     >
-      {featured && (
-        <span className="absolute -top-3 left-7 rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
-          Najczęściej wybierany
-        </span>
-      )}
-
-      <div className="flex items-center justify-between">
-        <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
-          {service.n}
-        </span>
-        <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-cream/40">
-          {service.cycle}
-        </span>
+      {/* Photo header */}
+      <div className="relative">
+        <MediaSlot
+          src={service.image}
+          alt={`${service.name} — ${service.tagline}`}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="aspect-[16/9] w-full"
+        />
+        {featured && (
+          <span className="absolute left-4 top-4 z-10 rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
+            Najczęściej wybierany
+          </span>
+        )}
       </div>
+
+      <div className="flex flex-1 flex-col p-7 sm:p-8">
+        <div className="flex items-center justify-between">
+          <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
+            {service.n}
+          </span>
+          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-cream/40">
+            {service.cycle}
+          </span>
+        </div>
 
       <h3
         className={cn(
@@ -136,11 +147,12 @@ function PackageCard({
           <Arrow className="transition-transform duration-500 ease-lux group-hover/btn:translate-x-1" />
         </button>
         <Link
-          href={`/uslugi/${service.slug}`}
+          href={`/pakiety/${service.slug}`}
           className="shrink-0 font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-cream/45 transition-colors duration-300 hover:text-champagne"
         >
           Szczegóły
         </Link>
+        </div>
       </div>
     </div>
   );
@@ -159,7 +171,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
 
   return (
     <section
-      id="cennik"
+      id="pakiety"
       data-section-theme="dark"
       className="relative overflow-hidden bg-wine-deep text-cream"
     >
@@ -175,7 +187,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
       <div className="relative z-10 mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-40">
         <div className="max-w-3xl">
           <Reveal>
-            <SectionLabel index="04">Cennik</SectionLabel>
+            <SectionLabel index="04">Pakiety</SectionLabel>
           </Reveal>
           <Reveal delay={0.05}>
             <Heading

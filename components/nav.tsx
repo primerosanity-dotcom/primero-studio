@@ -15,7 +15,7 @@ const LINKS = [
   { n: "01", label: "Studio", href: "/" },
   { n: "02", label: "O nas", href: "/o-nas" },
   { n: "03", label: "Usługi", href: "/uslugi" },
-  { n: "04", label: "Cennik", href: "/cennik" },
+  { n: "04", label: "Pakiety", href: "/pakiety" },
   { n: "05", label: "Realizacje", href: "/realizacje" },
   { n: "06", label: "Opinie", href: "/opinie" },
   { n: "07", label: "Kontakt", href: "/kontakt" },

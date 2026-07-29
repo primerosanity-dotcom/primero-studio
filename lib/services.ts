@@ -41,7 +41,7 @@ export const SERVICES: Service[] = [
     duration: "~2 godziny",
     cycle: "Co 2–4 tygodnie",
     prefill: "essential",
-    image: "/images/uslugi/essential.jpg",
+    image: "/images/p1.png",
     problem:
       "Auto używane na co dzień szybko traci świeżość — kurz, sól i drobne zabrudzenia osadzają się na lakierze i we wnętrzu. Bez regularnej pielęgnacji efekt kumuluje się z tygodnia na tydzień.",
     effect: [
@@ -70,7 +70,7 @@ export const SERVICES: Service[] = [
     duration: "~4–5 godzin",
     cycle: "Co 2–3 miesiące",
     prefill: "protect",
-    image: "/images/uslugi/protect.jpg",
+    image: "/images/p2.png",
     problem:
       "Lakier codziennie mierzy się z owadami, bitumem, solą drogową i promieniowaniem UV. Bez warstwy ochronnej zanieczyszczenia wnikają w powłokę, a kolor blaknie.",
     effect: [
@@ -99,7 +99,7 @@ export const SERVICES: Service[] = [
     duration: "1 dzień roboczy",
     cycle: "Raz na 12–18 miesięcy",
     prefill: "restore",
-    image: "/images/uslugi/restore.jpg",
+    image: "/images/p3.png",
     problem:
       "Z czasem lakier matowieje, pokrywa się swirlami i traci głębię koloru. Standardowe mycie tego nie cofnie — potrzebne jest polerowanie karoserii.",
     effect: [
@@ -128,7 +128,7 @@ export const SERVICES: Service[] = [
     duration: "1–2 dni",
     cycle: "Raz na 2–3 lata",
     prefill: "ceramic",
-    image: "/images/uslugi/ceramic.jpg",
+    image: "/images/p4.png",
     popular: true,
     problem:
       "Chcesz, by efekt utrzymał się latami, a nie tygodniami. Wosk zmywa się po kilku miesiącach — trwałą ochronę i głębię daje dopiero ceramika na wypolerowanym lakierze.",
@@ -158,7 +158,7 @@ export const SERVICES: Service[] = [
     duration: "2–3 dni",
     cycle: "Raz na rok",
     prefill: "signature",
-    image: "/images/uslugi/signature.jpg",
+    image: "/images/p5.png",
     problem:
       "Oczekujesz kompletnej odnowy auta w jednym zabiegu — perfekcyjnego wnętrza, wypolerowanego lakieru i najtrwalszej ochrony, bez kompromisów.",
     effect: [

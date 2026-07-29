@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { ServicesShowcase } from "@/components/sections/services-showcase";
+import { ServicesList } from "@/components/sections/services-list";
 import { LeadSection } from "@/components/sections/lead-section";
 
 export const metadata: Metadata = {
   title: "Usługi",
   description:
-    "Mycie detailingowe, korekta lakieru, powłoki ceramiczne, ochrona PPF i detailing wnętrza w Warszawie. Wybierz usługę i poznaj szczegóły.",
+    "Pojedyncze usługi detailingowe w Warszawie — mycie, dekontaminacja, polerowanie, powłoka ceramiczna, twardy wosk, pranie wnętrza i więcej.",
 };
 
 export default function UslugiPage() {
   return (
     <>
-      <ServicesShowcase />
+      <ServicesList />
       <LeadSection />
     </>
   );

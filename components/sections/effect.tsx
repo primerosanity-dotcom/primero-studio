@@ -1,14 +1,12 @@
+import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { BeforeAfter } from "@/components/ui/before-after";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
+import { PROJECTS } from "@/lib/projects";
 
-const CASES = [
-  { caption: "Korekta lakieru", beforeSrc: undefined, afterSrc: undefined },
-  { caption: "Detailing wnętrza", beforeSrc: undefined, afterSrc: undefined },
-  { caption: "Renowacja felg", beforeSrc: undefined, afterSrc: undefined },
-];
+const CASES = PROJECTS.slice(0, 3);
 
 export function Effect() {
   return (
@@ -65,25 +63,54 @@ export function Effect() {
         {/* Before / after cases */}
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
           {CASES.map((c, i) => (
-            <Reveal key={c.caption} delay={0.1 + i * 0.1}>
-              <figure>
-                {/* Podmień na własne kadry (ten sam ujęcie przed/po):
-                    <BeforeAfter beforeSrc="/images/before-1.jpg" afterSrc="/images/after-1.jpg" /> */}
+            <Reveal key={c.slug} delay={0.1 + i * 0.1}>
+              <figure className="flex h-full flex-col">
+                {/* Podmień na własne kadry przed/po w lib/projects.ts */}
                 <BeforeAfter
                   beforeSrc={c.beforeSrc}
                   afterSrc={c.afterSrc}
-                  beforeAlt={`${c.caption} — przed`}
-                  afterAlt={`${c.caption} — po`}
+                  beforeAlt={`${c.car} — przed`}
+                  afterAlt={`${c.car} — po`}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="aspect-[4/5] w-full"
+                  className="aspect-[4/5] w-full rounded-xl"
                 />
-                <figcaption className="mt-4 flex items-center justify-between gap-3">
-                  <span className="font-sans text-[11px] uppercase tracking-[0.24em] text-cream/70">
-                    {c.caption}
+                <figcaption className="mt-5 flex flex-1 flex-col">
+                  <div className="flex items-center gap-2.5">
+                    <span className="rounded-full bg-gold/15 px-3 py-1 font-sans text-[10px] font-medium uppercase tracking-[0.18em] text-gold">
+                      {c.service}
+                    </span>
+                    <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-cream/35">
+                      0{i + 1}
+                    </span>
+                  </div>
+                  <span className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.06em] text-cream">
+                    {c.car}
                   </span>
-                  <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-cream/35">
-                    0{i + 1}
-                  </span>
+                  <p className="mt-1.5 font-sans text-[13px] leading-snug text-cream/55">
+                    {c.short}
+                  </p>
+                  <Link
+                    href={`/realizacje/${c.slug}`}
+                    className="group/link mt-4 inline-flex items-center gap-2.5 font-sans text-[0.66rem] font-medium uppercase tracking-[0.22em] text-champagne transition-colors duration-300 hover:text-gold"
+                  >
+                    Zobacz szczegóły
+                    <svg
+                      width="20"
+                      height="10"
+                      viewBox="0 0 26 12"
+                      fill="none"
+                      aria-hidden
+                      className="transition-transform duration-500 ease-lux group-hover/link:translate-x-1"
+                    >
+                      <path
+                        d="M0 6h24M19 1l5 5-5 5"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </Link>
                 </figcaption>
               </figure>
             </Reveal>

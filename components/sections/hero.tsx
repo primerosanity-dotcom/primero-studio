@@ -37,8 +37,8 @@ export function Hero() {
       >
         {/* Desktop / tablet — landscape crop */}
         <Image
-          src="/images/hero-porsche.png"
-          alt="Porsche 911 po detailingu w Primero Studio"
+          src="/images/hero-bmw.png"
+          alt="BMW M340i po detailingu w Primero Studio"
           fill
           priority
           sizes="100vw"
@@ -46,8 +46,8 @@ export function Hero() {
         />
         {/* Mobile — dedicated portrait crop */}
         <Image
-          src="/images/hero-porsche-mobile.png"
-          alt="Porsche 911 po detailingu w Primero Studio"
+          src="/images/hero-bmw-mobile.png"
+          alt="BMW M340i po detailingu w Primero Studio"
           fill
           priority
           sizes="100vw"
@@ -141,8 +141,8 @@ export function Hero() {
             <span aria-hidden className="h-9 w-px bg-cream/20" />
           </div>
           <Link
-            href="#uslugi"
-            aria-label="Przewiń do usług"
+            href="#pakiety"
+            aria-label="Przewiń do pakietów"
             className="transition-opacity duration-300 hover:opacity-80"
           >
             <ScrollCue label="Scroll" />

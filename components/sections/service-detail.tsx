@@ -69,8 +69,8 @@ export function ServiceDetail({ service }: { service: Service }) {
         {/* Breadcrumb */}
         <Reveal>
           <div className="flex items-center gap-3 font-sans text-[11px] uppercase tracking-[0.28em] text-cream/45">
-            <Link href="/uslugi" className="transition-colors hover:text-gold">
-              Usługi
+            <Link href="/pakiety" className="transition-colors hover:text-gold">
+              Pakiety
             </Link>
             <span className="text-cream/25">/</span>
             <span className="text-cream/70">{service.name}</span>
@@ -110,9 +110,11 @@ export function ServiceDetail({ service }: { service: Service }) {
           </div>
 
           <Reveal delay={0.15}>
-            {/* Podmień: <MediaSlot src={service.image} ... /> */}
             <MediaSlot
-              caption={service.name}
+              src={service.image}
+              alt={`${service.name} — ${service.tagline}`}
+              priority
+              sizes="(max-width: 1024px) 100vw, 45vw"
               className="aspect-[16/10] w-full rounded-2xl sm:aspect-[16/9] lg:aspect-[4/3]"
             />
           </Reveal>
@@ -204,7 +206,7 @@ export function ServiceDetail({ service }: { service: Service }) {
             {others.map((o) => (
               <Link
                 key={o.slug}
-                href={`/uslugi/${o.slug}`}
+                href={`/pakiety/${o.slug}`}
                 className="group inline-flex items-center gap-3 font-display text-lg font-medium uppercase tracking-[0.02em] text-cream/70 transition-colors duration-300 hover:text-gold sm:text-xl"
               >
                 {o.name}

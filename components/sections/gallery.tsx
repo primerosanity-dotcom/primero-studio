@@ -3,13 +3,15 @@ import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
+import { cn } from "@/lib/cn";
 
+// Deterministic mosaic — fills a 3-col × 4-row grid with no gaps.
 const TILES = [
-  { caption: "Korekta lakieru", cls: "aspect-[4/3] sm:col-span-2" },
-  { caption: "Powłoka ceramiczna", cls: "aspect-[3/4]" },
-  { caption: "Detal felgi", cls: "aspect-[3/4]" },
-  { caption: "Wnętrze — skóra", cls: "aspect-[3/4]" },
-  { caption: "Głęboki połysk", cls: "aspect-[4/3] sm:col-span-2" },
+  { caption: "Korekta lakieru", cls: "sm:col-span-2 sm:row-span-2" },
+  { caption: "Powłoka ceramiczna", cls: "" },
+  { caption: "Detal felgi", cls: "" },
+  { caption: "Wnętrze — skóra", cls: "sm:row-span-2" },
+  { caption: "Głęboki połysk", cls: "sm:col-span-2 sm:row-span-2" },
 ];
 
 export function Gallery() {
@@ -42,9 +44,13 @@ export function Gallery() {
           </Reveal>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:mt-16">
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:auto-rows-[200px] lg:mt-16 lg:auto-rows-[260px]">
           {TILES.map((t, i) => (
-            <Reveal key={t.caption} delay={0.05 + i * 0.07} className={t.cls}>
+            <Reveal
+              key={t.caption}
+              delay={0.05 + i * 0.07}
+              className={cn("aspect-[4/3] sm:aspect-auto", t.cls)}
+            >
               {/* Podmień: <MediaSlot src="/images/realizacja-N.jpg" ... /> */}
               <MediaSlot caption={t.caption} className="h-full w-full rounded-lg" />
             </Reveal>

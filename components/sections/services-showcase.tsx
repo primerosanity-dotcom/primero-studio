@@ -29,7 +29,7 @@ function Arrow() {
 export function ServicesShowcase({ index = "03" }: { index?: string }) {
   return (
     <section
-      id="uslugi"
+      id="pakiety"
       data-section-theme="light"
       className="relative overflow-hidden bg-cream text-ink"
     >
@@ -60,13 +60,14 @@ export function ServicesShowcase({ index = "03" }: { index?: string }) {
           {SERVICES.map((s, i) => (
             <Reveal key={s.slug} delay={0.05 + i * 0.06}>
               <Link
-                href={`/uslugi/${s.slug}`}
+                href={`/pakiety/${s.slug}`}
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-ink/12 bg-cream-soft/40 transition-colors duration-500 ease-lux hover:border-champagne/50"
               >
-                {/* Podmień: <MediaSlot src={s.image} ... /> */}
                 <MediaSlot
+                  src={s.image}
+                  alt={`${s.name} — ${s.tagline}`}
                   tone="light"
-                  caption={s.name}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="aspect-[4/3] w-full"
                 />
                 <div className="flex flex-1 flex-col p-6">

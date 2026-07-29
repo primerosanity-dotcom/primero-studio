@@ -4,12 +4,12 @@ import { LeadSection } from "@/components/sections/lead-section";
 import { getContactConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Cennik",
+  title: "Pakiety",
   description:
-    "Skomponuj wycenę detailingu — wybierz typ auta i usługi, a my policzymy orientacyjny koszt. Umów wizytę online.",
+    "Pakiety detailingu w Warszawie — ESSENTIAL, PROTECT, RESTORE, CERAMIC i SIGNATURE. Zobacz zakres i orientacyjne ceny, umów wizytę online.",
 };
 
-export default function CennikPage() {
+export default function PakietyPage() {
   return (
     <>
       <Pricing contact={getContactConfig()} />
