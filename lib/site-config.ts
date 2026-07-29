@@ -47,6 +47,10 @@ export function getContactConfig(): ContactConfig {
     email: optional(process.env.CONTACT_EMAIL),
     addressLines: address,
     mapsUrl: optional(process.env.CONTACT_MAPS_URL),
-    leadDeliveryEnabled: Boolean(optional(process.env.LEAD_WEBHOOK_URL)),
+    leadDeliveryEnabled: Boolean(
+      optional(process.env.LEAD_WEBHOOK_URL) ||
+        (optional(process.env.TELEGRAM_BOT_TOKEN) &&
+          optional(process.env.TELEGRAM_CHAT_ID)),
+    ),
   };
 }
