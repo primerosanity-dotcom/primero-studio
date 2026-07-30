@@ -7,6 +7,8 @@ export type PointService = {
   price: string;
   /** Estimated time */
   duration: string;
+  /** Photo path — drop a real file in /public/images/uslugi/<id>.png */
+  image?: string;
 };
 
 /**
