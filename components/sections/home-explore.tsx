@@ -108,22 +108,6 @@ export function HomeExplore() {
                   c.feature ? "min-h-[240px] lg:min-h-[300px]" : "min-h-[230px]",
                 )}
               >
-                {/* Oversized ghost number */}
-                <span
-                  aria-hidden
-                  className={cn(
-                    "pointer-events-none absolute -top-8 right-1 select-none font-display font-bold leading-none text-ink/[0.05] transition-all duration-700 ease-lux group-hover:-translate-y-1 group-hover:text-champagne/15",
-                    c.feature ? "text-[13rem]" : "text-[9rem]",
-                  )}
-                >
-                  {c.n}
-                </span>
-
-                {/* Monogram watermark on the feature card */}
-                {c.feature && (
-                  <Monogram className="pointer-events-none absolute -bottom-6 -left-6 h-40 w-40 text-ink/[0.04] transition-colors duration-700 group-hover:text-champagne/10" />
-                )}
-
                 <div className="relative">
                   <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
                     {c.n}
