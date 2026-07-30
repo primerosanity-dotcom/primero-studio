@@ -31,7 +31,7 @@ function Pin() {
 export function LeadSection({ withLocation = false }: { withLocation?: boolean }) {
   const contact = getContactConfig();
   const address =
-    contact.addressLines.length > 0 ? contact.addressLines : ["Warszawa"];
+    contact.addressLines.length > 0 ? contact.addressLines : ["Łódź"];
   const mapsUrl =
     contact.mapsUrl ??
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -157,7 +157,7 @@ export function LeadSection({ withLocation = false }: { withLocation?: boolean }
                 >
                   {contact.instagramHandle}
                 </a>
-                <span>Warszawa</span>
+                <span>Łódź</span>
               </div>
             </Reveal>
           )}

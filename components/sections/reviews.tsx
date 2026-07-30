@@ -5,7 +5,7 @@ import { Reveal } from "@/components/reveal";
 
 // Podmień na link do profilu Google Twojej firmy
 const GOOGLE_URL =
-  "https://www.google.com/maps/search/?api=1&query=Primero+Studio+Warszawa";
+  "https://www.google.com/maps/search/?api=1&query=Primero+Studio+Łódź";
 const RATING = "5,0";
 const REVIEW_COUNT = 48;
 

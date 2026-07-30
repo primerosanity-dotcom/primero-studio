@@ -18,7 +18,7 @@ export async function generateMetadata({
   if (!service) return {};
   return {
     title: service.name,
-    description: `${service.name} w Warszawie — ${service.short} ${service.price}.`,
+    description: `${service.name} w Łodzi — ${service.short} ${service.price}.`,
   };
 }
 

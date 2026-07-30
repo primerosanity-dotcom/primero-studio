@@ -47,7 +47,7 @@ export function ServiceDetail({ service }: { service: Service }) {
     { label: "Cena od", value: service.price },
     { label: "Czas realizacji", value: service.duration },
     { label: "Częstotliwość", value: service.cycle },
-    { label: "Lokalizacja", value: "Warszawa" },
+    { label: "Lokalizacja", value: "Łódź" },
   ];
 
   return (
@@ -146,7 +146,7 @@ export function ServiceDetail({ service }: { service: Service }) {
               Dla kogo jest pakiet {service.name}?
             </h2>
             <p className="mt-4 max-w-3xl font-sans text-base leading-relaxed text-cream/70">
-              {service.name} — {service.tagline.toLowerCase()} w Warszawie.
+              {service.name} — {service.tagline.toLowerCase()} w Łodzi.
               Cena {service.price}, orientacyjny czas realizacji:{" "}
               {service.duration}. Zalecana częstotliwość: {service.cycle.toLowerCase()}.
             </p>
@@ -186,7 +186,7 @@ export function ServiceDetail({ service }: { service: Service }) {
 
               <InfoCard label="Gdzie wykonujemy">
                 <p className="font-sans text-sm leading-relaxed text-cream/70">
-                  Studio detailingu w Warszawie. Umów dogodny termin —
+                  Studio detailingu w Łodzi. Umów dogodny termin —
                   zajmiemy się autem kompleksowo, a Ty odbierzesz je gotowe.
                 </p>
                 <ArrowButton href="#kontakt-form" tone="dark" className="mt-5">

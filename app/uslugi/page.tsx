@@ -5,7 +5,7 @@ import { LeadSection } from "@/components/sections/lead-section";
 export const metadata: Metadata = {
   title: "Usługi",
   description:
-    "Pojedyncze usługi detailingowe w Warszawie — mycie, dekontaminacja, polerowanie, powłoka ceramiczna, twardy wosk, pranie wnętrza i więcej.",
+    "Pojedyncze usługi detailingowe w Łodzi — mycie, dekontaminacja, polerowanie, powłoka ceramiczna, twardy wosk, pranie wnętrza i więcej.",
 };
 
 export default function UslugiPage() {

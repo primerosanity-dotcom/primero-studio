@@ -32,7 +32,7 @@ export function Footer() {
             </span>
           </Link>
           <p className="mt-6 max-w-xs font-sans text-sm leading-relaxed text-cream/55">
-            Studio detailingu klasy premium w Warszawie. Zadbamy o każdy detal
+            Studio detailingu klasy premium w Łodzi. Zadbamy o każdy detal
             Twojego auta.
           </p>
         </div>
@@ -130,7 +130,7 @@ export function Footer() {
             © {2026} PRIMERO.STUDIO
           </span>
           <span className="font-sans text-[10px] uppercase tracking-[0.32em] text-cream/35">
-            Premium Auto Detailing · Warszawa
+            Premium Auto Detailing · Łódź
           </span>
         </div>
       </div>

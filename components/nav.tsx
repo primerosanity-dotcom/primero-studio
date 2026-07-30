@@ -312,7 +312,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
                   {contact.instagramHandle}
                 </a>
                 <span className="text-cream/25">·</span>
-                <span>Warszawa</span>
+                <span>Łódź</span>
               </motion.div>
             </div>
           </motion.div>

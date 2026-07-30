@@ -109,7 +109,7 @@ export function Hero() {
             className="mt-7 max-w-sm font-sans text-base leading-relaxed text-cream/75"
           >
             Profesjonalny detailing, ochrona lakieru i pielęgnacja wnętrz
-            w&nbsp;Warszawie.
+            w&nbsp;Łodzi.
           </motion.p>
 
           <motion.div
