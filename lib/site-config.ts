@@ -10,47 +10,40 @@ export type ContactConfig = {
   leadDeliveryEnabled: boolean;
 };
 
-function optional(value: string | undefined): string | null {
-  const trimmed = value?.trim();
-  return trimmed ? trimmed : null;
+// Hardcoded business contact data — edit here when anything changes.
+const CONTACT = {
+  phone: "+48 512 340 678",
+  whatsapp: "+48 512 340 678",
+  email: "kontakt@primero.studio",
+  instagramHandle: "@primero.studio",
+  instagramUrl: "https://www.instagram.com/primero.studio/",
+  addressLines: ["ul. Papiernicza 7R", "Łódź"],
+  mapsUrl: "https://maps.google.com/?q=Papiernicza+7R+Łódź",
+};
+
+function phoneHref(phone: string): string {
+  return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }
 
-function phoneHref(phone: string | null): string | null {
-  if (!phone) return null;
-  const normalized = phone.replace(/[^\d+]/g, "");
-  return normalized ? `tel:${normalized}` : null;
-}
-
-function whatsappUrl(phone: string | null): string | null {
-  if (!phone) return null;
-  const normalized = phone.replace(/\D/g, "");
-  return normalized ? `https://wa.me/${normalized}` : null;
+function whatsappUrl(phone: string): string {
+  return `https://wa.me/${phone.replace(/\D/g, "")}`;
 }
 
 export function getContactConfig(): ContactConfig {
-  const phone = optional(process.env.CONTACT_PHONE);
-  const whatsapp = optional(process.env.CONTACT_WHATSAPP) ?? phone;
-  const address = [
-    optional(process.env.CONTACT_ADDRESS_LINE_1),
-    optional(process.env.CONTACT_ADDRESS_LINE_2),
-  ].filter((line): line is string => Boolean(line));
-
   return {
-    phoneDisplay: phone,
-    phoneHref: phoneHref(phone),
-    whatsappUrl: whatsappUrl(whatsapp),
-    instagramHandle:
-      optional(process.env.CONTACT_INSTAGRAM_HANDLE) ?? "@primero.studio",
-    instagramUrl:
-      optional(process.env.CONTACT_INSTAGRAM_URL) ??
-      "https://www.instagram.com/primero.studio/",
-    email: optional(process.env.CONTACT_EMAIL),
-    addressLines: address,
-    mapsUrl: optional(process.env.CONTACT_MAPS_URL),
+    phoneDisplay: CONTACT.phone,
+    phoneHref: phoneHref(CONTACT.phone),
+    whatsappUrl: whatsappUrl(CONTACT.whatsapp),
+    instagramHandle: CONTACT.instagramHandle,
+    instagramUrl: CONTACT.instagramUrl,
+    email: CONTACT.email,
+    addressLines: CONTACT.addressLines,
+    mapsUrl: CONTACT.mapsUrl,
+    // Lead delivery stays env-driven — secrets live in Vercel.
     leadDeliveryEnabled: Boolean(
-      optional(process.env.LEAD_WEBHOOK_URL) ||
-        (optional(process.env.TELEGRAM_BOT_TOKEN) &&
-          optional(process.env.TELEGRAM_CHAT_ID)),
+      process.env.LEAD_WEBHOOK_URL?.trim() ||
+        (process.env.TELEGRAM_BOT_TOKEN?.trim() &&
+          process.env.TELEGRAM_CHAT_ID?.trim()),
     ),
   };
 }
