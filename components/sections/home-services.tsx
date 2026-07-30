@@ -9,8 +9,8 @@ import { cn } from "@/lib/cn";
 // The 5 most popular point services shown on the home page.
 // The first one is the featured (tall) card in the mosaic.
 const POPULAR_IDS = [
-  "powloka-ceramiczna",
   "mycie-detailingowe",
+  "powloka-ceramiczna",
   "pranie-wnetrza",
   "polerowanie",
   "twardy-wosk",
