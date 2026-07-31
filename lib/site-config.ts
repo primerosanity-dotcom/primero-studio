@@ -15,8 +15,8 @@ const CONTACT = {
   phone: "+48 512 340 678",
   whatsapp: "+48 512 340 678",
   email: "kontakt@primero.studio",
-  instagramHandle: "@primero.studio",
-  instagramUrl: "https://www.instagram.com/primero.studio/",
+  instagramHandle: "@primero_studio",
+  instagramUrl: "https://www.instagram.com/primero_studio/",
   addressLines: ["ul. Papiernicza 7R", "Łódź"],
   mapsUrl: "https://maps.google.com/?q=Papiernicza+7R+Łódź",
 };
