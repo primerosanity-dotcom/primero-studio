@@ -137,10 +137,8 @@ function PackageCard({
           type="button"
           onClick={() => onBook(service)}
           className={cn(
-            "group/btn inline-flex flex-1 items-center justify-between gap-6 px-6 py-4 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] transition-colors duration-500 ease-lux active:scale-[0.99]",
-            featured
-              ? "bg-gold text-wine-deep hover:bg-cream-soft"
-              : "border border-cream/25 text-cream hover:border-gold hover:text-gold",
+            "group/btn inline-flex flex-1 items-center justify-between gap-6 px-6 py-4 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.24em] transition-all duration-500 ease-lux hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99]",
+            "bg-gold text-wine-deep shadow-[0_12px_32px_-12px_rgba(217,184,114,0.5)] hover:bg-cream-soft",
           )}
         >
           <span>Umów</span>

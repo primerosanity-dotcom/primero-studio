@@ -43,12 +43,12 @@ export function ArrowButton({
   href = "#",
   children,
   tone = "dark",
-  variant = "outline",
+  variant = "solid",
   className,
   onClick,
 }: Props) {
   const base =
-    "group inline-flex items-center justify-between gap-10 px-8 py-5 font-sans text-[0.7rem] font-medium uppercase tracking-[0.28em] transition-colors duration-500 ease-lux";
+    "group inline-flex items-center justify-between gap-10 px-8 py-5 font-sans text-[0.7rem] font-semibold uppercase tracking-[0.28em] transition-all duration-500 ease-lux";
 
   if (variant === "solid") {
     return (
@@ -57,7 +57,7 @@ export function ArrowButton({
         onClick={onClick}
         className={cn(
           base,
-          "bg-gold text-wine-deep hover:bg-cream-soft",
+          "bg-gold text-wine-deep shadow-[0_14px_38px_-14px_rgba(217,184,114,0.55)] hover:-translate-y-0.5 hover:bg-cream-soft hover:shadow-[0_18px_44px_-14px_rgba(217,184,114,0.7)] active:translate-y-0 active:scale-[0.99]",
           className,
         )}
       >
