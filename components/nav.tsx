@@ -160,7 +160,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
                   dark ? "text-cream/45" : "text-ink/45",
                 )}
               >
-                PREMIUM AUTO DETAILING
+                AUTO DETAILING · ŁÓDŹ
               </span>
             </span>
           </Link>

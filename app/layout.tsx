@@ -10,13 +10,13 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "PRIMERO.STUDIO — Premium Auto Detailing Łódź",
+    default: "PRIMERO.STUDIO — Auto Detailing Łódź",
     template: "%s — PRIMERO.STUDIO",
   },
   description:
-    "Studio detailingu premium w Łodzi. Powłoki ceramiczne, korekta lakieru, ochrona PPF i detailing wnętrza. Zadbamy o każdy detal.",
+    "Studio detailingu w Łodzi. Powłoki ceramiczne, korekta lakieru, ochrona PPF i detailing wnętrza. Zadbamy o każdy detal.",
   openGraph: {
-    title: "PRIMERO.STUDIO — Premium Auto Detailing Łódź",
+    title: "PRIMERO.STUDIO — Auto Detailing Łódź",
     description:
       "Powłoki ceramiczne, korekta lakieru, ochrona PPF i kompleksowy detailing w sercu Łodzi.",
     locale: "pl_PL",

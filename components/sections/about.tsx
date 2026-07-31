@@ -43,8 +43,8 @@ export function About() {
 
           <Reveal delay={0.15}>
             <p className="mt-7 max-w-xl font-sans text-base leading-relaxed text-ink/65">
-              Primero Studio to precyzyjna pielęgnacja samochodów klasy
-              premium — od korekty lakieru po ochronę i wnętrze dopracowane
+              Primero Studio to precyzyjna pielęgnacja samochodów —
+              od korekty lakieru po ochronę i wnętrze dopracowane
               w&nbsp;każdym detalu.
             </p>
           </Reveal>

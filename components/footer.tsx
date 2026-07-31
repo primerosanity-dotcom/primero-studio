@@ -27,12 +27,12 @@ export function Footer() {
                 PRIMERO.STUDIO
               </span>
               <span className="mt-1.5 block font-sans text-[9px] tracking-[0.34em] text-cream/45">
-                PREMIUM AUTO DETAILING
+                AUTO DETAILING · ŁÓDŹ
               </span>
             </span>
           </Link>
           <p className="mt-6 max-w-xs font-sans text-sm leading-relaxed text-cream/55">
-            Studio detailingu klasy premium w Łodzi. Zadbamy o każdy detal
+            Studio detailingu w Łodzi. Zadbamy o każdy detal
             Twojego auta.
           </p>
         </div>
@@ -130,7 +130,7 @@ export function Footer() {
             © {2026} PRIMERO.STUDIO
           </span>
           <span className="font-sans text-[10px] uppercase tracking-[0.32em] text-cream/35">
-            Premium Auto Detailing · Łódź
+            Auto Detailing · Łódź
           </span>
         </div>
       </div>

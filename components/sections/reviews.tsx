@@ -13,7 +13,7 @@ const REVIEWS = [
   {
     name: "Marek K.",
     date: "2 tygodnie temu",
-    text: "Auto wygląda lepiej niż w dniu odbioru z salonu. Lakier jak lustro, wnętrze dopracowane w każdym detalu. Profesjonalizm klasy premium.",
+    text: "Auto wygląda lepiej niż w dniu odbioru z salonu. Lakier jak lustro, wnętrze dopracowane w każdym detalu. Profesjonalizm najwyższej klasy.",
     tone: "bg-wine text-cream",
   },
   {

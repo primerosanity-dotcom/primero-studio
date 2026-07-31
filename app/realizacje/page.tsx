@@ -6,7 +6,7 @@ import { LeadSection } from "@/components/sections/lead-section";
 export const metadata: Metadata = {
   title: "Realizacje",
   description:
-    "Efekty naszej pracy — interaktywne porównania przed/po oraz galeria realizacji aut klasy premium.",
+    "Efekty naszej pracy — interaktywne porównania przed/po oraz galeria naszych realizacji.",
 };
 
 export default function RealizacjePage() {

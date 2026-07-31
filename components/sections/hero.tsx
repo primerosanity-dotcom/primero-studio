@@ -89,7 +89,7 @@ export function Hero() {
               animate="show"
               className="block whitespace-nowrap"
             >
-              klasy premium.
+              w każdym detalu.
             </motion.span>
           </Heading>
 

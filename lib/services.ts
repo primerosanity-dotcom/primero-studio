@@ -150,7 +150,7 @@ export const SERVICES: Service[] = [
     slug: "signature",
     n: "05",
     name: "SIGNATURE",
-    tagline: "Pełny detailing premium",
+    tagline: "Pełny detailing auta",
     short:
       "Maksymalny zakres pielęgnacji i ochrony — od wnętrza po ceramikę.",
     price: "od 4 990 zł",
@@ -163,7 +163,7 @@ export const SERVICES: Service[] = [
       "Oczekujesz kompletnej odnowy auta w jednym zabiegu — perfekcyjnego wnętrza, wypolerowanego lakieru i najtrwalszej ochrony, bez kompromisów.",
     effect: [
       "Pełna renowacja wnętrza i lakieru",
-      "Powłoka ceramiczna klasy premium",
+      "Powłoka ceramiczna najwyższej klasy",
       "Auto w stanie lepszym niż salonowy",
     ],
     includes: [

@@ -6,7 +6,7 @@ import { LeadSection } from "@/components/sections/lead-section";
 export const metadata: Metadata = {
   title: "O nas",
   description:
-    "Primero Studio — precyzyjna pielęgnacja aut klasy premium w Łodzi. Poznaj nasze podejście i proces pracy krok po kroku.",
+    "Primero Studio — precyzyjna pielęgnacja aut w Łodzi. Poznaj nasze podejście i proces pracy krok po kroku.",
 };
 
 export default function ONasPage() {

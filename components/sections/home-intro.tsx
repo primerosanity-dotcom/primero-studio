@@ -37,8 +37,8 @@ export function HomeIntro() {
 
         <Reveal delay={0.1}>
           <p className="mt-7 max-w-xl font-sans text-base leading-relaxed text-ink/65">
-            Primero Studio — studio detailingu klasy premium w Łodzi.
-            Pracujemy na materiałach premium, dbamy o każdy detal i stawiamy
+            Primero Studio — studio detailingu w Łodzi.
+            Pracujemy na najlepszych materiałach, dbamy o każdy detal i stawiamy
             trwałość ponad szybkość.{" "}
             <Link
               href="/o-nas"
