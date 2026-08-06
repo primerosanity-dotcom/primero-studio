@@ -21,9 +21,9 @@ export function Footer() {
         {/* Brand */}
         <div className="sm:col-span-2 lg:col-span-1">
           <Link href="/" className="flex items-center gap-3 text-cream">
-            <Monogram className="h-9 w-9 text-gold" />
+            <Monogram gradient className="h-9 w-9" />
             <span className="leading-none">
-              <span className="block font-display text-sm font-semibold tracking-[0.2em]">
+              <span className="block font-sans text-[15px] font-light uppercase tracking-[0.2em]">
                 PRIMERO.STUDIO
               </span>
               <span className="mt-1.5 block font-sans text-[9px] tracking-[0.34em] text-cream/45">

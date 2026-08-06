@@ -149,9 +149,9 @@ export function Nav({ contact }: { contact: ContactConfig }) {
               dark ? "text-cream" : "text-ink",
             )}
           >
-            <Monogram className="h-8 w-8 text-gold" />
+            <Monogram gradient className="h-8 w-8" />
             <span className="leading-none">
-              <span className="block font-display text-sm font-semibold tracking-[0.2em]">
+              <span className="block font-sans text-[15px] font-light uppercase tracking-[0.2em]">
                 PRIMERO.STUDIO
               </span>
               <span
