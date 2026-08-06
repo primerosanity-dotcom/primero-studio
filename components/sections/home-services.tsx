@@ -31,7 +31,7 @@ export function HomeServices({ index = "03" }: { index?: string }) {
     >
       <div
         aria-hidden
-        className="texture-wine absolute inset-0"
+        className="absolute inset-0"
         style={{
           background:
             "radial-gradient(80% 70% at 12% 12%, rgba(124,32,48,0.28), transparent 55%), #150406",

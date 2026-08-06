@@ -16,7 +16,7 @@ export function Footer() {
   const contact = getContactConfig();
 
   return (
-    <footer className="texture-wine relative border-t border-cream/[0.07] bg-[#150406] text-cream">
+    <footer className="relative border-t border-cream/[0.07] bg-[#150406] text-cream">
       <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-12 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10 lg:px-12 lg:py-20">
         {/* Brand */}
         <div className="sm:col-span-2 lg:col-span-1">

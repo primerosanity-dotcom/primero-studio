@@ -112,7 +112,7 @@ export function Contact({ contact }: { contact: ContactConfig }) {
     >
       <div
         aria-hidden
-        className="texture-wine absolute inset-0"
+        className="absolute inset-0"
         style={{
           background:
             "radial-gradient(100% 80% at 85% 12%, rgba(124,32,48,0.32), transparent 55%), #150406",
