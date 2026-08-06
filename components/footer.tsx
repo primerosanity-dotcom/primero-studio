@@ -26,7 +26,7 @@ export function Footer() {
               <span className="block font-sans text-[15px] font-light uppercase tracking-[0.2em]">
                 PRIMERO.STUDIO
               </span>
-              <span className="mt-1.5 block font-sans text-[9px] tracking-[0.34em] text-cream/45">
+              <span className="mt-1.5 block font-sans text-[8.5px] tracking-[0.22em] text-cream/45">
                 AUTO DETAILING · ŁÓDŹ
               </span>
             </span>

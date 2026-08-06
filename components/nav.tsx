@@ -156,7 +156,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
               </span>
               <span
                 className={cn(
-                  "mt-1.5 block font-sans text-[9px] tracking-[0.34em] transition-colors duration-500",
+                  "mt-1.5 block font-sans text-[8.5px] tracking-[0.22em] transition-colors duration-500",
                   dark ? "text-cream/45" : "text-ink/45",
                 )}
               >

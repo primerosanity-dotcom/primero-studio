@@ -37,9 +37,10 @@ export function HomeIntro() {
 
         <Reveal delay={0.1}>
           <p className="mt-7 max-w-xl font-sans text-base leading-relaxed text-ink/65">
-            Primero Studio — studio detailingu w Łodzi.
-            Pracujemy na najlepszych materiałach, dbamy o każdy detal i stawiamy
-            trwałość ponad szybkość.{" "}
+            Primero Studio — studio detailingu w Łodzi. Pracujemy na
+            najlepszych materiałach i zapewniamy precyzyjną pielęgnację auta —
+            od korekty lakieru i ochrony karoserii po nienaganne wnętrze,
+            z dbałością o każdy detal.{" "}
             <Link
               href="/o-nas"
               className="text-champagne underline-offset-4 hover:underline"
