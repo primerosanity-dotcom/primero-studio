@@ -58,7 +58,7 @@ export function ServiceDetail({ service }: { service: Service }) {
     >
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="texture-wine absolute inset-0"
         style={{
           background:
             "radial-gradient(90% 70% at 85% 8%, rgba(124,32,48,0.3), transparent 55%), #150406",

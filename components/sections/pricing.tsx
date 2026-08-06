@@ -175,7 +175,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
     >
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="texture-wine absolute inset-0"
         style={{
           background:
             "radial-gradient(90% 70% at 12% 8%, rgba(124,32,48,0.3), transparent 55%), radial-gradient(80% 55% at 90% 80%, rgba(76,22,34,0.32), transparent 60%), #150406",

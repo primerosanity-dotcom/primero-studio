@@ -46,7 +46,7 @@ export function LeadSection({ withLocation = false }: { withLocation?: boolean }
     >
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="texture-wine absolute inset-0"
         style={{
           background:
             "radial-gradient(90% 70% at 15% 10%, rgba(124,32,48,0.28), transparent 55%), #150406",

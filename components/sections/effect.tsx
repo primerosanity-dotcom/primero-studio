@@ -17,7 +17,7 @@ export function Effect() {
     >
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="texture-wine absolute inset-0"
         style={{
           background:
             "radial-gradient(100% 80% at 85% 20%, rgba(124,32,48,0.35), transparent 55%), linear-gradient(180deg, #120306 0%, #180508 100%)",
