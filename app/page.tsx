@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/hero";
 import { HomeIntro } from "@/components/sections/home-intro";
+import { Process } from "@/components/sections/process";
 import { HomeServices } from "@/components/sections/home-services";
 import { ServicesShowcase } from "@/components/sections/services-showcase";
 import { Reviews } from "@/components/sections/reviews";
@@ -10,9 +11,10 @@ export default function Home() {
     <>
       <Hero />
       <HomeIntro />
-      <HomeServices />
-      <ServicesShowcase index="04" />
-      <Reviews index="05" />
+      <Process index="03" />
+      <HomeServices index="04" />
+      <ServicesShowcase index="05" />
+      <Reviews index="06" />
       <LeadSection withLocation />
     </>
   );

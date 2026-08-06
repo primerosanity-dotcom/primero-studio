@@ -11,7 +11,7 @@ const STEPS = [
   { n: "04", label: "Odbiór auta" },
 ];
 
-export function Process() {
+export function Process({ index = "—" }: { index?: string }) {
   return (
     <section
       id="proces"
@@ -22,7 +22,7 @@ export function Process() {
         {/* Left — copy + steps */}
         <div className="lg:col-span-7">
           <Reveal>
-            <SectionLabel index="—" tone="ink">
+            <SectionLabel index={index} tone="ink">
               Proces
             </SectionLabel>
           </Reveal>

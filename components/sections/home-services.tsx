@@ -20,7 +20,7 @@ const POPULAR = POPULAR_IDS.map(
   (id) => POINT_SERVICES.find((s) => s.id === id)!,
 ).filter(Boolean);
 
-export function HomeServices() {
+export function HomeServices({ index = "03" }: { index?: string }) {
   const [featured, ...rest] = POPULAR;
 
   return (
@@ -42,7 +42,7 @@ export function HomeServices() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
             <Reveal>
-              <SectionLabel index="03">Usługi</SectionLabel>
+              <SectionLabel index={index}>Usługi</SectionLabel>
             </Reveal>
             <Reveal delay={0.05}>
               <Heading
