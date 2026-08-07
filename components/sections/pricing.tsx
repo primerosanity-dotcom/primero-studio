@@ -58,10 +58,10 @@ function PackageCard({
   return (
     <div
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border text-ink shadow-[0_24px_60px_-32px_rgba(0,0,0,0.75)] transition-colors duration-500 ease-lux",
+        "group relative flex h-full flex-col overflow-hidden rounded-2xl border transition-colors duration-500 ease-lux",
         featured
-          ? "border-gold/70 bg-cream-soft"
-          : "border-cream/15 bg-cream hover:border-champagne/60",
+          ? "border-gold/50 bg-gold/[0.05]"
+          : "border-cream/12 bg-wine/40 hover:border-champagne/40",
       )}
     >
       {/* Photo header */}
@@ -84,7 +84,7 @@ function PackageCard({
           <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
             {service.n}
           </span>
-          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-ink/45">
+          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-cream/40">
             {service.cycle}
           </span>
         </div>
@@ -92,30 +92,30 @@ function PackageCard({
       <h3
         className={cn(
           "mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em]",
-          featured ? "text-champagne" : "text-ink",
+          featured ? "text-gold" : "text-cream",
         )}
       >
         {service.name}
       </h3>
-      <p className="mt-2 font-sans text-sm leading-relaxed text-ink/60">
+      <p className="mt-2 font-sans text-sm leading-relaxed text-cream/55">
         {service.tagline}
       </p>
 
       <div className="mt-6 flex items-baseline gap-2">
-        <span className="font-display text-3xl font-bold text-ink">
+        <span className="font-display text-3xl font-bold text-cream">
           {service.price}
         </span>
       </div>
-      <span className="mt-1 font-sans text-[11px] uppercase tracking-[0.18em] text-ink/45">
+      <span className="mt-1 font-sans text-[11px] uppercase tracking-[0.18em] text-cream/40">
         Czas: {service.duration}
       </span>
 
-      <ul className="mt-6 flex-1 space-y-2.5 border-t border-ink/10 pt-6">
+      <ul className="mt-6 flex-1 space-y-2.5 border-t border-cream/10 pt-6">
         {service.includes.map((item) => (
           <li key={item} className="flex items-start gap-2.5">
             <svg
               viewBox="0 0 16 16"
-              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-champagne"
+              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.7"
@@ -125,7 +125,7 @@ function PackageCard({
             >
               <path d="M3 8.5 6.5 12 13 4.5" />
             </svg>
-            <span className="font-sans text-[13px] leading-snug text-ink/70">
+            <span className="font-sans text-[13px] leading-snug text-cream/80">
               {item}
             </span>
           </li>
@@ -138,7 +138,7 @@ function PackageCard({
           onClick={() => onBook(service)}
           className={cn(
             "group/btn inline-flex flex-1 items-center justify-between gap-6 px-6 py-4 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.24em] transition-all duration-500 ease-lux hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99]",
-            "bg-gold text-wine-deep shadow-[0_12px_32px_-12px_rgba(217,184,114,0.5)] hover:bg-champagne",
+            "bg-gold text-wine-deep shadow-[0_12px_32px_-12px_rgba(217,184,114,0.5)] hover:bg-cream-soft",
           )}
         >
           <span>Umów</span>
@@ -146,7 +146,7 @@ function PackageCard({
         </button>
         <Link
           href={`/pakiety/${service.slug}`}
-          className="shrink-0 font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-ink/45 transition-colors duration-300 hover:text-champagne"
+          className="shrink-0 font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-cream/45 transition-colors duration-300 hover:text-champagne"
         >
           Szczegóły
         </Link>
@@ -213,7 +213,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
 
           {/* Consultation card fills the 6th cell */}
           <Reveal delay={0.05 + SERVICES.length * 0.05}>
-            <div className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-cream/25 bg-cream/[0.04] p-7 sm:p-8">
+            <div className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-cream/20 bg-transparent p-7 sm:p-8">
               <div>
                 <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
                   06
@@ -223,7 +223,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
                   <br />
                   który wybrać?
                 </h3>
-                <p className="mt-3 font-sans text-sm leading-relaxed text-cream/60">
+                <p className="mt-3 font-sans text-sm leading-relaxed text-cream/55">
                   Napisz lub zadzwoń — obejrzymy auto, dobierzemy zakres prac i
                   przygotujemy indywidualną wycenę.
                 </p>
@@ -231,7 +231,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
               <div className="mt-8 flex flex-col gap-3">
                 <Link
                   href="#kontakt-form"
-                  className="group inline-flex items-center justify-between gap-6 bg-gold px-6 py-4 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.24em] text-wine-deep shadow-[0_12px_32px_-12px_rgba(217,184,114,0.5)] transition-all duration-500 ease-lux hover:-translate-y-0.5 hover:bg-champagne active:translate-y-0 active:scale-[0.99]"
+                  className="group inline-flex items-center justify-between gap-6 border border-cream/25 px-6 py-4 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-cream transition-colors duration-500 ease-lux hover:border-gold hover:text-gold"
                 >
                   <span>Umów konsultację</span>
                   <Arrow className="transition-transform duration-500 ease-lux group-hover:translate-x-1" />
