@@ -58,10 +58,10 @@ function PackageCard({
   return (
     <div
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border text-cream shadow-[0_20px_50px_-30px_rgba(45,7,10,0.6)] transition-colors duration-500 ease-lux",
+        "group relative flex h-full flex-col overflow-hidden rounded-2xl border text-ink shadow-[0_24px_60px_-32px_rgba(0,0,0,0.75)] transition-colors duration-500 ease-lux",
         featured
-          ? "border-gold/60 bg-wine-deep"
-          : "border-wine/40 bg-wine hover:border-champagne/50",
+          ? "border-gold/70 bg-cream-soft"
+          : "border-cream/15 bg-cream hover:border-champagne/60",
       )}
     >
       {/* Photo header */}
@@ -84,7 +84,7 @@ function PackageCard({
           <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
             {service.n}
           </span>
-          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-cream/40">
+          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-ink/45">
             {service.cycle}
           </span>
         </div>
@@ -92,30 +92,30 @@ function PackageCard({
       <h3
         className={cn(
           "mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em]",
-          featured ? "text-gold" : "text-cream",
+          featured ? "text-champagne" : "text-ink",
         )}
       >
         {service.name}
       </h3>
-      <p className="mt-2 font-sans text-sm leading-relaxed text-cream/55">
+      <p className="mt-2 font-sans text-sm leading-relaxed text-ink/60">
         {service.tagline}
       </p>
 
       <div className="mt-6 flex items-baseline gap-2">
-        <span className="font-display text-3xl font-bold text-cream">
+        <span className="font-display text-3xl font-bold text-ink">
           {service.price}
         </span>
       </div>
-      <span className="mt-1 font-sans text-[11px] uppercase tracking-[0.18em] text-cream/40">
+      <span className="mt-1 font-sans text-[11px] uppercase tracking-[0.18em] text-ink/45">
         Czas: {service.duration}
       </span>
 
-      <ul className="mt-6 flex-1 space-y-2.5 border-t border-cream/10 pt-6">
+      <ul className="mt-6 flex-1 space-y-2.5 border-t border-ink/10 pt-6">
         {service.includes.map((item) => (
           <li key={item} className="flex items-start gap-2.5">
             <svg
               viewBox="0 0 16 16"
-              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold"
+              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-champagne"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.7"
@@ -125,7 +125,7 @@ function PackageCard({
             >
               <path d="M3 8.5 6.5 12 13 4.5" />
             </svg>
-            <span className="font-sans text-[13px] leading-snug text-cream/80">
+            <span className="font-sans text-[13px] leading-snug text-ink/70">
               {item}
             </span>
           </li>
@@ -138,7 +138,7 @@ function PackageCard({
           onClick={() => onBook(service)}
           className={cn(
             "group/btn inline-flex flex-1 items-center justify-between gap-6 px-6 py-4 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.24em] transition-all duration-500 ease-lux hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99]",
-            "bg-gold text-wine-deep shadow-[0_12px_32px_-12px_rgba(217,184,114,0.5)] hover:bg-cream-soft",
+            "bg-gold text-wine-deep shadow-[0_12px_32px_-12px_rgba(217,184,114,0.5)] hover:bg-champagne",
           )}
         >
           <span>Umów</span>
@@ -146,7 +146,7 @@ function PackageCard({
         </button>
         <Link
           href={`/pakiety/${service.slug}`}
-          className="shrink-0 font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-cream/45 transition-colors duration-300 hover:text-champagne"
+          className="shrink-0 font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-ink/45 transition-colors duration-300 hover:text-champagne"
         >
           Szczegóły
         </Link>
@@ -170,26 +170,33 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
   return (
     <section
       id="pakiety"
-      data-section-theme="light"
-      className="relative overflow-hidden bg-cream text-ink"
+      data-section-theme="dark"
+      className="relative overflow-hidden bg-wine-deep text-cream"
     >
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(90% 70% at 12% 8%, rgba(124,32,48,0.3), transparent 55%), radial-gradient(80% 55% at 90% 80%, rgba(76,22,34,0.32), transparent 60%), #150406",
+        }}
+      />
+
       <div className="relative z-10 mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-40">
         <div className="max-w-3xl">
           <Reveal>
-            <SectionLabel index="04" tone="ink">
-              Pakiety
-            </SectionLabel>
+            <SectionLabel index="04">Pakiety</SectionLabel>
           </Reveal>
           <Reveal delay={0.05}>
             <Heading
-              variant="strong"
-              className="mt-8 text-[clamp(2rem,4.5vw,3.6rem)] text-ink"
+              variant="elegant"
+              className="mt-8 text-[clamp(2rem,4.5vw,3.6rem)] gold-metallic"
             >
               Pakiety detailingu.
             </Heading>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-ink/65">
+            <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-cream/60">
               Pięć kompleksowych pakietów — od regularnej pielęgnacji po pełną
               renowację i ochronę. Ceny orientacyjne, ostateczną wycenę
               potwierdzamy po ocenie stanu auta.
@@ -206,17 +213,17 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
 
           {/* Consultation card fills the 6th cell */}
           <Reveal delay={0.05 + SERVICES.length * 0.05}>
-            <div className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-ink/25 bg-cream-soft/40 p-7 sm:p-8">
+            <div className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-cream/25 bg-cream/[0.04] p-7 sm:p-8">
               <div>
                 <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
                   06
                 </span>
-                <h3 className="mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em] text-ink">
+                <h3 className="mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em] text-cream">
                   Nie wiesz,
                   <br />
                   który wybrać?
                 </h3>
-                <p className="mt-3 font-sans text-sm leading-relaxed text-ink/60">
+                <p className="mt-3 font-sans text-sm leading-relaxed text-cream/60">
                   Napisz lub zadzwoń — obejrzymy auto, dobierzemy zakres prac i
                   przygotujemy indywidualną wycenę.
                 </p>
@@ -232,7 +239,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
                 {contact.phoneHref && contact.phoneDisplay && (
                   <a
                     href={contact.phoneHref}
-                    className="text-center font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-ink/50 transition-colors duration-300 hover:text-champagne"
+                    className="text-center font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-cream/50 transition-colors duration-300 hover:text-champagne"
                   >
                     {contact.phoneDisplay}
                   </a>
@@ -247,7 +254,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="mt-10 font-sans text-[11px] leading-relaxed text-ink/45"
+          className="mt-10 font-sans text-[11px] leading-relaxed text-cream/35"
         >
           Ceny orientacyjne brutto. Zależą od rozmiaru i stanu auta — ostateczną
           wycenę potwierdzamy w studio.
