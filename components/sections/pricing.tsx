@@ -58,10 +58,10 @@ function PackageCard({
   return (
     <div
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border transition-colors duration-500 ease-lux",
+        "group relative flex h-full flex-col overflow-hidden rounded-2xl border text-cream shadow-[0_20px_50px_-30px_rgba(45,7,10,0.6)] transition-colors duration-500 ease-lux",
         featured
-          ? "border-gold/50 bg-gold/[0.05]"
-          : "border-cream/12 bg-wine/40 hover:border-champagne/40",
+          ? "border-gold/60 bg-wine-deep"
+          : "border-wine/40 bg-wine hover:border-champagne/50",
       )}
     >
       {/* Photo header */}
@@ -170,33 +170,26 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
   return (
     <section
       id="pakiety"
-      data-section-theme="dark"
-      className="relative overflow-hidden bg-wine-deep text-cream"
+      data-section-theme="light"
+      className="relative overflow-hidden bg-cream text-ink"
     >
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(90% 70% at 12% 8%, rgba(124,32,48,0.3), transparent 55%), radial-gradient(80% 55% at 90% 80%, rgba(76,22,34,0.32), transparent 60%), #150406",
-        }}
-      />
-
       <div className="relative z-10 mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-40">
         <div className="max-w-3xl">
           <Reveal>
-            <SectionLabel index="04">Pakiety</SectionLabel>
+            <SectionLabel index="04" tone="ink">
+              Pakiety
+            </SectionLabel>
           </Reveal>
           <Reveal delay={0.05}>
             <Heading
-              variant="elegant"
-              className="mt-8 text-[clamp(2rem,4.5vw,3.6rem)] gold-metallic"
+              variant="strong"
+              className="mt-8 text-[clamp(2rem,4.5vw,3.6rem)] text-ink"
             >
               Pakiety detailingu.
             </Heading>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-cream/60">
+            <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-ink/65">
               Pięć kompleksowych pakietów — od regularnej pielęgnacji po pełną
               renowację i ochronę. Ceny orientacyjne, ostateczną wycenę
               potwierdzamy po ocenie stanu auta.
@@ -213,17 +206,17 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
 
           {/* Consultation card fills the 6th cell */}
           <Reveal delay={0.05 + SERVICES.length * 0.05}>
-            <div className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-cream/20 bg-transparent p-7 sm:p-8">
+            <div className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-ink/25 bg-cream-soft/40 p-7 sm:p-8">
               <div>
                 <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
                   06
                 </span>
-                <h3 className="mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em] text-cream">
+                <h3 className="mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em] text-ink">
                   Nie wiesz,
                   <br />
                   który wybrać?
                 </h3>
-                <p className="mt-3 font-sans text-sm leading-relaxed text-cream/55">
+                <p className="mt-3 font-sans text-sm leading-relaxed text-ink/60">
                   Napisz lub zadzwoń — obejrzymy auto, dobierzemy zakres prac i
                   przygotujemy indywidualną wycenę.
                 </p>
@@ -231,7 +224,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
               <div className="mt-8 flex flex-col gap-3">
                 <Link
                   href="#kontakt-form"
-                  className="group inline-flex items-center justify-between gap-6 border border-cream/25 px-6 py-4 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-cream transition-colors duration-500 ease-lux hover:border-gold hover:text-gold"
+                  className="group inline-flex items-center justify-between gap-6 bg-gold px-6 py-4 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.24em] text-wine-deep shadow-[0_12px_32px_-12px_rgba(217,184,114,0.5)] transition-all duration-500 ease-lux hover:-translate-y-0.5 hover:bg-champagne active:translate-y-0 active:scale-[0.99]"
                 >
                   <span>Umów konsultację</span>
                   <Arrow className="transition-transform duration-500 ease-lux group-hover:translate-x-1" />
@@ -239,7 +232,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
                 {contact.phoneHref && contact.phoneDisplay && (
                   <a
                     href={contact.phoneHref}
-                    className="text-center font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-cream/50 transition-colors duration-300 hover:text-champagne"
+                    className="text-center font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-ink/50 transition-colors duration-300 hover:text-champagne"
                   >
                     {contact.phoneDisplay}
                   </a>
@@ -254,7 +247,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="mt-10 font-sans text-[11px] leading-relaxed text-cream/35"
+          className="mt-10 font-sans text-[11px] leading-relaxed text-ink/45"
         >
           Ceny orientacyjne brutto. Zależą od rozmiaru i stanu auta — ostateczną
           wycenę potwierdzamy w studio.
