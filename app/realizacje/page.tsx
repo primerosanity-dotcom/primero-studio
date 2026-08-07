@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
-import { Effect } from "@/components/sections/effect";
-import { Gallery } from "@/components/sections/gallery";
+import { ProjectsGrid } from "@/components/sections/projects-grid";
 import { LeadSection } from "@/components/sections/lead-section";
 
 export const metadata: Metadata = {
   title: "Realizacje",
   description:
-    "Efekty naszej pracy — interaktywne porównania przed/po oraz galeria naszych realizacji.",
+    "Nasze realizacje — auta po detailingu, korekcie lakieru, powłoce ceramicznej i pielęgnacji wnętrza. Zobacz szczegóły każdego projektu.",
 };
 
 export default function RealizacjePage() {
   return (
     <>
-      <Effect />
-      <Gallery />
+      <ProjectsGrid />
       <LeadSection />
     </>
   );

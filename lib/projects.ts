@@ -4,16 +4,15 @@ export type Project = {
   car: string;
   /** Service badge */
   service: string;
-  /** One-line summary shown under the before/after */
+  /** One-line summary shown on the card */
   short: string;
   /** Full description of what was done */
   description: string;
   /** Scope of work */
   steps: string[];
   duration: string;
-  /** placeholder paths — drop real before/after photos here */
-  beforeSrc?: string;
-  afterSrc?: string;
+  /** Cover photo — drop the file in /public/images/realizacje/ */
+  image?: string;
 };
 
 export const PROJECTS: Project[] = [
