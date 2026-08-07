@@ -12,8 +12,8 @@ export type ContactConfig = {
 
 // Hardcoded business contact data — edit here when anything changes.
 const CONTACT = {
-  phone: "+48 512 340 678",
-  whatsapp: "+48 512 340 678",
+  phone: "+48 731 601 733",
+  whatsapp: "+48 731 601 733",
   email: "kontakt@primero.studio",
   instagramHandle: "@primero_studio",
   instagramUrl: "https://www.instagram.com/primero_studio/",
