@@ -190,7 +190,7 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
           <Reveal delay={0.05}>
             <Heading
               variant="elegant"
-              className="mt-8 text-[clamp(2rem,4.5vw,3.6rem)] text-gold"
+              className="mt-8 text-[clamp(2rem,4.5vw,3.6rem)] gold-metallic"
             >
               Pakiety detailingu.
             </Heading>

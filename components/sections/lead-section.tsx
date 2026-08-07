@@ -61,7 +61,7 @@ export function LeadSection({ withLocation = false }: { withLocation?: boolean }
           <Reveal delay={0.05}>
             <Heading
               variant="elegant"
-              className="mt-8 text-[clamp(2rem,4.4vw,3.5rem)] text-gold"
+              className="mt-8 text-[clamp(2rem,4.4vw,3.5rem)] gold-metallic"
             >
               Gotowy na perfekcję?
             </Heading>

@@ -35,7 +35,7 @@ export function Effect() {
             <Reveal delay={0.05}>
               <Heading
                 variant="elegant"
-                className="mt-8 text-[clamp(2.1rem,4.8vw,4.25rem)] text-gold"
+                className="mt-8 text-[clamp(2.1rem,4.8vw,4.25rem)] gold-metallic"
               >
                 Efekt, który mówi
                 <br />

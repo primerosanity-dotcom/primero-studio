@@ -135,3 +135,20 @@
     scroll-behavior: auto;
   }
 }
+
+/* ── Metallic gold for large headings ──────────────────── */
+/* Polished-gold gradient clipped into the glyphs — no glow. */
+.gold-metallic {
+  background-image: linear-gradient(
+    103deg,
+    #f4e3ae 0%,
+    #e3c684 26%,
+    #d9b872 44%,
+    #a87f45 68%,
+    #d9b872 86%,
+    #eed9a0 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

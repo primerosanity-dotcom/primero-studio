@@ -47,7 +47,7 @@ export function HomeServices({ index = "03" }: { index?: string }) {
             <Reveal delay={0.05}>
               <Heading
                 variant="elegant"
-                className="mt-8 text-[clamp(2rem,4.6vw,3.8rem)] text-gold"
+                className="mt-8 text-[clamp(2rem,4.6vw,3.8rem)] gold-metallic"
               >
                 Najczęściej wybierane usługi.
               </Heading>

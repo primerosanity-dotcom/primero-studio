@@ -71,14 +71,14 @@ export function Hero() {
           <Heading
             as="h1"
             variant="elegant"
-            className="text-[clamp(1.75rem,7.6vw,4.5rem)] text-gold"
+            className="text-[clamp(1.75rem,7.6vw,4.5rem)]"
           >
             <motion.span
               custom={0}
               variants={rise}
               initial="hidden"
               animate="show"
-              className="block whitespace-nowrap"
+              className="gold-metallic block whitespace-nowrap"
             >
               Pielęgnacja aut
             </motion.span>
@@ -87,7 +87,7 @@ export function Hero() {
               variants={rise}
               initial="hidden"
               animate="show"
-              className="block whitespace-nowrap"
+              className="gold-metallic block whitespace-nowrap"
             >
               w każdym detalu.
             </motion.span>

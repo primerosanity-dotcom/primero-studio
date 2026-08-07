@@ -87,7 +87,7 @@ export function ServiceDetail({ service }: { service: Service }) {
               <Heading
                 as="h1"
                 variant="elegant"
-                className="mt-8 text-[clamp(2.2rem,5vw,4.2rem)] text-gold"
+                className="mt-8 text-[clamp(2.2rem,5vw,4.2rem)] gold-metallic"
               >
                 {service.name}
               </Heading>
