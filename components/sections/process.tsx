@@ -75,11 +75,12 @@ export function Process({ index = "—" }: { index?: string }) {
         {/* Right — media */}
         <div className="lg:col-span-5 lg:col-start-8">
           <Reveal delay={0.15}>
-            {/* Podmień: <MediaSlot src="/images/process.jpg" tone="light" ... /> */}
             <MediaSlot
+              src="/images/about.png"
+              alt="Wnętrze studia Primero — hala detailingowa"
               tone="light"
-              caption="Precyzja · Proces"
-              className="aspect-[16/10] w-full lg:aspect-auto lg:h-[62vh]"
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="rounded-2xl aspect-[16/10] w-full lg:aspect-auto lg:h-[62vh]"
             />
           </Reveal>
         </div>
