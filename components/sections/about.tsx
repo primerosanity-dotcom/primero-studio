@@ -68,11 +68,12 @@ export function About() {
         {/* Right — media */}
         <div className="lg:col-span-5 lg:col-start-8">
           <Reveal delay={0.15}>
-            {/* Podmień: <MediaSlot src="/images/about.jpg" tone="light" ... /> */}
             <MediaSlot
+              src="/images/about.png"
+              alt="Wnętrze studia Primero — hala detailingowa"
               tone="light"
-              caption="Detal · Studio"
-              className="aspect-[16/10] w-full lg:aspect-auto lg:h-[62vh]"
+              sizes="(max-width: 1024px) 100vw, 45vw"
+              className="aspect-[16/10] w-full rounded-2xl lg:aspect-auto lg:h-[62vh]"
             />
           </Reveal>
         </div>
