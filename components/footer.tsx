@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Monogram } from "@/components/ui/monogram";
+import { Wordmark } from "@/components/ui/wordmark";
 import { getContactConfig } from "@/lib/site-config";
 
 const NAV = [
@@ -20,16 +21,13 @@ export function Footer() {
       <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-12 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10 lg:px-12 lg:py-20">
         {/* Brand */}
         <div className="sm:col-span-2 lg:col-span-1">
-          <Link href="/" className="flex items-center gap-3 text-cream">
+          <Link
+            href="/"
+            aria-label="PRIMERO.STUDIO — strona główna"
+            className="flex items-center gap-3 text-cream"
+          >
             <Monogram gradient className="h-9 w-9" />
-            <span className="leading-none">
-              <span className="block font-sans text-[15px] font-light uppercase tracking-[0.2em]">
-                PRIMERO.STUDIO
-              </span>
-              <span className="mt-1.5 block font-sans text-[8.5px] tracking-[0.22em] text-cream/45">
-                AUTO DETAILING · ŁÓDŹ
-              </span>
-            </span>
+            <Wordmark />
           </Link>
           <p className="mt-6 max-w-xs font-sans text-sm leading-relaxed text-cream/55">
             Studio detailingu w Łodzi. Zadbamy o każdy detal

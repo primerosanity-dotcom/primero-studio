@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { useLenis } from "lenis/react";
 import { Monogram } from "@/components/ui/monogram";
+import { Wordmark } from "@/components/ui/wordmark";
 import { cn } from "@/lib/cn";
 import type { ContactConfig } from "@/lib/site-config";
 
@@ -150,19 +151,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
             )}
           >
             <Monogram gradient className="h-8 w-8" />
-            <span className="leading-none">
-              <span className="block font-sans text-[15px] font-light uppercase tracking-[0.2em]">
-                PRIMERO.STUDIO
-              </span>
-              <span
-                className={cn(
-                  "mt-1.5 block font-sans text-[8.5px] tracking-[0.22em] transition-colors duration-500",
-                  dark ? "text-cream/45" : "text-ink/45",
-                )}
-              >
-                AUTO DETAILING · ŁÓDŹ
-              </span>
-            </span>
+            <Wordmark tone={dark ? "dark" : "light"} />
           </Link>
 
           <div className="flex items-center gap-6 xl:gap-8">

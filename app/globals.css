@@ -152,3 +152,18 @@
   background-clip: text;
   color: transparent;
 }
+
+/* Deeper gold for the same treatment on light (cream) backgrounds. */
+.gold-metallic-deep {
+  background-image: linear-gradient(
+    103deg,
+    #c9a869 0%,
+    #b9975a 28%,
+    #8f6c39 58%,
+    #b9975a 82%,
+    #a07c44 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
