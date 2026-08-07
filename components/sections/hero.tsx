@@ -37,7 +37,7 @@ export function Hero() {
       >
         {/* Desktop / tablet — landscape crop */}
         <Image
-          src="/images/desktop.png"
+          src="/images/hero-desktop-v2.png"
           alt="BMW M340i po detailingu w Primero Studio"
           fill
           priority
@@ -46,7 +46,7 @@ export function Hero() {
         />
         {/* Mobile — dedicated portrait crop */}
         <Image
-          src="/images/moblie.png"
+          src="/images/hero-mobile-v2.png"
           alt="BMW M340i po detailingu w Primero Studio"
           fill
           priority
