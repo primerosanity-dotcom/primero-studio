@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
+import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
 import { PROJECTS } from "@/lib/projects";
 
@@ -26,7 +27,19 @@ function Arrow() {
   );
 }
 
-export function ProjectsGrid({ index = "05" }: { index?: string }) {
+export function ProjectsGrid({
+  index = "05",
+  limit,
+  cta = false,
+}: {
+  index?: string;
+  /** Show only the first N projects (home teaser). */
+  limit?: number;
+  /** Append a link to the full portfolio. */
+  cta?: boolean;
+}) {
+  const items = limit ? PROJECTS.slice(0, limit) : PROJECTS;
+
   return (
     <section
       id="realizacje"
@@ -64,7 +77,7 @@ export function ProjectsGrid({ index = "05" }: { index?: string }) {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
-          {PROJECTS.map((p, i) => (
+          {items.map((p, i) => (
             <Reveal key={p.slug} delay={0.05 + i * 0.06}>
               <Link
                 href={`/realizacje/${p.slug}`}
@@ -104,6 +117,19 @@ export function ProjectsGrid({ index = "05" }: { index?: string }) {
             </Reveal>
           ))}
         </div>
+
+        {cta && (
+          <Reveal delay={0.25}>
+            <ArrowButton
+              href="/realizacje"
+              tone="dark"
+              variant="outline"
+              className="mt-10 w-full justify-between lg:mt-12"
+            >
+              Zobacz wszystkie realizacje
+            </ArrowButton>
+          </Reveal>
+        )}
       </div>
     </section>
   );
