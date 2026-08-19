@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useLenis } from "lenis/react";
@@ -62,6 +63,10 @@ export function Gallery({
 
   if (images.length === 0) return null;
 
+  // AnimatePresence stays mounted inside the portal so the exit fade plays;
+  // during SSR there is no document, and both sides render nothing.
+  const portalTarget = typeof document === "undefined" ? null : document.body;
+
   return (
     <>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
@@ -87,8 +92,10 @@ export function Gallery({
         ))}
       </div>
 
-      <AnimatePresence>
-        {openAt !== null && (
+      {portalTarget &&
+        createPortal(
+          <AnimatePresence>
+            {openAt !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -172,8 +179,10 @@ export function Gallery({
               </>
             )}
           </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </>
   );
 }
