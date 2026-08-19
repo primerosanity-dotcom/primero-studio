@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
-import { MediaSlot } from "@/components/ui/media-slot";
+import { BeforeAfter } from "@/components/ui/before-after";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
 import { PROJECTS } from "@/lib/projects";
@@ -14,7 +14,7 @@ function Arrow() {
       viewBox="0 0 26 12"
       fill="none"
       aria-hidden
-      className="transition-transform duration-500 ease-lux group-hover:translate-x-1"
+      className="transition-transform duration-500 ease-lux group-hover/link:translate-x-1"
     >
       <path
         d="M0 6h24M19 1l5 5-5 5"
@@ -79,14 +79,14 @@ export function ProjectsGrid({
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
           {items.map((p, i) => (
             <Reveal key={p.slug} delay={0.05 + i * 0.06}>
-              <Link
-                href={`/realizacje/${p.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/50"
-              >
-                {/* Podmień: zdjęcie realizacji w lib/projects.ts */}
-                <MediaSlot
-                  src={p.image}
-                  alt={`${p.car} — ${p.service}`}
+              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/50">
+                {/* Drag the handle to compare. Add `beforeImage` in
+                    lib/projects.ts to swap the placeholder for a real shot. */}
+                <BeforeAfter
+                  beforeSrc={p.beforeImage}
+                  afterSrc={p.image}
+                  beforeAlt={`${p.car} — przed`}
+                  afterAlt={`${p.car} — po`}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="aspect-[4/3] w-full"
                 />
@@ -101,19 +101,27 @@ export function ProjectsGrid({
                     </span>
                   </div>
 
-                  <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.06em] text-cream transition-colors duration-300 group-hover:text-gold sm:text-xl">
-                    {p.car}
+                  <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.06em] text-cream sm:text-xl">
+                    <Link
+                      href={`/realizacje/${p.slug}`}
+                      className="transition-colors duration-300 hover:text-gold"
+                    >
+                      {p.car}
+                    </Link>
                   </h3>
                   <p className="mt-1.5 flex-1 font-sans text-[13px] leading-snug text-cream/55">
                     {p.short}
                   </p>
 
-                  <span className="mt-5 inline-flex items-center gap-2.5 font-sans text-[0.66rem] font-medium uppercase tracking-[0.22em] text-champagne transition-colors duration-300 group-hover:text-gold">
+                  <Link
+                    href={`/realizacje/${p.slug}`}
+                    className="group/link mt-5 inline-flex items-center gap-2.5 self-start font-sans text-[0.66rem] font-medium uppercase tracking-[0.22em] text-champagne transition-colors duration-300 hover:text-gold"
+                  >
                     Zobacz szczegóły
                     <Arrow />
-                  </span>
+                  </Link>
                 </div>
-              </Link>
+              </article>
             </Reveal>
           ))}
         </div>

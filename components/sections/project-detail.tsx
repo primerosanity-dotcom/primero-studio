@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
-import { MediaSlot } from "@/components/ui/media-slot";
+import { BeforeAfter } from "@/components/ui/before-after";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
 import { PROJECTS, type Project } from "@/lib/projects";
@@ -65,13 +65,14 @@ export function ProjectDetail({ project }: { project: Project }) {
           </Reveal>
         </div>
 
-        {/* Cover photo */}
+        {/* Cover — before/after comparison */}
         <Reveal delay={0.1}>
           <figure className="mt-12 lg:mt-16">
-            <MediaSlot
-              src={project.image}
-              alt={`${project.car} — ${project.service}`}
-              priority
+            <BeforeAfter
+              beforeSrc={project.beforeImage}
+              afterSrc={project.image}
+              beforeAlt={`${project.car} — przed`}
+              afterAlt={`${project.car} — po`}
               sizes="(max-width: 1024px) 100vw, 1400px"
               className="aspect-[16/10] w-full rounded-2xl sm:aspect-[16/9]"
             />
