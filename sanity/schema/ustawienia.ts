@@ -11,6 +11,7 @@ export const ustawienia = defineType({
     { name: "strona", title: "Strona główna" },
     { name: "zdjecia", title: "Zdjęcia" },
     { name: "google", title: "Google" },
+    { name: "analityka", title: "Analityka" },
   ],
   fields: [
     // Kontakt
@@ -75,6 +76,30 @@ export const ustawienia = defineType({
     defineField({ name: "googleRating", title: "Ocena (np. 5,0)", type: "string", group: "google" }),
     defineField({ name: "googleReviewCount", title: "Liczba opinii", type: "number", group: "google" }),
     defineField({ name: "googleUrl", title: "Link do profilu Google", type: "url", group: "google" }),
+
+    // Analityka — puste pole = skrypt nie jest ładowany
+    defineField({
+      name: "gtmId", title: "Google Tag Manager ID", type: "string", group: "analityka",
+      description: "Format: GTM-XXXXXXX. Zostaw puste, aby wyłączyć.",
+      validation: (r) =>
+        r.custom((v) =>
+          !v || /^GTM-[A-Z0-9]+$/.test(v) ? true : "Format: GTM-XXXXXXX",
+        ),
+    }),
+    defineField({
+      name: "gaId", title: "Google Analytics 4 ID", type: "string", group: "analityka",
+      description: "Format: G-XXXXXXXXXX. Zostaw puste, aby wyłączyć.",
+      validation: (r) =>
+        r.custom((v) =>
+          !v || /^G-[A-Z0-9]+$/.test(v) ? true : "Format: G-XXXXXXXXXX",
+        ),
+    }),
+    defineField({
+      name: "metaPixelId", title: "Meta Pixel ID", type: "string", group: "analityka",
+      description: "Same cyfry, np. 123456789012345. Zostaw puste, aby wyłączyć.",
+      validation: (r) =>
+        r.custom((v) => (!v || /^\d+$/.test(v) ? true : "Same cyfry")),
+    }),
   ],
   preview: { prepare: () => ({ title: "Ustawienia strony" }) },
 });

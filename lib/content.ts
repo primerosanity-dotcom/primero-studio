@@ -175,6 +175,7 @@ type SettingsRow = {
   stats?: { value: string; label: string }[];
   aboutText?: string;
   googleRating?: string; googleReviewCount?: number; googleUrl?: string;
+  gtmId?: string; gaId?: string; metaPixelId?: string;
   heroDesktop?: SanityImage; heroMobile?: SanityImage; aboutImage?: SanityImage;
 };
 
@@ -193,6 +194,8 @@ export type SiteSettings = {
   heroDesktop: string;
   heroMobile: string;
   aboutImage: string;
+  /** Analytics ids set by the client in Studio; empty = script not loaded. */
+  analytics: { gtmId: string; gaId: string; metaPixelId: string };
 };
 
 const FALLBACK_HOURS = [
@@ -241,5 +244,10 @@ export async function getSettings(): Promise<SiteSettings> {
     heroMobile:
       imageUrl(s?.heroMobile as never, 1400) ?? "/images/hero-mobile-v2.png",
     aboutImage: imageUrl(s?.aboutImage as never, 1600) ?? "/images/about.png",
+    analytics: {
+      gtmId: s?.gtmId?.trim() ?? "",
+      gaId: s?.gaId?.trim() ?? "",
+      metaPixelId: s?.metaPixelId?.trim() ?? "",
+    },
   };
 }
