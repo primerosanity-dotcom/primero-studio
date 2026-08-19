@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import { clash, satoshi } from "./fonts";
 import { cn } from "@/lib/cn";
-import { SmoothScroll } from "@/components/smooth-scroll";
-import { FilmGrain } from "@/components/film-grain";
-import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
-import { getContactConfig } from "@/lib/site-config";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -27,21 +22,12 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const contact = getContactConfig();
-
   return (
     <html
       lang="pl"
       className={cn(clash.variable, satoshi.variable, "antialiased")}
     >
-      <body>
-        <SmoothScroll>
-          <FilmGrain />
-          <Nav contact={contact} />
-          <main>{children}</main>
-          <Footer />
-        </SmoothScroll>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
