@@ -11,10 +11,10 @@ export type Project = {
   /** Scope of work */
   steps: string[];
   duration: string;
-  /** Cover photo ("after") — drop the file in /public/images/realizacje/ */
+  /** Cover photo — drop the file in /public/images/realizacje/ */
   image?: string;
-  /** Optional "before" shot; when set, the card shows a before/after slider */
-  beforeImage?: string;
+  /** Extra shots shown in the gallery under the description */
+  gallery?: string[];
 };
 
 export const PROJECTS: Project[] = [

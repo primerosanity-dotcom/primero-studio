@@ -95,7 +95,7 @@ export async function getPointServices(): Promise<PointService[]> {
 type RealizacjaRow = {
   car: string; slug: string; order: number; service?: string; short?: string;
   description?: string; steps?: string[]; duration?: string;
-  image?: SanityImage; beforeImage?: SanityImage;
+  image?: SanityImage; gallery?: SanityImage[];
 };
 
 export async function getProjects(): Promise<Project[]> {
@@ -103,7 +103,7 @@ export async function getProjects(): Promise<Project[]> {
     tags: ["realizacja"],
     query: `*[_type == "realizacja"] | order(order asc){
       car, "slug": slug.current, order, service, short, description, steps,
-      duration, image, beforeImage
+      duration, image, gallery
     }`,
   });
   if (!rows?.length) return PROJECTS;
@@ -117,7 +117,9 @@ export async function getProjects(): Promise<Project[]> {
     steps: r.steps ?? [],
     duration: r.duration ?? "",
     image: imageUrl(r.image as never) ?? undefined,
-    beforeImage: imageUrl(r.beforeImage as never) ?? undefined,
+    gallery: (r.gallery ?? [])
+      .map((g) => imageUrl(g as never, 2000))
+      .filter((u): u is string => Boolean(u)),
   }));
 }
 

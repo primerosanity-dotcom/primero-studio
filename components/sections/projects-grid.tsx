@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
-import { BeforeAfter } from "@/components/ui/before-after";
+import { MediaSlot } from "@/components/ui/media-slot";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
 import { getProjects } from "@/lib/content";
@@ -81,13 +81,9 @@ export async function ProjectsGrid({
           {items.map((p, i) => (
             <Reveal key={p.slug} delay={0.05 + i * 0.06}>
               <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/50">
-                {/* Drag the handle to compare. Add `beforeImage` in
-                    lib/projects.ts to swap the placeholder for a real shot. */}
-                <BeforeAfter
-                  beforeSrc={p.beforeImage}
-                  afterSrc={p.image}
-                  beforeAlt={`${p.car} — przed`}
-                  afterAlt={`${p.car} — po`}
+                <MediaSlot
+                  src={p.image}
+                  alt={`${p.car} — ${p.service}`}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="aspect-[4/3] w-full"
                 />

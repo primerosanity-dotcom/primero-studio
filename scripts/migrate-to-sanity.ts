@@ -129,7 +129,6 @@ async function run() {
       steps: p.steps,
       duration: p.duration,
       image: await uploadImage(p.image),
-      beforeImage: await uploadImage(p.beforeImage),
     });
   }
 

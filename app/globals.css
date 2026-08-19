@@ -72,14 +72,6 @@
     linear-gradient(125deg, #180509 0%, #3c1019 46%, #0f0306 100%);
 }
 
-/* Before/after "before" — a dull, matte, desaturated panel */
-.ba-before {
-  background:
-    radial-gradient(90% 70% at 30% 20%, rgba(120, 108, 96, 0.25), transparent 60%),
-    linear-gradient(125deg, #322c27 0%, #453d36 50%, #29231f 100%);
-  filter: saturate(0.65) brightness(0.92);
-}
-
 /* Light variant — a glossy cream/champagne panel */
 .media-placeholder-light {
   background:
