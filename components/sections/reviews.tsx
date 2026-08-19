@@ -2,39 +2,7 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
-
-// Podmień na link do profilu Google Twojej firmy
-const GOOGLE_URL =
-  "https://www.google.com/maps/search/?api=1&query=Primero+Studio+Łódź";
-const RATING = "5,0";
-const REVIEW_COUNT = 48;
-
-const REVIEWS = [
-  {
-    name: "Marek K.",
-    date: "2 tygodnie temu",
-    text: "Auto wygląda lepiej niż w dniu odbioru z salonu. Lakier jak lustro, wnętrze dopracowane w każdym detalu. Profesjonalizm najwyższej klasy.",
-    tone: "bg-wine text-cream",
-  },
-  {
-    name: "Anna W.",
-    date: "miesiąc temu",
-    text: "Powłoka ceramiczna zrobiła ogromną różnicę — woda spływa sama, a auto łatwiej utrzymać w czystości. Serdecznie polecam!",
-    tone: "bg-champagne text-wine-deep",
-  },
-  {
-    name: "Tomasz L.",
-    date: "miesiąc temu",
-    text: "Świetny kontakt i pełen profesjonalizm. Korekta lakieru usunęła wszystkie rysy. Widać pasję do detali.",
-    tone: "bg-ink text-cream",
-  },
-  {
-    name: "Kamil R.",
-    date: "2 miesiące temu",
-    text: "Detailing wnętrza na najwyższym poziomie — skóra jak nowa. Terminowo i z dbałością o każdy element. Na pewno wrócę.",
-    tone: "bg-gold text-wine-deep",
-  },
-];
+import { getReviews } from "@/lib/content";
 
 function GoogleG({ className }: { className?: string }) {
   return (
@@ -59,16 +27,23 @@ function GoogleG({ className }: { className?: string }) {
   );
 }
 
-const Stars = ({ small }: { small?: boolean }) => (
+const Stars = ({ small, rating }: { small?: boolean; rating: string }) => (
   <span
     className={small ? "text-sm tracking-[0.15em]" : "text-base tracking-[0.2em]"}
-    aria-label={`${RATING} na 5`}
+    aria-label={`${rating} na 5`}
   >
     ★★★★★
   </span>
 );
 
-export function Reviews({ index = "06" }: { index?: string }) {
+export async function Reviews({ index = "06" }: { index?: string }) {
+  const {
+    reviews: REVIEWS,
+    rating: RATING,
+    count: REVIEW_COUNT,
+    googleUrl: GOOGLE_URL,
+  } = await getReviews();
+
   return (
     <section
       id="opinie"
@@ -112,7 +87,7 @@ export function Reviews({ index = "06" }: { index?: string }) {
                       {RATING}
                     </span>
                     <span className="text-gold">
-                      <Stars />
+                      <Stars rating={RATING} />
                     </span>
                   </div>
                   <span className="font-sans text-xs uppercase tracking-[0.2em] text-ink/50">
@@ -168,7 +143,7 @@ export function Reviews({ index = "06" }: { index?: string }) {
                     <GoogleG className="ml-auto h-4 w-4 shrink-0" />
                   </div>
                   <span className="mt-4 text-gold">
-                    <Stars small />
+                    <Stars small rating={RATING} />
                   </span>
                   <blockquote className="mt-3 font-sans text-sm leading-relaxed text-ink/70">
                     {r.text}

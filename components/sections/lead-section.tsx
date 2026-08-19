@@ -2,13 +2,7 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { LeadForm } from "@/components/lead-form";
 import { Reveal } from "@/components/reveal";
-import { getContactConfig } from "@/lib/site-config";
-
-const HOURS = [
-  { d: "Pon – Pt", h: "09:00 – 19:00" },
-  { d: "Sobota", h: "10:00 – 15:00" },
-  { d: "Niedziela", h: "Zamknięte" },
-];
+import { getSettings } from "@/lib/content";
 
 function Pin() {
   return (
@@ -28,8 +22,8 @@ function Pin() {
  * links for a full studio card — address, hours, phone and map — so the home
  * page has one rich booking block instead of two similar ones.
  */
-export function LeadSection({ withLocation = false }: { withLocation?: boolean }) {
-  const contact = getContactConfig();
+export async function LeadSection({ withLocation = false }: { withLocation?: boolean }) {
+  const { contact, hours } = await getSettings();
   const address =
     contact.addressLines.length > 0 ? contact.addressLines : ["Łódź"];
   const mapsUrl =
@@ -95,13 +89,13 @@ export function LeadSection({ withLocation = false }: { withLocation?: boolean }
                 </div>
 
                 <div className="mt-5 grid grid-cols-3 gap-3 border-t border-cream/10 pt-5">
-                  {HOURS.map((row) => (
-                    <div key={row.d}>
+                  {hours.map((row) => (
+                    <div key={row.days}>
                       <span className="block font-sans text-[9px] uppercase tracking-[0.16em] text-cream/40">
-                        {row.d}
+                        {row.days}
                       </span>
                       <span className="mt-1 block font-sans text-[12px] font-medium text-cream/85">
-                        {row.h}
+                        {row.hours}
                       </span>
                     </div>
                   ))}

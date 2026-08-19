@@ -4,7 +4,7 @@ import { Heading } from "@/components/ui/heading";
 import { BeforeAfter } from "@/components/ui/before-after";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
-import { PROJECTS } from "@/lib/projects";
+import { getProjects } from "@/lib/content";
 
 function Arrow() {
   return (
@@ -27,7 +27,7 @@ function Arrow() {
   );
 }
 
-export function ProjectsGrid({
+export async function ProjectsGrid({
   index = "05",
   limit,
   cta = false,
@@ -38,7 +38,8 @@ export function ProjectsGrid({
   /** Append a link to the full portfolio. */
   cta?: boolean;
 }) {
-  const items = limit ? PROJECTS.slice(0, limit) : PROJECTS;
+  const projects = await getProjects();
+  const items = limit ? projects.slice(0, limit) : projects;
 
   return (
     <section

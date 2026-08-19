@@ -4,10 +4,13 @@ import { Heading } from "@/components/ui/heading";
 import { BeforeAfter } from "@/components/ui/before-after";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
-import { PROJECTS, type Project } from "@/lib/projects";
+import type { Project } from "@/lib/projects";
+import { getProjects } from "@/lib/content";
 
-export function ProjectDetail({ project }: { project: Project }) {
-  const others = PROJECTS.filter((p) => p.slug !== project.slug).slice(0, 3);
+export async function ProjectDetail({ project }: { project: Project }) {
+  const others = (await getProjects())
+    .filter((p) => p.slug !== project.slug)
+    .slice(0, 3);
 
   return (
     <section

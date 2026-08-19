@@ -9,7 +9,7 @@ import { MediaSlot } from "@/components/ui/media-slot";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/cn";
 import { BookingModal, type BookingSummary } from "@/components/booking-modal";
-import { SERVICES, type Service } from "@/lib/services";
+import type { Service } from "@/lib/services";
 import type { ContactConfig } from "@/lib/site-config";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -156,10 +156,16 @@ function PackageCard({
   );
 }
 
-export function Pricing({ contact }: { contact: ContactConfig }) {
+export function Pricing({
+  contact,
+  services,
+}: {
+  contact: ContactConfig;
+  services: Service[];
+}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [active, setActive] = useState<Service>(
-    () => SERVICES.find((s) => s.popular) ?? SERVICES[0],
+    () => services.find((s) => s.popular) ?? services[0],
   );
 
   const book = (s: Service) => {
@@ -205,14 +211,14 @@ export function Pricing({ contact }: { contact: ContactConfig }) {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
-          {SERVICES.map((s, i) => (
+          {services.map((s, i) => (
             <Reveal key={s.slug} delay={0.05 + i * 0.05}>
               <PackageCard service={s} onBook={book} />
             </Reveal>
           ))}
 
           {/* Consultation card fills the 6th cell */}
-          <Reveal delay={0.05 + SERVICES.length * 0.05}>
+          <Reveal delay={0.05 + services.length * 0.05}>
             <div className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-cream/20 bg-transparent p-7 sm:p-8">
               <div>
                 <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">

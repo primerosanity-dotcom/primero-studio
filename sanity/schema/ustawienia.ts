@@ -9,6 +9,7 @@ export const ustawienia = defineType({
     { name: "kontakt", title: "Kontakt", default: true },
     { name: "godziny", title: "Godziny" },
     { name: "strona", title: "Strona główna" },
+    { name: "zdjecia", title: "Zdjęcia" },
     { name: "google", title: "Google" },
   ],
   fields: [
@@ -54,6 +55,21 @@ export const ustawienia = defineType({
       ],
     }),
     defineField({ name: "aboutText", title: "Tekst O nas", type: "text", rows: 4, group: "strona" }),
+
+    // Zdjęcia
+    defineField({
+      name: "heroDesktop", title: "Zdjęcie główne — desktop", type: "image",
+      options: { hotspot: true }, group: "zdjecia",
+    }),
+    defineField({
+      name: "heroMobile", title: "Zdjęcie główne — telefon", type: "image",
+      options: { hotspot: true }, group: "zdjecia",
+      description: "Kadr pionowy.",
+    }),
+    defineField({
+      name: "aboutImage", title: "Zdjęcie studia (blok O nas)", type: "image",
+      options: { hotspot: true }, group: "zdjecia",
+    }),
 
     // Google
     defineField({ name: "googleRating", title: "Ocena (np. 5,0)", type: "string", group: "google" }),

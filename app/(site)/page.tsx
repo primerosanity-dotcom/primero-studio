@@ -6,11 +6,14 @@ import { ServicesShowcase } from "@/components/sections/services-showcase";
 import { ProjectsGrid } from "@/components/sections/projects-grid";
 import { Reviews } from "@/components/sections/reviews";
 import { LeadSection } from "@/components/sections/lead-section";
+import { getSettings } from "@/lib/content";
 
-export default function Home() {
+export default async function Home() {
+  const { heroDesktop, heroMobile } = await getSettings();
+
   return (
     <>
-      <Hero />
+      <Hero desktopSrc={heroDesktop} mobileSrc={heroMobile} />
       <HomeIntro />
       <Process index="03" />
       <HomeServices index="04" />

@@ -4,7 +4,7 @@ import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
-import { POINT_SERVICES } from "@/lib/individual-services";
+import { getPointServices } from "@/lib/content";
 
 // The three services we lead with on the home page.
 const POPULAR_IDS = [
@@ -12,10 +12,6 @@ const POPULAR_IDS = [
   "powloka-ceramiczna",
   "pranie-wnetrza",
 ];
-
-const POPULAR = POPULAR_IDS.map(
-  (id) => POINT_SERVICES.find((s) => s.id === id)!,
-).filter(Boolean);
 
 function Arrow({ className }: { className?: string }) {
   return (
@@ -38,7 +34,11 @@ function Arrow({ className }: { className?: string }) {
   );
 }
 
-export function HomeServices({ index = "03" }: { index?: string }) {
+export async function HomeServices({ index = "03" }: { index?: string }) {
+  const all = await getPointServices();
+  const POPULAR = POPULAR_IDS.map((id) => all.find((s) => s.id === id)).filter(
+    (s): s is NonNullable<typeof s> => Boolean(s),
+  );
   return (
     <section
       id="uslugi-home"

@@ -6,7 +6,7 @@ import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
 import { Reveal } from "@/components/reveal";
 import { dispatchLeadPrefill } from "@/lib/lead-prefill";
-import { POINT_SERVICES } from "@/lib/individual-services";
+import type { PointService } from "@/lib/individual-services";
 
 function Arrow({ className }: { className?: string }) {
   return (
@@ -29,7 +29,7 @@ function Arrow({ className }: { className?: string }) {
   );
 }
 
-export function ServicesList() {
+export function ServicesList({ services }: { services: PointService[] }) {
   return (
     <section
       id="uslugi"
@@ -66,7 +66,7 @@ export function ServicesList() {
 
         {/* Horizontal cards: photo | text + price + CTA */}
         <div className="mt-12 space-y-5 lg:mt-16">
-          {POINT_SERVICES.map((s, i) => (
+          {services.map((s, i) => (
             <Reveal key={s.id} delay={0.05 + Math.min(i, 4) * 0.04}>
               <article className="group grid grid-cols-1 overflow-hidden rounded-2xl border border-ink/12 bg-cream-soft/40 transition-colors duration-500 ease-lux hover:border-champagne/50 md:grid-cols-[minmax(0,380px)_1fr]">
                 {/* Photo — drop the real file in /public/images/uslugi/<id>.png */}

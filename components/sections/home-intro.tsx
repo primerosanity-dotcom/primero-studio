@@ -3,15 +3,10 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
 import { Reveal } from "@/components/reveal";
+import { getSettings } from "@/lib/content";
 
-const STATS = [
-  { value: "300+", label: "Zrealizowanych aut" },
-  { value: "5,0★", label: "Ocena Google" },
-  { value: "7 lat", label: "Doświadczenia" },
-  { value: "100%", label: "Gwarancja jakości" },
-];
-
-export function HomeIntro() {
+export async function HomeIntro() {
+  const { stats: STATS, aboutText, aboutImage } = await getSettings();
   return (
     <section
       id="o-nas"
@@ -41,10 +36,7 @@ export function HomeIntro() {
 
             <Reveal delay={0.1}>
               <p className="mt-7 max-w-xl font-sans text-base leading-relaxed text-ink/65">
-                Primero Studio — studio detailingu w Łodzi. Pracujemy na
-                najlepszych materiałach i zapewniamy precyzyjną pielęgnację
-                auta — od korekty lakieru i ochrony karoserii po nienaganne
-                wnętrze, z dbałością o każdy detal.{" "}
+                {aboutText}{" "}
                 <Link
                   href="/o-nas"
                   className="text-champagne underline-offset-4 hover:underline"
@@ -59,7 +51,7 @@ export function HomeIntro() {
           <div className="lg:col-span-6">
             <Reveal delay={0.15}>
               <MediaSlot
-                src="/images/about.png"
+                src={aboutImage}
                 alt="Wnętrze studia Primero — hala detailingowa"
                 tone="light"
                 sizes="(max-width: 1024px) 100vw, 45vw"

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Monogram } from "@/components/ui/monogram";
 import { Wordmark } from "@/components/ui/wordmark";
-import { getContactConfig } from "@/lib/site-config";
+import { getSettings } from "@/lib/content";
 
 const NAV = [
   { label: "Studio", href: "/" },
@@ -13,8 +13,8 @@ const NAV = [
   { label: "Kontakt", href: "/kontakt" },
 ];
 
-export function Footer() {
-  const contact = getContactConfig();
+export async function Footer() {
+  const { contact, hours } = await getSettings();
 
   return (
     <footer className="relative border-t border-cream/[0.07] bg-[#150406] text-cream">
@@ -115,8 +115,11 @@ export function Footer() {
               </address>
             )}
             <div className="leading-relaxed text-cream/60">
-              <span className="block">Pon – Pt: 9:00 – 19:00</span>
-              <span className="block">Sob: 10:00 – 15:00</span>
+              {hours.map((row) => (
+                <span key={row.days} className="block">
+                  {row.days}: {row.hours}
+                </span>
+              ))}
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
 import { Reveal } from "@/components/reveal";
+import { getSettings } from "@/lib/content";
 
 const CAPABILITIES = [
   "Korekta lakieru",
@@ -10,7 +11,8 @@ const CAPABILITIES = [
   "Pielęgnacja wnętrza",
 ];
 
-export function About() {
+export async function About() {
+  const { aboutImage } = await getSettings();
   return (
     <section
       id="o-nas"
@@ -69,7 +71,7 @@ export function About() {
         <div className="lg:col-span-5 lg:col-start-8">
           <Reveal delay={0.15}>
             <MediaSlot
-              src="/images/about.png"
+              src={aboutImage}
               alt="Wnętrze studia Primero — hala detailingowa"
               tone="light"
               sizes="(max-width: 1024px) 100vw, 45vw"

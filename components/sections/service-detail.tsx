@@ -4,7 +4,8 @@ import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
-import { SERVICES, type Service } from "@/lib/services";
+import type { Service } from "@/lib/services";
+import { getPackages } from "@/lib/content";
 
 function Check() {
   return (
@@ -40,8 +41,8 @@ function InfoCard({
   );
 }
 
-export function ServiceDetail({ service }: { service: Service }) {
-  const others = SERVICES.filter((s) => s.slug !== service.slug);
+export async function ServiceDetail({ service }: { service: Service }) {
+  const others = (await getPackages()).filter((s) => s.slug !== service.slug);
 
   const meta = [
     { label: "Cena od", value: service.price },

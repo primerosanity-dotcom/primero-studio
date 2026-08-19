@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { SERVICES, getService } from "@/lib/services";
+import { getPackage, getPackages } from "@/lib/content";
 import { ServiceDetail } from "@/components/sections/service-detail";
 import { LeadSection } from "@/components/sections/lead-section";
 
-export function generateStaticParams() {
-  return SERVICES.map((s) => ({ slug: s.slug }));
+export async function generateStaticParams() {
+  return (await getPackages()).map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({
@@ -14,7 +14,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await getPackage(slug);
   if (!service) return {};
   return {
     title: service.name,
@@ -28,7 +28,7 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await getPackage(slug);
   if (!service) notFound();
 
   return (

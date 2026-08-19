@@ -21,7 +21,13 @@ const rise = {
 
 const KEYWORDS = ["Korekta lakieru", "Ceramika", "PPF", "Wnętrza"];
 
-export function Hero() {
+export function Hero({
+  desktopSrc,
+  mobileSrc,
+}: {
+  desktopSrc: string;
+  mobileSrc: string;
+}) {
   return (
     <section
       id="studio"
@@ -37,7 +43,7 @@ export function Hero() {
       >
         {/* Desktop / tablet — landscape crop */}
         <Image
-          src="/images/hero-desktop-v2.png"
+          src={desktopSrc}
           alt="BMW M340i po detailingu w Primero Studio"
           fill
           priority
@@ -46,7 +52,7 @@ export function Hero() {
         />
         {/* Mobile — dedicated portrait crop */}
         <Image
-          src="/images/hero-mobile-v2.png"
+          src={mobileSrc}
           alt="BMW M340i po detailingu w Primero Studio"
           fill
           priority

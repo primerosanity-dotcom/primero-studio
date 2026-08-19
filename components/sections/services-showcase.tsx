@@ -4,8 +4,7 @@ import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
 import { Monogram } from "@/components/ui/monogram";
 import { Reveal } from "@/components/reveal";
-import { SERVICES } from "@/lib/services";
-import { getContactConfig } from "@/lib/site-config";
+import { getPackages, getSettings } from "@/lib/content";
 
 function Arrow() {
   return (
@@ -28,8 +27,11 @@ function Arrow() {
   );
 }
 
-export function ServicesShowcase({ index = "03" }: { index?: string }) {
-  const contact = getContactConfig();
+export async function ServicesShowcase({ index = "03" }: { index?: string }) {
+  const [SERVICES, { contact }] = await Promise.all([
+    getPackages(),
+    getSettings(),
+  ]);
 
   return (
     <section

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Contact } from "@/components/sections/contact";
-import { getContactConfig } from "@/lib/site-config";
+import { getSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Kontakt",
@@ -8,6 +8,8 @@ export const metadata: Metadata = {
     "Umów wizytę w Primero Studio w Łodzi — telefon, WhatsApp, adres, godziny otwarcia i formularz zgłoszeniowy.",
 };
 
-export default function KontaktPage() {
-  return <Contact contact={getContactConfig()} />;
+export default async function KontaktPage() {
+  const { contact } = await getSettings();
+
+  return <Contact contact={contact} />;
 }
