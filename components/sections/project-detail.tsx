@@ -93,7 +93,7 @@ export async function ProjectDetail({ project }: { project: Project }) {
 
         {/* Scope card + hero photo */}
         <div className="mt-8 grid grid-cols-1 items-stretch gap-5 lg:mt-10 lg:grid-cols-2">
-          <Reveal>
+          <Reveal className="order-2 lg:order-1">
             <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/30 p-7 sm:p-9">
               <Monogram className="pointer-events-none absolute -bottom-6 -right-4 h-48 w-48 text-cream/[0.03]" />
 
@@ -128,7 +128,7 @@ export async function ProjectDetail({ project }: { project: Project }) {
             </div>
           </Reveal>
 
-          <Reveal delay={0.05}>
+          <Reveal delay={0.05} className="order-1 lg:order-2">
             <MediaSlot
               src={project.image}
               alt={`${project.car} — ${project.service}`}
