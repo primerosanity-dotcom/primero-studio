@@ -43,7 +43,9 @@ export function getContactConfig(): ContactConfig {
     leadDeliveryEnabled: Boolean(
       process.env.LEAD_WEBHOOK_URL?.trim() ||
         (process.env.TELEGRAM_BOT_TOKEN?.trim() &&
-          process.env.TELEGRAM_CHAT_ID?.trim()),
+          process.env.TELEGRAM_CHAT_ID?.trim()) ||
+        (process.env.KOMMO_SUBDOMAIN?.trim() &&
+          process.env.KOMMO_ACCESS_TOKEN?.trim()),
     ),
   };
 }

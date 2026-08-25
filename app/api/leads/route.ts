@@ -1,4 +1,5 @@
 import { SERVICES as PACKAGES } from "@/lib/services";
+import { getKommoConfig, sendKommo } from "@/lib/kommo";
 
 // service value → human label for the notification
 const SERVICE_LABELS: Record<string, string> = {
@@ -154,6 +155,19 @@ export async function POST(request: Request) {
   }
   if (webhook) {
     deliveries.push({ channel: "webhook", run: sendWebhook(webhook, lead) });
+  }
+
+  const kommo = getKommoConfig();
+  if (kommo) {
+    deliveries.push({
+      channel: "kommo",
+      run: sendKommo(kommo, {
+        name,
+        phone,
+        serviceLabel: service ? (SERVICE_LABELS[service] ?? null) : null,
+        details,
+      }),
+    });
   }
 
   // Nothing configured → tell the client to use the WhatsApp/Instagram fallback.
