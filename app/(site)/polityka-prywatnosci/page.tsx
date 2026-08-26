@@ -60,6 +60,7 @@ function Section({
 export default function PolitykaPrywatnosciPage() {
   const contact = getContactConfig();
   const address = contact.addressLines.join(", ");
+  const privacyEmail = COMPANY.privacyEmail ?? contact.email;
   const identity = [
     COMPANY.legalName,
     COMPANY.nip ? `NIP ${COMPANY.nip}` : null,
@@ -75,7 +76,7 @@ export default function PolitykaPrywatnosciPage() {
       blocks: [
         {
           p: `Administratorem Twoich danych osobowych jest ${identity}. W sprawach dotyczących danych osobowych możesz skontaktować się z nami mailowo${
-            contact.email ? ` pod adresem ${contact.email}` : ""
+            privacyEmail ? ` pod adresem ${privacyEmail}` : ""
           }${contact.phoneDisplay ? ` lub telefonicznie: ${contact.phoneDisplay}` : ""}.`,
         },
         {
@@ -165,7 +166,7 @@ export default function PolitykaPrywatnosciPage() {
         },
         {
           p: `Aby skorzystać z któregokolwiek z tych praw, napisz do nas${
-            contact.email ? ` na ${contact.email}` : ""
+            privacyEmail ? ` na ${privacyEmail}` : ""
           }. Odpowiadamy najpóźniej w ciągu miesiąca. Jeśli uznasz, że przetwarzamy Twoje dane niezgodnie z prawem, możesz złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych, ul. Stawki 2, 00-193 Warszawa.`,
         },
       ],
