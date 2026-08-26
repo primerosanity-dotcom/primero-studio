@@ -77,10 +77,25 @@ export async function sendKommo(
   config: KommoConfig,
   lead: KommoLead,
 ): Promise<void> {
+  // Kommo's "INFO" textarea on the deal — the field the studio actually reads.
+  const info = [
+    lead.serviceLabel ? `Usługa: ${lead.serviceLabel}` : null,
+    lead.details ? `Uwagi: ${lead.details}` : null,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
   const deal = {
     name: lead.serviceLabel
       ? `Strona WWW — ${lead.serviceLabel}`
       : "Strona WWW — zapytanie",
+    ...(info
+      ? {
+          custom_fields_values: [
+            { field_code: "INFO", values: [{ value: info }] },
+          ],
+        }
+      : {}),
     ...(config.pipelineId ? { pipeline_id: config.pipelineId } : {}),
     ...(config.statusId ? { status_id: config.statusId } : {}),
     ...(config.responsibleUserId
