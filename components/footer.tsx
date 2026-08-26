@@ -127,9 +127,17 @@ export async function Footer() {
 
       <div className="border-t border-cream/10">
         <div className="mx-auto flex max-w-[1500px] flex-col items-center gap-3 px-6 py-6 text-center sm:flex-row sm:justify-between sm:text-left lg:px-12">
-          <span className="font-sans text-[11px] tracking-[0.2em] text-cream/40">
-            © {2026} PRIMERO.STUDIO
-          </span>
+          <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-6">
+            <span className="font-sans text-[11px] tracking-[0.2em] text-cream/40">
+              © {2026} PRIMERO.STUDIO
+            </span>
+            <Link
+              href="/polityka-prywatnosci"
+              className="font-sans text-[11px] tracking-[0.2em] text-cream/40 transition-colors duration-300 hover:text-gold"
+            >
+              Polityka prywatności
+            </Link>
+          </div>
           <span className="font-sans text-[10px] uppercase tracking-[0.32em] text-cream/35">
             Auto Detailing · Łódź
           </span>

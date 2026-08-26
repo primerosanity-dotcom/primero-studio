@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { Select } from "@/components/ui/select";
 import { cn } from "@/lib/cn";
@@ -359,7 +360,14 @@ export function LeadForm({
 
             <p className="mt-4 font-sans text-[10px] leading-relaxed text-cream/35">
               Wysyłając zgłoszenie wyrażasz zgodę na kontakt telefoniczny
-              w sprawie wyceny.
+              w sprawie wyceny. Twoje dane przetwarzamy zgodnie z{" "}
+              <Link
+                href="/polityka-prywatnosci"
+                className="underline underline-offset-2 transition-colors duration-300 hover:text-gold"
+              >
+                polityką prywatności
+              </Link>
+              .
             </p>
           </motion.form>
         )}

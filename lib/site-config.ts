@@ -21,6 +21,14 @@ const CONTACT = {
   mapsUrl: "https://maps.google.com/?q=Papiernicza+7R+Łódź",
 };
 
+// Legal identity of the data controller, used by the privacy policy.
+// TODO(client): uzupełnić pełną nazwę firmy i NIP z CEIDG.
+export const COMPANY = {
+  legalName: "PRIMERO.STUDIO",
+  nip: null as string | null,
+  regon: null as string | null,
+};
+
 function phoneHref(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }
