@@ -27,6 +27,8 @@ export const COMPANY = {
   legalName: "PRIMERO.STUDIO",
   nip: null as string | null,
   regon: null as string | null,
+  // TODO(client): kod pocztowy — potrzebny do danych strukturalnych Google.
+  postalCode: null as string | null,
   // Address for data-protection requests — deliberately separate from the
   // general contact address shown in the footer.
   privacyEmail: "info@primero-studio.com",

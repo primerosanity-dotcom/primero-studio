@@ -4,8 +4,11 @@ import { Heading } from "@/components/ui/heading";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Reveal } from "@/components/reveal";
 import { COMPANY, getContactConfig } from "@/lib/site-config";
+import { OG_SHARED } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/polityka-prywatnosci" },
+  openGraph: { ...OG_SHARED, url: "/polityka-prywatnosci", type: "website" },
   title: "Polityka prywatności",
   description:
     "Jak Primero Studio przetwarza dane osobowe: administrator, cele i podstawy prawne, odbiorcy danych, okres przechowywania, prawa użytkownika i pliki cookies.",

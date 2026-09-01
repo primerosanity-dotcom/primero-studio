@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Pricing } from "@/components/sections/pricing";
 import { LeadSection } from "@/components/sections/lead-section";
 import { getPackages, getSettings } from "@/lib/content";
+import { OG_SHARED } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pakiety" },
+  openGraph: { ...OG_SHARED, url: "/pakiety", type: "website" },
   title: "Pakiety",
   description:
     "Pakiety detailingu w Łodzi — ESSENTIAL, PROTECT, RESTORE, CERAMIC i SIGNATURE. Zobacz zakres i orientacyjne ceny, umów wizytę online.",
