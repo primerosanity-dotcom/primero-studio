@@ -14,7 +14,8 @@ export type ContactConfig = {
 const CONTACT = {
   phone: "+48 731 601 733",
   whatsapp: "+48 731 601 733",
-  email: "kontakt@primero.studio",
+  // primero.studio belongs to an unrelated branding studio — never fall back to it.
+  email: "info@primero-studio.com",
   instagramHandle: "@primero_studio",
   instagramUrl: "https://www.instagram.com/primero_studio/",
   addressLines: ["ul. Papiernicza 7R", "Łódź"],
