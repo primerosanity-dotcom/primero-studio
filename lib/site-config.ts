@@ -25,7 +25,7 @@ const CONTACT = {
 // Legal identity of the data controller, used by the privacy policy.
 // TODO(client): uzupełnić pełną nazwę firmy i NIP z CEIDG.
 export const COMPANY = {
-  legalName: "PRIMERO.STUDIO",
+  legalName: "Primero Studio",
   nip: null as string | null,
   regon: null as string | null,
   // TODO(client): kod pocztowy — potrzebny do danych strukturalnych Google.

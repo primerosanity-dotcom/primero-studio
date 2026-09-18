@@ -4,7 +4,8 @@ import { cn } from "@/lib/cn";
 import { SITE_NAME, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
-const TITLE = "Detailing Łódź — powłoki ceramiczne i korekta lakieru | PRIMERO.STUDIO";
+// Kept under 60 characters — Google rewrites long titles wholesale.
+const TITLE = "Detailing Łódź — powłoki ceramiczne i PPF | Primero Studio";
 const DESCRIPTION =
   "Studio detailingu w Łodzi. Powłoki ceramiczne, korekta lakieru, folia ochronna PPF i detailing wnętrza. Bezpłatna wycena — ul. Papiernicza 7R.";
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: TITLE,
-    template: "%s — PRIMERO.STUDIO",
+    template: "%s — Primero Studio",
   },
   description: DESCRIPTION,
   applicationName: SITE_NAME,

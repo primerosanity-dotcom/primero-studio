@@ -2,7 +2,13 @@ import { COMPANY, getContactConfig } from "@/lib/site-config";
 
 /** Canonical origin. Everything Google sees is anchored to this. */
 export const SITE_URL = "https://primero-studio.com";
-export const SITE_NAME = "PRIMERO.STUDIO";
+/**
+ * The name Google may print instead of our <title> on the home page. Written
+ * plainly on purpose: Google lower-cases ALL-CAPS names, and the dotted form
+ * "PRIMERO.STUDIO" then reads as primero.studio — an unrelated company's
+ * actual domain. The on-screen wordmark keeps its own styling.
+ */
+export const SITE_NAME = "Primero Studio";
 
 export function absoluteUrl(path = "/"): string {
   return new URL(path, SITE_URL).toString();
@@ -145,6 +151,23 @@ export function localBusinessSchema(settings: {
     currenciesAccepted: "PLN",
     openingHoursSpecification: toOpeningHours(settings.hours),
     sameAs: [contact.instagramUrl].filter(Boolean),
+  };
+}
+
+/**
+ * Google's documented lever for the site name shown in results. Home page
+ * only — it is ignored on subdirectories.
+ */
+export function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    name: SITE_NAME,
+    alternateName: "Primero Studio Łódź",
+    url: SITE_URL,
+    inLanguage: "pl-PL",
+    publisher: { "@id": `${SITE_URL}/#studio` },
   };
 }
 
