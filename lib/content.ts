@@ -138,8 +138,9 @@ const TONES = [
 
 export type ReviewsContent = {
   reviews: Review[];
-  rating: string;
-  count: number;
+  /** null until the studio fills in its real Google numbers. */
+  rating: string | null;
+  count: number | null;
   googleUrl: string;
 };
 

@@ -69,8 +69,9 @@ export async function Reviews({ index = "06" }: { index?: string }) {
 
           <Reveal delay={0.1}>
             <p className="mt-8 max-w-xl font-sans text-base leading-relaxed text-ink/65">
-              Nie musisz wierzyć nam na słowo — przeczytaj, co piszą o nas
-              klienci w Google.
+              {REVIEWS.length > 0
+                ? "Nie musisz wierzyć nam na słowo — przeczytaj, co piszą o nas klienci w Google."
+                : "Nie musisz wierzyć nam na słowo — wszystkie opinie o nas przeczytasz bezpośrednio w Google."}
             </p>
           </Reveal>
         </div>
@@ -82,16 +83,20 @@ export async function Reviews({ index = "06" }: { index?: string }) {
               <div className="flex items-center gap-4">
                 <GoogleG className="h-9 w-9" />
                 <div>
-                  <div className="flex items-center gap-3">
-                    <span className="font-display text-2xl font-semibold text-ink">
-                      {RATING}
-                    </span>
-                    <span className="text-gold">
-                      <Stars rating={RATING} />
-                    </span>
-                  </div>
+                  {RATING ? (
+                    <div className="flex items-center gap-3">
+                      <span className="font-display text-2xl font-semibold text-ink">
+                        {RATING}
+                      </span>
+                      <span className="text-gold">
+                        <Stars rating={RATING} />
+                      </span>
+                    </div>
+                  ) : null}
                   <span className="font-sans text-xs uppercase tracking-[0.2em] text-ink/50">
-                    Opinie Google · {REVIEW_COUNT} opinii
+                    {REVIEW_COUNT
+                      ? `Opinie Google · ${REVIEW_COUNT} opinii`
+                      : "Opinie Google"}
                   </span>
                 </div>
               </div>
@@ -122,7 +127,13 @@ export async function Reviews({ index = "06" }: { index?: string }) {
             </div>
           </Reveal>
 
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div
+            className={
+              REVIEWS.length > 0
+                ? "mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+                : "hidden"
+            }
+          >
             {REVIEWS.map((r, i) => (
               <Reveal key={r.name} delay={0.05 + i * 0.08}>
                 <figure className="flex h-full flex-col rounded-2xl border border-ink/10 bg-cream-soft/60 p-6">
@@ -142,9 +153,11 @@ export async function Reviews({ index = "06" }: { index?: string }) {
                     </div>
                     <GoogleG className="ml-auto h-4 w-4 shrink-0" />
                   </div>
-                  <span className="mt-4 text-gold">
-                    <Stars small rating={RATING} />
-                  </span>
+                  {RATING ? (
+                    <span className="mt-4 text-gold">
+                      <Stars small rating={RATING} />
+                    </span>
+                  ) : null}
                   <blockquote className="mt-3 font-sans text-sm leading-relaxed text-ink/70">
                     {r.text}
                   </blockquote>
