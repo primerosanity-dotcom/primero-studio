@@ -30,6 +30,9 @@ export const COMPANY = {
   regon: null as string | null,
   // TODO(client): kod pocztowy — potrzebny do danych strukturalnych Google.
   postalCode: null as string | null,
+  /** Google Business Profile — canonical cid link, plus the pin it sits on. */
+  googleProfileUrl: "https://maps.google.com/?cid=4122063228309782347",
+  geo: { lat: 51.7449989, lng: 19.5137918 },
   // Address for data-protection requests — deliberately separate from the
   // general contact address shown in the footer.
   privacyEmail: "info@primero-studio.com",

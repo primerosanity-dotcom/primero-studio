@@ -142,7 +142,12 @@ export function localBusinessSchema(settings: {
       addressCountry: "PL",
       ...(COMPANY.postalCode ? { postalCode: COMPANY.postalCode } : {}),
     },
-    ...(contact.mapsUrl ? { hasMap: contact.mapsUrl } : {}),
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: COMPANY.geo.lat,
+      longitude: COMPANY.geo.lng,
+    },
+    hasMap: COMPANY.googleProfileUrl,
     areaServed: [
       { "@type": "City", name: "Łódź" },
       { "@type": "AdministrativeArea", name: "województwo łódzkie" },
@@ -150,7 +155,8 @@ export function localBusinessSchema(settings: {
     priceRange: "$$",
     currenciesAccepted: "PLN",
     openingHoursSpecification: toOpeningHours(settings.hours),
-    sameAs: [contact.instagramUrl].filter(Boolean),
+    // Ties the site to the Google Business Profile as one and the same entity.
+    sameAs: [contact.instagramUrl, COMPANY.googleProfileUrl].filter(Boolean),
   };
 }
 
