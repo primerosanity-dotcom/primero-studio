@@ -20,7 +20,9 @@ export async function generateMetadata({
   if (!service) return {};
   const description = `${service.name} w Łodzi — ${service.short} ${service.price}.`;
   return {
-    title: service.name,
+    title: {
+      absolute: `${service.name} — pakiet detailingu w Łodzi | Primero Studio`,
+    },
     description,
     alternates: { canonical: `/pakiety/${slug}` },
     openGraph: {

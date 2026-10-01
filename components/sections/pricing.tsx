@@ -195,10 +195,11 @@ export function Pricing({
           </Reveal>
           <Reveal delay={0.05}>
             <Heading
+              as="h1"
               variant="elegant"
               className="mt-8 text-[clamp(2rem,4.5vw,3.6rem)] gold-metallic"
             >
-              Pakiety detailingu.
+              Pakiety detailingu w Łodzi.
             </Heading>
           </Reveal>
           <Reveal delay={0.1}>

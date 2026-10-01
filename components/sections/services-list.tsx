@@ -45,10 +45,11 @@ export function ServicesList({ services }: { services: PointService[] }) {
           </Reveal>
           <Reveal delay={0.05}>
             <Heading
+              as="h1"
               variant="strong"
               className="mt-8 text-[clamp(2.1rem,5vw,4.5rem)] text-ink"
             >
-              Pojedyncze usługi detailingowe.
+              Pojedyncze usługi detailingowe w Łodzi.
             </Heading>
           </Reveal>
           <Reveal delay={0.1}>

@@ -31,12 +31,15 @@ export async function ProjectsGrid({
   index = "05",
   limit,
   cta = false,
+  headingAs = "h2",
 }: {
   index?: string;
   /** Show only the first N projects (home teaser). */
   limit?: number;
   /** Append a link to the full portfolio. */
   cta?: boolean;
+  /** "h1" when this section is the page's subject, not a teaser. */
+  headingAs?: "h1" | "h2";
 }) {
   const projects = await getProjects();
   const items = limit ? projects.slice(0, limit) : projects;
@@ -63,6 +66,7 @@ export async function ProjectsGrid({
           </Reveal>
           <Reveal delay={0.05}>
             <Heading
+              as={headingAs}
               variant="elegant"
               className="mt-8 text-[clamp(2.1rem,4.8vw,4.25rem)] gold-metallic"
             >

@@ -7,7 +7,7 @@ import { OG_SHARED } from "@/lib/seo";
 export const metadata: Metadata = {
   alternates: { canonical: "/pakiety" },
   openGraph: { ...OG_SHARED, url: "/pakiety", type: "website" },
-  title: "Pakiety",
+  title: { absolute: "Pakiety detailingu Łódź — cennik i zakres | Primero Studio" },
   description:
     "Pakiety detailingu w Łodzi — ESSENTIAL, PROTECT, RESTORE, CERAMIC i SIGNATURE. Zobacz zakres i orientacyjne ceny, umów wizytę online.",
 };

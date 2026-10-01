@@ -7,7 +7,7 @@ import { OG_SHARED } from "@/lib/seo";
 export const metadata: Metadata = {
   alternates: { canonical: "/o-nas" },
   openGraph: { ...OG_SHARED, url: "/o-nas", type: "website" },
-  title: "O nas",
+  title: { absolute: "Studio detailingowe w Łodzi | Primero Studio" },
   description:
     "Primero Studio — precyzyjna pielęgnacja aut w Łodzi. Poznaj nasze podejście i proces pracy krok po kroku.",
 };

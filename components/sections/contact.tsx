@@ -136,6 +136,7 @@ export function Contact({ contact }: { contact: ContactConfig }) {
 
           <Reveal delay={0.05}>
             <Heading
+              as="h1"
               variant="elegant"
               className="mt-8 text-[clamp(2.2rem,5vw,4.5rem)] gold-metallic"
             >

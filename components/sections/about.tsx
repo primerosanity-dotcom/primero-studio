@@ -30,6 +30,7 @@ export async function About() {
 
           <Reveal delay={0.05}>
             <Heading
+              as="h1"
               variant="strong"
               className="mt-8 text-[clamp(2.2rem,5.2vw,4.5rem)] text-ink"
             >

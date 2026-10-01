@@ -6,7 +6,7 @@ import { OG_SHARED } from "@/lib/seo";
 export const metadata: Metadata = {
   alternates: { canonical: "/kontakt" },
   openGraph: { ...OG_SHARED, url: "/kontakt", type: "website" },
-  title: "Kontakt",
+  title: { absolute: "Kontakt — studio detailingowe Łódź | Primero Studio" },
   description:
     "Umów wizytę w Primero Studio w Łodzi — telefon, WhatsApp, adres, godziny otwarcia i formularz zgłoszeniowy.",
 };

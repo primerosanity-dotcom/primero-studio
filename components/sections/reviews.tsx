@@ -36,7 +36,14 @@ const Stars = ({ small, rating }: { small?: boolean; rating: string }) => (
   </span>
 );
 
-export async function Reviews({ index = "06" }: { index?: string }) {
+export async function Reviews({
+  index = "06",
+  headingAs = "h2",
+}: {
+  index?: string;
+  /** "h1" when this section is the page's subject, not a teaser. */
+  headingAs?: "h1" | "h2";
+}) {
   const {
     reviews: REVIEWS,
     rating: RATING,
@@ -60,6 +67,7 @@ export async function Reviews({ index = "06" }: { index?: string }) {
 
           <Reveal delay={0.05}>
             <Heading
+              as={headingAs}
               variant="strong"
               className="mt-8 text-[clamp(2rem,4.6vw,4rem)] text-ink"
             >

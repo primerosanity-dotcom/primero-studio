@@ -6,7 +6,7 @@ import { OG_SHARED } from "@/lib/seo";
 export const metadata: Metadata = {
   alternates: { canonical: "/realizacje" },
   openGraph: { ...OG_SHARED, url: "/realizacje", type: "website" },
-  title: "Realizacje",
+  title: { absolute: "Realizacje detailingu — Łódź | Primero Studio" },
   description:
     "Nasze realizacje — auta po detailingu, korekcie lakieru, powłoce ceramicznej i pielęgnacji wnętrza. Zobacz szczegóły każdego projektu.",
 };
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function RealizacjePage() {
   return (
     <>
-      <ProjectsGrid />
+      <ProjectsGrid headingAs="h1" />
       <LeadSection />
     </>
   );

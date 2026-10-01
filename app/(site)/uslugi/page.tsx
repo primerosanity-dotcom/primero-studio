@@ -7,7 +7,7 @@ import { OG_SHARED } from "@/lib/seo";
 export const metadata: Metadata = {
   alternates: { canonical: "/uslugi" },
   openGraph: { ...OG_SHARED, url: "/uslugi", type: "website" },
-  title: "Usługi",
+  title: { absolute: "Usługi detailingowe Łódź — cennik | Primero Studio" },
   description:
     "Pojedyncze usługi detailingowe w Łodzi — mycie, dekontaminacja, polerowanie, powłoka ceramiczna, twardy wosk, pranie wnętrza i więcej.",
 };
