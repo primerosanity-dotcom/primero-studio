@@ -1,9 +1,17 @@
+"use client";
+
 import Script from "next/script";
+import { useConsent } from "@/lib/consent";
 
 /**
  * Tracking scripts. Every id is optional and comes from Sanity ("Ustawienia
  * strony" → Analityka), so the client turns each tool on by pasting its id —
  * an empty field simply renders nothing and costs the visitor no requests.
+ *
+ * Nothing loads until the visitor has actively accepted: GA4, GTM and the Meta
+ * pixel all write cookies that EU law requires consent for, and the privacy
+ * policy promises exactly that. The noscript fallbacks are inside the gate too
+ * — with JavaScript off there is no way to collect a choice, so we don't track.
  */
 export function Analytics({
   gtmId,
@@ -14,6 +22,8 @@ export function Analytics({
   gaId?: string;
   metaPixelId?: string;
 }) {
+  if (useConsent() !== "granted") return null;
+
   return (
     <>
       {gtmId && (
