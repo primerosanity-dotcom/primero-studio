@@ -18,7 +18,7 @@ export const PROMO: Service = {
   duration: "1–2 dni robocze",
   cycle: "Promocja z okazji otwarcia",
   prefill: PROMO_SLUG,
-  image: "",
+  image: "/images/pakiety/promocja.jpg",
   problem:
     "Z czasem lakier matowieje, pokrywa się swirlami i traci głębię koloru. Zwykłe mycie tego nie naprawi — potrzebne jest polerowanie. W tej promocji po polerowaniu zabezpieczamy lakier powłoką ceramiczną zamiast wosku. Ceramika tworzy na lakierze twardą, gładką warstwę ochronną, która trzyma się znacznie dłużej niż wosk: woda i brud spływają z niej same, sól drogowa i promienie UV nie niszczą lakieru, a auto myje się szybciej i dłużej wygląda jak po wyjeździe ze studia.",
   effect: [

@@ -1,10 +1,22 @@
 import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
+import { MediaSlot } from "@/components/ui/media-slot";
 import { Monogram } from "@/components/ui/monogram";
 import { Reveal } from "@/components/reveal";
 import { getPackages, getSettings } from "@/lib/content";
 import { PROMO, PROMO_OLD_PRICE } from "@/lib/promo";
+
+/** Real studio photos used as package covers on the homepage. */
+const COVERS: Record<string, string> = {
+  essential: "/images/pakiety/essential.jpg",
+  protect: "/images/pakiety/protect.jpg",
+  ceramic: "/images/pakiety/ceramic.jpg",
+  signature: "/images/pakiety/signature.jpg",
+};
+const PROMO_COVER = PROMO.image;
+/** RESTORE (hard wax) is hidden on the homepage while the promo runs. */
+const HIDDEN_ON_HOME = new Set(["restore"]);
 
 function Arrow() {
   return (
@@ -28,60 +40,80 @@ function Arrow() {
 }
 
 export async function ServicesShowcase({ index = "03" }: { index?: string }) {
-  const [SERVICES, { contact }] = await Promise.all([
+  const [all, { contact }] = await Promise.all([
     getPackages(),
     getSettings(),
   ]);
+  const SERVICES = all.filter((s) => !HIDDEN_ON_HOME.has(s.slug));
 
   return (
     <section
       id="pakiety"
-      data-section-theme="light"
-      className="relative overflow-hidden bg-cream text-ink"
+      data-section-theme="dark"
+      className="relative overflow-hidden bg-wine-deep text-cream"
     >
-      <div className="mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-40">
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(80% 70% at 12% 12%, rgba(124,32,48,0.28), transparent 55%), #150406",
+        }}
+      />
+      <div className="relative z-10 mx-auto max-w-[1500px] px-6 py-20 lg:px-12 lg:py-28">
         <div className="max-w-3xl">
           <Reveal>
-            <SectionLabel index={index} tone="ink">
+            <SectionLabel index={index}>
               Pakiety
             </SectionLabel>
           </Reveal>
           <Reveal delay={0.05}>
             <Heading
-              variant="strong"
-              className="mt-8 text-[clamp(2.1rem,5vw,4.5rem)] text-ink"
+              variant="elegant"
+              className="mt-8 text-[clamp(2rem,4.6vw,3.8rem)] gold-metallic"
             >
               Pakiet dopasowany do twojego auta.
             </Heading>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-8 max-w-xl font-sans text-base leading-relaxed text-ink/65">
-              Pięć kompleksowych pakietów — od regularnej pielęgnacji po pełną
+            <p className="mt-8 max-w-xl font-sans text-base leading-relaxed text-cream/55">
+              Kompleksowe pakiety — od regularnej pielęgnacji po pełną
               renowację i ochronę ceramiczną. Zobacz zakres i orientacyjną cenę.
             </p>
           </Reveal>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
-          {/* Opening promo — regular package card + the site's "featured" style */}
+          {/* Opening promo — the site's "featured" card style (see /pakiety) */}
           <Reveal delay={0.05}>
             <Link
               href={`/pakiety/${PROMO.slug}`}
               className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-gold/[0.05] transition-colors duration-500 ease-lux"
             >
-              <div className="flex flex-1 flex-col p-6">
-                <span className="self-start rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
+              <div className="relative">
+                <MediaSlot
+                  src={PROMO_COVER}
+                  alt={`${PROMO.name} — ${PROMO.tagline}`}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="aspect-[4/3] w-full"
+                />
+                <span className="absolute left-4 top-4 z-10 rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
                   Promocja otwarcia · -50%
                 </span>
-                <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-ink transition-colors duration-300 group-hover:text-champagne sm:text-xl">
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
+                  00
+                </span>
+                <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-gold sm:text-xl">
                   {PROMO.name}
                 </h3>
-                <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-ink/60">
+                <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-cream/55">
                   {PROMO.short}
                 </p>
-                <div className="mt-6 flex items-center justify-between border-t border-ink/10 pt-4">
-                  <span className="font-sans text-sm font-semibold text-ink">
-                    <span className="mr-2 font-normal text-ink/40 line-through">
+                <div className="mt-6 flex items-center justify-between border-t border-cream/10 pt-4">
+                  <span className="font-sans text-sm font-semibold text-cream">
+                    <span className="mr-2 font-normal text-cream/40 line-through">
                       {PROMO_OLD_PRICE}
                     </span>
                     {PROMO.price}
@@ -99,20 +131,26 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
             <Reveal key={s.slug} delay={0.11 + i * 0.06}>
               <Link
                 href={`/pakiety/${s.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-ink/12 bg-cream-soft/40 transition-colors duration-500 ease-lux hover:border-champagne/50"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/40"
               >
+                <MediaSlot
+                  src={COVERS[s.slug] ?? s.image}
+                  alt={`${s.name} — ${s.tagline}`}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="aspect-[4/3] w-full"
+                />
                 <div className="flex flex-1 flex-col p-6">
                   <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
-                    {s.n}
+                    {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-ink transition-colors duration-300 group-hover:text-champagne sm:text-xl">
+                  <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-cream transition-colors duration-300 group-hover:text-champagne sm:text-xl">
                     {s.name}
                   </h3>
-                  <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-ink/60">
+                  <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-cream/55">
                     {s.short}
                   </p>
-                  <div className="mt-6 flex items-center justify-between border-t border-ink/10 pt-4">
-                    <span className="font-sans text-sm font-semibold text-ink">
+                  <div className="mt-6 flex items-center justify-between border-t border-cream/10 pt-4">
+                    <span className="font-sans text-sm font-semibold text-cream">
                       {s.price}
                     </span>
                     <span className="flex items-center gap-2 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-champagne">
@@ -131,7 +169,7 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
               <Monogram className="pointer-events-none absolute -right-8 -top-10 h-44 w-44 text-gold/[0.06]" />
               <div className="relative">
                 <span className="font-sans text-[11px] tracking-[0.3em] text-gold/70">
-                  06
+                  {String(SERVICES.length + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-gold sm:text-xl">
                   Nie wiesz,

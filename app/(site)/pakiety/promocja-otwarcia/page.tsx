@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { getPackage } from "@/lib/content";
 import { PROMO, PROMO_SLUG } from "@/lib/promo";
 import { ServiceDetail } from "@/components/sections/service-detail";
 import { LeadSection } from "@/components/sections/lead-section";
@@ -23,10 +22,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function PromoPage() {
-  // Reuse the CERAMIC package photo until the promo gets its own.
-  const ceramic = await getPackage("ceramic");
-  const service = { ...PROMO, image: PROMO.image || ceramic?.image || "" };
+export default function PromoPage() {
+  const service = PROMO;
 
   return (
     <>
