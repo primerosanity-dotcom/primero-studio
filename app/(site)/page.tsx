@@ -24,8 +24,8 @@ export default async function Home() {
       />
       <HomeIntro />
       <Process index="03" />
-      <HomeServices index="04" />
-      <ServicesShowcase index="05" />
+      <ServicesShowcase index="04" />
+      <HomeServices index="05" />
       <ProjectsGrid index="06" limit={3} cta />
       <Reviews index="07" />
       <LeadSection withLocation />
