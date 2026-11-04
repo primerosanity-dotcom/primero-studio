@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { Heading } from "@/components/ui/heading";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { ScrollCue } from "@/components/ui/scroll-cue";
+import { BookingModal } from "@/components/booking-modal";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -24,10 +26,16 @@ const KEYWORDS = ["Korekta lakieru", "Ceramika", "PPF", "Wnętrza"];
 export function Hero({
   desktopSrc,
   mobileSrc,
+  deliveryEnabled,
+  fallbackUrl,
 }: {
   desktopSrc: string;
   mobileSrc: string;
+  deliveryEnabled: boolean;
+  fallbackUrl: string;
 }) {
+  const [bookingOpen, setBookingOpen] = useState(false);
+
   return (
     <section
       id="studio"
@@ -125,7 +133,16 @@ export function Hero({
             animate="show"
             className="mt-10"
           >
-            <ArrowButton href="/kontakt" tone="dark" className="gap-8">
+            <ArrowButton
+              href="/kontakt"
+              tone="dark"
+              className="gap-8"
+              onClick={(e) => {
+                // /kontakt stays the no-JS fallback; with JS the form opens in place.
+                e.preventDefault();
+                setBookingOpen(true);
+              }}
+            >
               Umów wizytę
             </ArrowButton>
           </motion.div>
@@ -172,6 +189,13 @@ export function Hero({
           </div>
         </motion.div>
       </div>
+
+      <BookingModal
+        open={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        deliveryEnabled={deliveryEnabled}
+        fallbackUrl={fallbackUrl}
+      />
     </section>
   );
 }

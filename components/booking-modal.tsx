@@ -29,7 +29,8 @@ export function BookingModal({
 }: {
   open: boolean;
   onClose: () => void;
-  summary: BookingSummary;
+  /** Package picked on the pricing grid; omit for a general enquiry. */
+  summary?: BookingSummary;
   deliveryEnabled: boolean;
   fallbackUrl: string;
 }) {
@@ -57,7 +58,7 @@ export function BookingModal({
     };
   }, [open, onClose, lenis]);
 
-  const extraDetails = [
+  const extraDetails = summary && [
     `Wybrany pakiet: ${summary.name} — ${summary.tagline}`,
     `Cena: ${summary.price}`,
     "W pakiecie:",
@@ -119,10 +120,13 @@ export function BookingModal({
                 Umów wizytę
               </h2>
               <p className="mt-3 font-sans text-sm leading-relaxed text-cream/60">
-                Zostaw kontakt — potwierdzimy wycenę i zaproponujemy termin.
+                {summary
+                  ? "Zostaw kontakt — potwierdzimy wycenę i zaproponujemy termin."
+                  : "Zostaw kontakt — oddzwonimy, doradzimy zakres prac i zarezerwujemy dogodny termin."}
               </p>
 
               {/* Selection summary */}
+              {summary && (
               <div className="mt-6 rounded-xl border border-cream/10 bg-wine-deep/40 p-5">
                 <div className="flex items-baseline justify-between gap-4">
                   <span className="font-display text-lg font-semibold uppercase tracking-[0.14em] text-gold">
@@ -153,13 +157,16 @@ export function BookingModal({
                   ))}
                 </ul>
               </div>
+              )}
 
               {/* Lead form — no service picker, package carried into details */}
               <div className="mt-7">
                 <LeadForm
                   compact
+                  // General enquiry from the hero: name + phone only.
                   hideService
-                  presetService={summary.prefill}
+                  hideDetails={!summary}
+                  presetService={summary?.prefill}
                   extraDetails={extraDetails}
                   deliveryEnabled={deliveryEnabled}
                   fallbackUrl={fallbackUrl}
