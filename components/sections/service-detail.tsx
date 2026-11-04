@@ -41,7 +41,14 @@ function InfoCard({
   );
 }
 
-export async function ServiceDetail({ service }: { service: Service }) {
+export async function ServiceDetail({
+  service,
+  oldPrice,
+}: {
+  service: Service;
+  /** Price before a promo discount, shown crossed out next to the price. */
+  oldPrice?: string;
+}) {
   const others = (await getPackages()).filter((s) => s.slug !== service.slug);
 
   const meta = [
@@ -100,8 +107,19 @@ export async function ServiceDetail({ service }: { service: Service }) {
             </Reveal>
             <Reveal delay={0.15}>
               <div className="mt-8 flex flex-wrap items-center gap-6">
-                <span className="font-display text-3xl font-semibold text-cream">
-                  {service.price}
+                <span className="flex items-baseline gap-4">
+                  {oldPrice && (
+                    <span className="relative inline-block font-display text-xl font-semibold text-cream/40">
+                      {oldPrice}
+                      <span
+                        aria-hidden
+                        className="pointer-events-none absolute left-[-6%] top-1/2 h-[2px] w-[112%] -rotate-[14deg] bg-gold"
+                      />
+                    </span>
+                  )}
+                  <span className="font-display text-3xl font-semibold text-cream">
+                    {service.price}
+                  </span>
                 </span>
                 <ArrowButton href="#kontakt-form" tone="dark">
                   Umów ten pakiet
@@ -190,7 +208,11 @@ export async function ServiceDetail({ service }: { service: Service }) {
                   Studio detailingu w Łodzi. Umów dogodny termin —
                   zajmiemy się autem kompleksowo, a Ty odbierzesz je gotowe.
                 </p>
-                <ArrowButton href="#kontakt-form" tone="dark" className="mt-5">
+                <ArrowButton
+                  href="#kontakt-form"
+                  tone="dark"
+                  className="mt-5 w-full gap-3! whitespace-nowrap px-5! tracking-[0.2em]! sm:w-auto sm:gap-10! sm:px-8! sm:tracking-[0.28em]!"
+                >
                   Zarezerwuj termin
                 </ArrowButton>
               </InfoCard>

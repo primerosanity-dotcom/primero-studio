@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PROMO, PROMO_SLUG } from "@/lib/promo";
+import { PROMO, PROMO_OLD_PRICE, PROMO_SLUG } from "@/lib/promo";
 import { ServiceDetail } from "@/components/sections/service-detail";
 import { LeadSection } from "@/components/sections/lead-section";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -34,7 +34,7 @@ export default function PromoPage() {
           { name: PROMO.name, path: `/pakiety/${PROMO_SLUG}` },
         ])}
       />
-      <ServiceDetail service={service} />
+      <ServiceDetail service={service} oldPrice={PROMO_OLD_PRICE} />
       <LeadSection />
     </>
   );

@@ -148,7 +148,7 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
           {/* Opening promo — the site's "featured" card style (see /pakiety) */}
           <Reveal delay={0.05}>
-            <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-gold/[0.05] transition-colors duration-500 ease-lux">
+            <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-gold/[0.05] transition-[transform,border-color,box-shadow] duration-500 ease-lux hover:-translate-y-1 hover:border-gold hover:shadow-[0_24px_60px_-24px_rgba(217,184,114,0.45)]">
               <div className="flex flex-1 flex-col p-6">
                 <span className="self-start rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
                   Promocja otwarcia · -50%
@@ -172,7 +172,7 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
 
           {SERVICES.map((s, i) => (
             <Reveal key={s.slug} delay={0.11 + i * 0.06}>
-              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/40">
+              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-[transform,border-color,box-shadow] duration-500 ease-lux hover:-translate-y-1 hover:border-champagne/40 hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.6)]">
                 <div className="flex flex-1 flex-col p-6">
                   <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
                     {String(i + 1).padStart(2, "0")}
