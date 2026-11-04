@@ -11,12 +11,17 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { websiteSchema } from "@/lib/seo";
 
 export default async function Home() {
-  const { heroDesktop, heroMobile } = await getSettings();
+  const { heroDesktop, heroMobile, contact } = await getSettings();
 
   return (
     <>
       <JsonLd schema={websiteSchema()} />
-      <Hero desktopSrc={heroDesktop} mobileSrc={heroMobile} />
+      <Hero
+        desktopSrc={heroDesktop}
+        mobileSrc={heroMobile}
+        deliveryEnabled={contact.leadDeliveryEnabled}
+        fallbackUrl={contact.whatsappUrl ?? contact.instagramUrl}
+      />
       <HomeIntro />
       <Process index="03" />
       <HomeServices index="04" />
