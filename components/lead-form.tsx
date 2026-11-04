@@ -59,6 +59,7 @@ export function LeadForm({
   presetService,
   extraDetails,
   compact = false,
+  hideDetails = false,
 }: {
   deliveryEnabled: boolean;
   fallbackUrl: string;
@@ -70,6 +71,8 @@ export function LeadForm({
   extraDetails?: string;
   /** Drop the card chrome + intro copy when embedded inside a modal. */
   compact?: boolean;
+  /** Hide the free-text notes field (name + phone only). */
+  hideDetails?: boolean;
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -302,6 +305,7 @@ export function LeadForm({
                 </Field>
               )}
 
+              {!hideDetails && (
               <Field label="Uwagi" htmlFor="lead-details">
                 <textarea
                   id="lead-details"
@@ -313,6 +317,7 @@ export function LeadForm({
                   className={cn(inputCls, "resize-y")}
                 />
               </Field>
+              )}
             </div>
 
             <input

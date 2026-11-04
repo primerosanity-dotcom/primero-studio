@@ -163,7 +163,9 @@ export function BookingModal({
               <div className="mt-7">
                 <LeadForm
                   compact
-                  hideService={!!summary}
+                  // General enquiry from the hero: name + phone only.
+                  hideService
+                  hideDetails={!summary}
                   presetService={summary?.prefill}
                   extraDetails={extraDetails}
                   deliveryEnabled={deliveryEnabled}
