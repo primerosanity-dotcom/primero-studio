@@ -164,6 +164,14 @@ export function LeadForm({
         setError(result.error ?? "Nie udało się wysłać zgłoszenia.");
         return;
       }
+      // Meta pixel: count a lead only after the server accepted it. The pixel
+      // exists only when the visitor consented to cookies (see analytics.tsx),
+      // so without consent this is a no-op.
+      const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void })
+        .fbq;
+      if (!website && typeof fbq === "function") {
+        fbq("track", "Lead", { content_name: serviceToSend ?? "kontakt" });
+      }
       setSent(true);
     } catch {
       setError("Brak połączenia. Sprawdź internet i spróbuj ponownie.");
