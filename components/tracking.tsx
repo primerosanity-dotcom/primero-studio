@@ -23,6 +23,7 @@ export function Tracking(props: {
   gtmId?: string;
   gaId?: string;
   metaPixelId?: string;
+  clarityId?: string;
 }) {
   return (
     <>

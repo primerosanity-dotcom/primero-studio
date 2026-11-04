@@ -178,7 +178,7 @@ type SettingsRow = {
   stats?: { value: string; label: string }[];
   aboutText?: string;
   googleRating?: string; googleReviewCount?: number; googleUrl?: string;
-  gtmId?: string; gaId?: string; metaPixelId?: string;
+  gtmId?: string; gaId?: string; metaPixelId?: string; clarityId?: string;
   heroDesktop?: SanityImage; heroMobile?: SanityImage; aboutImage?: SanityImage;
 };
 
@@ -198,8 +198,11 @@ export type SiteSettings = {
   heroMobile: string;
   aboutImage: string;
   /** Analytics ids set by the client in Studio; empty = script not loaded. */
-  analytics: { gtmId: string; gaId: string; metaPixelId: string };
+  analytics: { gtmId: string; gaId: string; metaPixelId: string; clarityId: string };
 };
+
+/** Primero Studio's Microsoft Clarity project; Studio can override it. */
+const CLARITY_PROJECT_ID = "z8gh9h8bzy";
 
 const FALLBACK_HOURS = [
   { days: "Pon – Pt", hours: "09:00 – 19:00" },
@@ -251,6 +254,7 @@ export async function getSettings(): Promise<SiteSettings> {
       gtmId: s?.gtmId?.trim() ?? "",
       gaId: s?.gaId?.trim() ?? "",
       metaPixelId: s?.metaPixelId?.trim() ?? "",
+      clarityId: s?.clarityId?.trim() || CLARITY_PROJECT_ID,
     },
   };
 }

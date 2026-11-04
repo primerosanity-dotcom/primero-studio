@@ -241,6 +241,7 @@ export function LeadForm({
         ) : (
           <motion.form
             key="form"
+            data-clarity-mask="true"
             onSubmit={submit}
             noValidate
             initial={{ opacity: 0, y: 14 }}

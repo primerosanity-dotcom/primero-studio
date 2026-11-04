@@ -17,10 +17,12 @@ export function Analytics({
   gtmId,
   gaId,
   metaPixelId,
+  clarityId,
 }: {
   gtmId?: string;
   gaId?: string;
   metaPixelId?: string;
+  clarityId?: string;
 }) {
   if (useConsent() !== "granted") return null;
 
@@ -60,6 +62,19 @@ gtag('js', new Date());
 gtag('config', '${gaId}');`}
           </Script>
         </>
+      )}
+
+      {clarityId && (
+        // Clarity (heatmaps, session recordings). It only loads after
+        // "Akceptuję", and for EEA visits it also needs an explicit consent
+        // signal (consentv2) or it records each page view in isolation.
+        <Script id="ms-clarity" strategy="afterInteractive">
+          {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window,document,"clarity","script","${clarityId}");
+window.clarity('consentv2',{ad_Storage:"granted",analytics_Storage:"granted"});`}
+        </Script>
       )}
 
       {metaPixelId && (

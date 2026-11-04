@@ -100,6 +100,12 @@ export const ustawienia = defineType({
       validation: (r) =>
         r.custom((v) => (!v || /^\d+$/.test(v) ? true : "Same cyfry")),
     }),
+    defineField({
+      name: "clarityId", title: "Microsoft Clarity ID", type: "string", group: "analityka",
+      description: "Identyfikator projektu z clarity.microsoft.com, np. z8gh9h8bzy. Puste pole = domyślny projekt Primero Studio.",
+      validation: (r) =>
+        r.custom((v) => (!v || /^[a-z0-9]+$/i.test(v) ? true : "Same litery i cyfry")),
+    }),
   ],
   preview: { prepare: () => ({ title: "Ustawienia strony" }) },
 });
