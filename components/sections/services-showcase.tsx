@@ -36,34 +36,26 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
   return (
     <section
       id="pakiety"
-      data-section-theme="dark"
-      className="relative overflow-hidden bg-wine-deep text-cream"
+      data-section-theme="light"
+      className="relative overflow-hidden bg-cream text-ink"
     >
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(80% 70% at 12% 12%, rgba(124,32,48,0.28), transparent 55%), #150406",
-        }}
-      />
-      <div className="relative z-10 mx-auto max-w-[1500px] px-6 py-20 lg:px-12 lg:py-28">
+      <div className="mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-40">
         <div className="max-w-3xl">
           <Reveal>
-            <SectionLabel index={index}>
+            <SectionLabel index={index} tone="ink">
               Pakiety
             </SectionLabel>
           </Reveal>
           <Reveal delay={0.05}>
             <Heading
-              variant="elegant"
-              className="mt-8 text-[clamp(2rem,4.6vw,3.8rem)] gold-metallic"
+              variant="strong"
+              className="mt-8 text-[clamp(2.1rem,5vw,4.5rem)] text-ink"
             >
               Pakiet dopasowany do twojego auta.
             </Heading>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-8 max-w-xl font-sans text-base leading-relaxed text-cream/60">
+            <p className="mt-8 max-w-xl font-sans text-base leading-relaxed text-ink/65">
               Pięć kompleksowych pakietów — od regularnej pielęgnacji po pełną
               renowację i ochronę ceramiczną. Zobacz zakres i orientacyjną cenę.
             </p>
@@ -71,39 +63,34 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
-          {/* Opening promo — first, same anatomy as the packages, highlighted */}
+          {/* Opening promo — regular package card + the site's "featured" style */}
           <Reveal delay={0.05}>
             <Link
               href={`/pakiety/${PROMO.slug}`}
-              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border-2 border-gold bg-wine p-6 shadow-[0_18px_48px_-20px_rgba(217,184,114,0.45)] transition-colors duration-500 ease-lux"
+              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-gold/[0.05] transition-colors duration-500 ease-lux"
             >
-              <div className="flex items-center justify-between gap-3">
-                <span className="bg-gold px-3 py-1.5 font-sans text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-wine-deep">
-                  Promocja otwarcia
+              <div className="flex flex-1 flex-col p-6">
+                <span className="self-start rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
+                  Promocja otwarcia · -50%
                 </span>
-                <span className="font-display text-xl font-semibold text-gold">
-                  -50%
-                </span>
-              </div>
-              <h3 className="mt-6 font-display text-lg font-semibold uppercase tracking-[0.14em] text-gold sm:text-xl">
-                {PROMO.name}
-              </h3>
-              <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-cream/65">
-                {PROMO.short}
-              </p>
-              <div className="mt-6 flex items-center justify-between border-t border-cream/15 pt-4">
-                <span className="flex items-baseline gap-2 font-sans">
-                  <span className="text-xs text-cream/40 line-through">
-                    {PROMO_OLD_PRICE}
-                  </span>
-                  <span className="text-base font-semibold text-gold">
+                <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-ink transition-colors duration-300 group-hover:text-champagne sm:text-xl">
+                  {PROMO.name}
+                </h3>
+                <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-ink/60">
+                  {PROMO.short}
+                </p>
+                <div className="mt-6 flex items-center justify-between border-t border-ink/10 pt-4">
+                  <span className="font-sans text-sm font-semibold text-ink">
+                    <span className="mr-2 font-normal text-ink/40 line-through">
+                      {PROMO_OLD_PRICE}
+                    </span>
                     {PROMO.price}
                   </span>
-                </span>
-                <span className="flex items-center gap-2 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-gold">
-                  Zobacz
-                  <Arrow />
-                </span>
+                  <span className="flex items-center gap-2 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-champagne">
+                    Zobacz
+                    <Arrow />
+                  </span>
+                </div>
               </div>
             </Link>
           </Reveal>
@@ -112,20 +99,20 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
             <Reveal key={s.slug} delay={0.11 + i * 0.06}>
               <Link
                 href={`/pakiety/${s.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/40"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-ink/12 bg-cream-soft/40 transition-colors duration-500 ease-lux hover:border-champagne/50"
               >
                 <div className="flex flex-1 flex-col p-6">
                   <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
                     {s.n}
                   </span>
-                  <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-cream transition-colors duration-300 group-hover:text-champagne sm:text-xl">
+                  <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-ink transition-colors duration-300 group-hover:text-champagne sm:text-xl">
                     {s.name}
                   </h3>
-                  <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-cream/55">
+                  <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-ink/60">
                     {s.short}
                   </p>
-                  <div className="mt-6 flex items-center justify-between border-t border-cream/10 pt-4">
-                    <span className="font-sans text-sm font-semibold text-cream">
+                  <div className="mt-6 flex items-center justify-between border-t border-ink/10 pt-4">
+                    <span className="font-sans text-sm font-semibold text-ink">
                       {s.price}
                     </span>
                     <span className="flex items-center gap-2 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-champagne">
