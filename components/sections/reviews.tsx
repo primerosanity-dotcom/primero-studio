@@ -39,17 +39,21 @@ const Stars = ({ small, rating }: { small?: boolean; rating: string }) => (
 export async function Reviews({
   index = "06",
   headingAs = "h2",
+  limit = 6,
 }: {
   index?: string;
   /** "h1" when this section is the page's subject, not a teaser. */
   headingAs?: "h1" | "h2";
+  /** How many reviews to show; the rest are one click away on Google Maps. */
+  limit?: number;
 }) {
   const {
-    reviews: REVIEWS,
+    reviews: ALL_REVIEWS,
     rating: RATING,
     count: REVIEW_COUNT,
     googleUrl: GOOGLE_URL,
   } = await getReviews();
+  const REVIEWS = ALL_REVIEWS.slice(0, limit);
 
   return (
     <section
@@ -138,7 +142,7 @@ export async function Reviews({
           <div
             className={
               REVIEWS.length > 0
-                ? "mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+                ? "mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
                 : "hidden"
             }
           >
@@ -166,7 +170,7 @@ export async function Reviews({
                       <Stars small rating={RATING} />
                     </span>
                   ) : null}
-                  <blockquote className="mt-3 font-sans text-sm leading-relaxed text-ink/70">
+                  <blockquote className="mt-3 line-clamp-[8] font-sans text-sm leading-relaxed text-ink/70">
                     {r.text}
                   </blockquote>
                 </figure>
