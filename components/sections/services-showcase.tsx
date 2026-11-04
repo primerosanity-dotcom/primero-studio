@@ -1,20 +1,11 @@
 import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
-import { MediaSlot } from "@/components/ui/media-slot";
 import { Monogram } from "@/components/ui/monogram";
 import { Reveal } from "@/components/reveal";
 import { getPackages, getSettings } from "@/lib/content";
 import { PROMO, PROMO_OLD_PRICE } from "@/lib/promo";
 
-/** Real studio photos used as package covers on the homepage. */
-const COVERS: Record<string, string> = {
-  essential: "/images/pakiety/essential.jpg",
-  protect: "/images/pakiety/protect.jpg",
-  ceramic: "/images/pakiety/ceramic.jpg",
-  signature: "/images/pakiety/signature.jpg",
-};
-const PROMO_COVER = PROMO.image;
 /** RESTORE (hard wax) is hidden on the homepage while the promo runs. */
 const HIDDEN_ON_HOME = new Set(["restore"]);
 
@@ -90,20 +81,9 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
               href={`/pakiety/${PROMO.slug}`}
               className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-gold/[0.05] transition-colors duration-500 ease-lux"
             >
-              <div className="relative">
-                <MediaSlot
-                  src={PROMO_COVER}
-                  alt={`${PROMO.name} — ${PROMO.tagline}`}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="aspect-[4/3] w-full"
-                />
-                <span className="absolute left-4 top-4 z-10 rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
-                  Promocja otwarcia · -50%
-                </span>
-              </div>
               <div className="flex flex-1 flex-col p-6">
-                <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
-                  00
+                <span className="self-start rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
+                  Promocja otwarcia · -50%
                 </span>
                 <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-gold sm:text-xl">
                   {PROMO.name}
@@ -133,12 +113,6 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
                 href={`/pakiety/${s.slug}`}
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/40"
               >
-                <MediaSlot
-                  src={COVERS[s.slug] ?? s.image}
-                  alt={`${s.name} — ${s.tagline}`}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="aspect-[4/3] w-full"
-                />
                 <div className="flex flex-1 flex-col p-6">
                   <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
                     {String(i + 1).padStart(2, "0")}
