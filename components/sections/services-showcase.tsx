@@ -30,6 +30,40 @@ function Arrow() {
   );
 }
 
+/** Same checkmark as the "W pakiecie" list on the package pages. */
+function Check() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      className="mt-0.5 h-4 w-4 shrink-0 text-gold"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M3 8.5 6.5 12 13 4.5" />
+    </svg>
+  );
+}
+
+function Includes({ items }: { items: string[] }) {
+  if (!items.length) return null;
+  return (
+    <ul className="mt-5 flex-1 space-y-2">
+      {items.map((item) => (
+        <li key={item} className="flex items-start gap-2.5">
+          <Check />
+          <span className="font-sans text-[13px] leading-snug text-cream/70">
+            {item}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export async function ServicesShowcase({ index = "03" }: { index?: string }) {
   const [all, { contact }] = await Promise.all([
     getPackages(),
@@ -88,9 +122,10 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
                 <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-gold sm:text-xl">
                   {PROMO.name}
                 </h3>
-                <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-cream/55">
+                <p className="mt-2 font-sans text-sm leading-relaxed text-cream/55">
                   {PROMO.short}
                 </p>
+                <Includes items={PROMO.includes} />
                 <div className="mt-6 flex items-center justify-between border-t border-cream/10 pt-4">
                   <span className="font-sans text-sm font-semibold text-cream">
                     <span className="mr-2 font-normal text-cream/40 line-through">
@@ -120,9 +155,10 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
                   <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-cream transition-colors duration-300 group-hover:text-champagne sm:text-xl">
                     {s.name}
                   </h3>
-                  <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-cream/55">
+                  <p className="mt-2 font-sans text-sm leading-relaxed text-cream/55">
                     {s.short}
                   </p>
+                  <Includes items={s.includes} />
                   <div className="mt-6 flex items-center justify-between border-t border-cream/10 pt-4">
                     <span className="font-sans text-sm font-semibold text-cream">
                       {s.price}
