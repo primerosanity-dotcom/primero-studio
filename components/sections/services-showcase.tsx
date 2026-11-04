@@ -5,30 +5,11 @@ import { Monogram } from "@/components/ui/monogram";
 import { Reveal } from "@/components/reveal";
 import { getPackages, getSettings } from "@/lib/content";
 import { PROMO, PROMO_OLD_PRICE } from "@/lib/promo";
+import { PackageBookingButton } from "@/components/package-booking-button";
+import type { Service } from "@/lib/services";
 
 /** RESTORE (hard wax) is hidden on the homepage while the promo runs. */
 const HIDDEN_ON_HOME = new Set(["restore"]);
-
-function Arrow() {
-  return (
-    <svg
-      width="24"
-      height="11"
-      viewBox="0 0 26 12"
-      fill="none"
-      aria-hidden
-      className="transition-transform duration-500 ease-lux group-hover:translate-x-1"
-    >
-      <path
-        d="M0 6h24M19 1l5 5-5 5"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 /** Same checkmark as the "W pakiecie" list on the package pages. */
 function Check() {
@@ -64,12 +45,68 @@ function Includes({ items }: { items: string[] }) {
   );
 }
 
+/** Price row + buttons, matching the Usługi cards on the homepage. */
+function CardFooter({
+  service,
+  oldPrice,
+  deliveryEnabled,
+  fallbackUrl,
+}: {
+  service: Service;
+  oldPrice?: string;
+  deliveryEnabled: boolean;
+  fallbackUrl: string;
+}) {
+  return (
+    <>
+      <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-cream/10 pt-6">
+        {oldPrice && (
+          <span className="relative inline-block font-display text-xl font-semibold text-cream/40">
+            {oldPrice}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute left-[-6%] top-1/2 h-[2px] w-[112%] -rotate-[14deg] bg-gold"
+            />
+          </span>
+        )}
+        <span className="font-display text-3xl font-bold text-cream">
+          {service.price}
+        </span>
+      </div>
+
+      <div className="mt-6 flex items-center gap-3">
+        <PackageBookingButton
+          summary={{
+            name: service.name,
+            tagline: service.tagline,
+            price: service.price,
+            cycle: service.cycle,
+            duration: service.duration,
+            includes: service.includes,
+            prefill: service.prefill,
+          }}
+          deliveryEnabled={deliveryEnabled}
+          fallbackUrl={fallbackUrl}
+        />
+        <Link
+          href={`/pakiety/${service.slug}`}
+          className="shrink-0 font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-cream/45 transition-colors duration-300 hover:text-champagne"
+        >
+          Szczegóły
+        </Link>
+      </div>
+    </>
+  );
+}
+
 export async function ServicesShowcase({ index = "03" }: { index?: string }) {
   const [all, { contact }] = await Promise.all([
     getPackages(),
     getSettings(),
   ]);
   const SERVICES = all.filter((s) => !HIDDEN_ON_HOME.has(s.slug));
+  const deliveryEnabled = contact.leadDeliveryEnabled;
+  const fallbackUrl = contact.whatsappUrl ?? contact.instagramUrl;
 
   return (
     <section
@@ -111,10 +148,7 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
           {/* Opening promo — the site's "featured" card style (see /pakiety) */}
           <Reveal delay={0.05}>
-            <Link
-              href={`/pakiety/${PROMO.slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-gold/[0.05] transition-colors duration-500 ease-lux"
-            >
+            <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-gold/[0.05] transition-colors duration-500 ease-lux">
               <div className="flex flex-1 flex-col p-6">
                 <span className="self-start rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
                   Promocja otwarcia · -50%
@@ -126,28 +160,19 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
                   {PROMO.short}
                 </p>
                 <Includes items={PROMO.includes} />
-                <div className="mt-6 flex items-center justify-between border-t border-cream/10 pt-4">
-                  <span className="font-sans text-sm font-semibold text-cream">
-                    <span className="mr-2 font-normal text-cream/40 line-through">
-                      {PROMO_OLD_PRICE}
-                    </span>
-                    {PROMO.price}
-                  </span>
-                  <span className="flex items-center gap-2 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-champagne">
-                    Zobacz
-                    <Arrow />
-                  </span>
-                </div>
+                <CardFooter
+                  service={PROMO}
+                  oldPrice={PROMO_OLD_PRICE}
+                  deliveryEnabled={deliveryEnabled}
+                  fallbackUrl={fallbackUrl}
+                />
               </div>
-            </Link>
+            </article>
           </Reveal>
 
           {SERVICES.map((s, i) => (
             <Reveal key={s.slug} delay={0.11 + i * 0.06}>
-              <Link
-                href={`/pakiety/${s.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/40"
-              >
+              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/40">
                 <div className="flex flex-1 flex-col p-6">
                   <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
                     {String(i + 1).padStart(2, "0")}
@@ -159,17 +184,13 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
                     {s.short}
                   </p>
                   <Includes items={s.includes} />
-                  <div className="mt-6 flex items-center justify-between border-t border-cream/10 pt-4">
-                    <span className="font-sans text-sm font-semibold text-cream">
-                      {s.price}
-                    </span>
-                    <span className="flex items-center gap-2 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-champagne">
-                      Zobacz
-                      <Arrow />
-                    </span>
-                  </div>
+                  <CardFooter
+                    service={s}
+                    deliveryEnabled={deliveryEnabled}
+                    fallbackUrl={fallbackUrl}
+                  />
                 </div>
-              </Link>
+              </article>
             </Reveal>
           ))}
 
