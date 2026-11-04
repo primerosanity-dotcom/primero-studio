@@ -42,27 +42,20 @@ export async function HomeServices({ index = "03" }: { index?: string }) {
   return (
     <section
       id="uslugi-home"
-      data-section-theme="dark"
-      className="relative overflow-hidden bg-wine-deep text-cream"
+      data-section-theme="light"
+      className="relative overflow-hidden bg-cream text-ink"
     >
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(80% 70% at 12% 12%, rgba(124,32,48,0.28), transparent 55%), #150406",
-        }}
-      />
-
-      <div className="relative z-10 mx-auto max-w-[1500px] px-6 py-20 lg:px-12 lg:py-28">
+      <div className="relative z-10 mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-40">
         <div className="max-w-3xl">
           <Reveal>
-            <SectionLabel index={index}>Usługi</SectionLabel>
+            <SectionLabel index={index} tone="ink">
+              Usługi
+            </SectionLabel>
           </Reveal>
           <Reveal delay={0.05}>
             <Heading
-              variant="elegant"
-              className="mt-8 text-[clamp(2rem,4.6vw,3.8rem)] gold-metallic"
+              variant="strong"
+              className="mt-8 text-[clamp(2.1rem,5vw,4.5rem)] text-ink"
             >
               Najczęściej wybierane usługi.
             </Heading>
@@ -72,10 +65,11 @@ export async function HomeServices({ index = "03" }: { index?: string }) {
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
           {POPULAR.map((s, i) => (
             <Reveal key={s.id} delay={0.05 + i * 0.06}>
-              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/40">
+              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-ink/12 bg-cream-soft/40 transition-colors duration-500 ease-lux hover:border-champagne/50">
                 <MediaSlot
                   src={s.image}
                   alt={s.title}
+                  tone="light"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="aspect-[16/9] w-full"
                 />
@@ -85,20 +79,20 @@ export async function HomeServices({ index = "03" }: { index?: string }) {
                     <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
                       {s.n}
                     </span>
-                    <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-cream/40">
+                    <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-ink/45">
                       {s.duration}
                     </span>
                   </div>
 
-                  <h3 className="mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em] text-cream">
+                  <h3 className="mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em] text-ink">
                     {s.title}
                   </h3>
-                  <p className="mt-3 flex-1 font-sans text-sm leading-relaxed text-cream/55">
+                  <p className="mt-3 flex-1 font-sans text-sm leading-relaxed text-ink/60">
                     {s.desc}
                   </p>
 
-                  <div className="mt-6 flex items-baseline gap-2 border-t border-cream/10 pt-6">
-                    <span className="font-display text-3xl font-bold text-cream">
+                  <div className="mt-6 flex items-baseline gap-2 border-t border-ink/10 pt-6">
+                    <span className="font-display text-3xl font-bold text-ink">
                       {s.price}
                     </span>
                   </div>
@@ -113,7 +107,7 @@ export async function HomeServices({ index = "03" }: { index?: string }) {
                     </Link>
                     <Link
                       href="/uslugi"
-                      className="shrink-0 font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-cream/45 transition-colors duration-300 hover:text-champagne"
+                      className="shrink-0 font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-ink/50 transition-colors duration-300 hover:text-champagne"
                     >
                       Szczegóły
                     </Link>
@@ -127,7 +121,7 @@ export async function HomeServices({ index = "03" }: { index?: string }) {
         <Reveal delay={0.25}>
           <ArrowButton
             href="/uslugi"
-            tone="dark"
+            tone="light"
             variant="outline"
             className="mt-10 w-full justify-between lg:mt-12"
           >

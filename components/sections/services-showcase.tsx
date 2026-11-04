@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
-import { MediaSlot } from "@/components/ui/media-slot";
 import { Monogram } from "@/components/ui/monogram";
 import { Reveal } from "@/components/reveal";
 import { getPackages, getSettings } from "@/lib/content";
+import { PROMO, PROMO_OLD_PRICE } from "@/lib/promo";
 
 function Arrow() {
   return (
@@ -36,26 +36,34 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
   return (
     <section
       id="pakiety"
-      data-section-theme="light"
-      className="relative overflow-hidden bg-cream text-ink"
+      data-section-theme="dark"
+      className="relative overflow-hidden bg-wine-deep text-cream"
     >
-      <div className="mx-auto max-w-[1500px] px-6 pb-16 pt-28 lg:px-12 lg:pb-24 lg:pt-40">
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(80% 70% at 12% 12%, rgba(124,32,48,0.28), transparent 55%), #150406",
+        }}
+      />
+      <div className="relative z-10 mx-auto max-w-[1500px] px-6 py-20 lg:px-12 lg:py-28">
         <div className="max-w-3xl">
           <Reveal>
-            <SectionLabel index={index} tone="ink">
+            <SectionLabel index={index}>
               Pakiety
             </SectionLabel>
           </Reveal>
           <Reveal delay={0.05}>
             <Heading
-              variant="strong"
-              className="mt-8 text-[clamp(2.1rem,5vw,4.5rem)] text-ink"
+              variant="elegant"
+              className="mt-8 text-[clamp(2rem,4.6vw,3.8rem)] gold-metallic"
             >
               Pakiet dopasowany do twojego auta.
             </Heading>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-8 max-w-xl font-sans text-base leading-relaxed text-ink/65">
+            <p className="mt-8 max-w-xl font-sans text-base leading-relaxed text-cream/60">
               Pięć kompleksowych pakietów — od regularnej pielęgnacji po pełną
               renowację i ochronę ceramiczną. Zobacz zakres i orientacyjną cenę.
             </p>
@@ -63,31 +71,61 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+          {/* Opening promo — first, same anatomy as the packages, highlighted */}
+          <Reveal delay={0.05}>
+            <Link
+              href={`/pakiety/${PROMO.slug}`}
+              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border-2 border-gold bg-wine p-6 shadow-[0_18px_48px_-20px_rgba(217,184,114,0.45)] transition-colors duration-500 ease-lux"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <span className="bg-gold px-3 py-1.5 font-sans text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-wine-deep">
+                  Promocja otwarcia
+                </span>
+                <span className="font-display text-xl font-semibold text-gold">
+                  -50%
+                </span>
+              </div>
+              <h3 className="mt-6 font-display text-lg font-semibold uppercase tracking-[0.14em] text-gold sm:text-xl">
+                {PROMO.name}
+              </h3>
+              <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-cream/65">
+                {PROMO.short}
+              </p>
+              <div className="mt-6 flex items-center justify-between border-t border-cream/15 pt-4">
+                <span className="flex items-baseline gap-2 font-sans">
+                  <span className="text-xs text-cream/40 line-through">
+                    {PROMO_OLD_PRICE}
+                  </span>
+                  <span className="text-base font-semibold text-gold">
+                    {PROMO.price}
+                  </span>
+                </span>
+                <span className="flex items-center gap-2 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-gold">
+                  Zobacz
+                  <Arrow />
+                </span>
+              </div>
+            </Link>
+          </Reveal>
+
           {SERVICES.map((s, i) => (
-            <Reveal key={s.slug} delay={0.05 + i * 0.06}>
+            <Reveal key={s.slug} delay={0.11 + i * 0.06}>
               <Link
                 href={`/pakiety/${s.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-ink/12 bg-cream-soft/40 transition-colors duration-500 ease-lux hover:border-champagne/50"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/12 bg-wine/40 transition-colors duration-500 ease-lux hover:border-champagne/40"
               >
-                <MediaSlot
-                  src={s.image}
-                  alt={`${s.name} — ${s.tagline}`}
-                  tone="light"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="aspect-[4/3] w-full"
-                />
                 <div className="flex flex-1 flex-col p-6">
                   <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
                     {s.n}
                   </span>
-                  <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-ink transition-colors duration-300 group-hover:text-champagne sm:text-xl">
+                  <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-cream transition-colors duration-300 group-hover:text-champagne sm:text-xl">
                     {s.name}
                   </h3>
-                  <p className="mt-2 font-sans text-sm leading-relaxed text-ink/60">
+                  <p className="mt-2 flex-1 font-sans text-sm leading-relaxed text-cream/55">
                     {s.short}
                   </p>
-                  <div className="mt-6 flex items-center justify-between border-t border-ink/10 pt-4">
-                    <span className="font-sans text-sm font-semibold text-ink">
+                  <div className="mt-6 flex items-center justify-between border-t border-cream/10 pt-4">
+                    <span className="font-sans text-sm font-semibold text-cream">
                       {s.price}
                     </span>
                     <span className="flex items-center gap-2 font-sans text-[0.66rem] font-medium uppercase tracking-[0.24em] text-champagne">
