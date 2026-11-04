@@ -131,6 +131,7 @@ export default function PolitykaPrywatnosciPage() {
             "Vercel — hosting strony i serwery, przez które przechodzi formularz.",
             "Sanity — system zarządzania treścią strony (nie przechowuje danych ze zgłoszeń).",
             "Google (Google Analytics, Google Tag Manager) i Meta Platforms (Meta Pixel) — statystyka ruchu i pomiar skuteczności reklam, o ile wyrazisz zgodę na pliki cookies.",
+            "Microsoft (Microsoft Clarity) — mapy kliknięć i anonimowe nagrania sposobu korzystania ze strony (ruch myszy, przewijanie, kliknięcia), o ile wyrazisz zgodę na pliki cookies. Treść wpisywana w formularze jest maskowana i nie trafia do nagrań.",
             "Biuro rachunkowe i dostawcy usług księgowych — w zakresie dokumentów rozliczeniowych.",
           ],
         },
@@ -183,7 +184,7 @@ export default function PolitykaPrywatnosciPage() {
         {
           list: [
             "Cookies niezbędne — konieczne do prawidłowego działania strony i formularza. Nie wymagają zgody.",
-            "Cookies analityczne i marketingowe — Google Analytics, Google Tag Manager i Meta Pixel. Pozwalają nam zobaczyć, które podstrony są odwiedzane i skąd trafiasz na stronę, oraz mierzyć skuteczność reklam. Używamy ich wyłącznie za Twoją zgodą.",
+            "Cookies analityczne i marketingowe — Google Analytics, Google Tag Manager, Meta Pixel i Microsoft Clarity. Pozwalają nam zobaczyć, które podstrony są odwiedzane, skąd trafiasz na stronę i w którym miejscu strona sprawia trudność, oraz mierzyć skuteczność reklam. Używamy ich wyłącznie za Twoją zgodą.",
           ],
         },
         {
