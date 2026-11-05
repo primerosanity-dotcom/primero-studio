@@ -14,8 +14,9 @@ export const client = sanityConfigured
   : null;
 
 /**
- * Tagged fetch. The tag lets the Sanity webhook invalidate exactly the content
- * that changed; the time-based revalidate is a safety net if a webhook is lost.
+ * Tagged fetch. The tag lets a Sanity webhook invalidate exactly the content
+ * that changed; the 60 s time-based revalidate keeps admin edits flowing
+ * even without the webhook.
  * Returns null on any failure so callers can fall back to bundled content.
  */
 export async function sanityFetch<T>({
@@ -31,7 +32,9 @@ export async function sanityFetch<T>({
 
   try {
     return await client.fetch<T>(query, params, {
-      next: { tags, revalidate: 3600 },
+      // No Sanity webhook is set up, so the time-based refresh is what makes
+      // admin edits show up: at most ~1 minute behind.
+      next: { tags, revalidate: 60 },
     });
   } catch (error) {
     console.error("[sanity] fetch failed, using bundled content", error);
