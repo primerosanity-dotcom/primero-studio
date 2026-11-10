@@ -83,7 +83,7 @@ export function Gallery({
           >
             <Image
               src={src}
-              alt={`${alt} — kadr ${i + 1}`}
+              alt={`${alt} — zdjęcie ${i + 1}`}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
               className="object-cover transition-transform duration-700 ease-lux group-hover:scale-105"
@@ -121,7 +121,7 @@ export function Gallery({
               <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl">
                 <Image
                   src={images[openAt]}
-                  alt={`${alt} — kadr ${openAt + 1}`}
+                  alt={`${alt} — zdjęcie ${openAt + 1}`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 1024px"
                   className="object-contain"

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Monogram } from "@/components/ui/monogram";
 import { Wordmark } from "@/components/ui/wordmark";
-import { getSettings } from "@/lib/content";
+import { getPointServices, getSettings } from "@/lib/content";
 
 const NAV = [
   { label: "Studio", href: "/" },
@@ -14,11 +14,14 @@ const NAV = [
 ];
 
 export async function Footer() {
-  const { contact, hours } = await getSettings();
+  const [{ contact, hours }, services] = await Promise.all([
+    getSettings(),
+    getPointServices(),
+  ]);
 
   return (
     <footer className="relative border-t border-cream/[0.07] bg-[#150406] text-cream">
-      <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-12 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10 lg:px-12 lg:py-20">
+      <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-12 px-6 py-16 sm:grid-cols-2 lg:grid-cols-5 lg:gap-10 lg:px-12 lg:py-20">
         {/* Brand */}
         <div className="sm:col-span-2 lg:col-span-1">
           <Link
@@ -48,6 +51,25 @@ export async function Footer() {
                   className="font-sans text-sm text-cream/70 transition-colors duration-300 hover:text-gold"
                 >
                   {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Services — keyword anchors into each landing page */}
+        <nav aria-label="Usługi detailingowe">
+          <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-cream/40">
+            Usługi w Łodzi
+          </span>
+          <ul className="mt-5 space-y-3">
+            {services.map((s) => (
+              <li key={s.id}>
+                <Link
+                  href={`/uslugi/${s.id}`}
+                  className="font-sans text-sm text-cream/70 transition-colors duration-300 hover:text-gold"
+                >
+                  {s.title}
                 </Link>
               </li>
             ))}

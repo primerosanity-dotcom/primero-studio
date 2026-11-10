@@ -15,6 +15,8 @@ export type Project = {
   image?: string;
   /** Extra shots shown in the gallery under the description */
   gallery?: string[];
+  /** Last edit in Sanity — feeds the sitemap lastmod. */
+  updatedAt?: string;
 };
 
 export const PROJECTS: Project[] = [

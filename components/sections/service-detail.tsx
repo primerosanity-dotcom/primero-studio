@@ -24,6 +24,22 @@ function Check() {
   );
 }
 
+/** Package line items that have their own service page, matched by wording. */
+const SERVICE_LINKS: [RegExp, string][] = [
+  [/^mycie detailingowe/i, "mycie-detailingowe"],
+  [/^podstawowa pielęgnacja wnętrza/i, "pielegnacja-wnetrza"],
+  [/^pranie wnętrza/i, "pranie-wnetrza"],
+  [/^dekontaminacja/i, "dekontaminacja"],
+  [/^polerowanie/i, "polerowanie"],
+  [/^powłoka ceramiczna/i, "powloka-ceramiczna"],
+  [/^twardy wosk/i, "twardy-wosk"],
+  [/^czyszczenie szyb/i, "czyszczenie-szyb"],
+];
+
+function serviceHref(item: string): string | null {
+  return SERVICE_LINKS.find(([re]) => re.test(item))?.[1] ?? null;
+}
+
 function InfoCard({
   label,
   children,
@@ -95,15 +111,15 @@ export async function ServiceDetail({
               <Heading
                 as="h1"
                 variant="elegant"
-                className="mt-8 text-[clamp(2.2rem,5vw,4.2rem)] gold-metallic"
+                className="mt-8 text-[clamp(2.2rem,5vw,4.2rem)]"
               >
-                {service.name}
+                <span className="gold-metallic block">{service.name}</span>
+                {/* Part of the H1 so the heading names the service and city,
+                    not just the package brand. */}
+                <span className="mt-4 block max-w-md font-sans text-lg font-normal normal-case leading-relaxed tracking-normal text-cream/80">
+                  {service.tagline} — pakiet detailingu w Łodzi
+                </span>
               </Heading>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-4 max-w-md font-sans text-lg leading-relaxed text-cream/80">
-                {service.tagline}
-              </p>
             </Reveal>
             <Reveal delay={0.15}>
               <div className="mt-8 flex flex-wrap items-center gap-6">
@@ -192,14 +208,26 @@ export async function ServiceDetail({
 
               <InfoCard label="W pakiecie">
                 <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-1">
-                  {service.includes.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5">
-                      <Check />
-                      <span className="font-sans text-sm leading-snug text-cream/80">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
+                  {service.includes.map((item) => {
+                    const slug = serviceHref(item);
+                    return (
+                      <li key={item} className="flex items-start gap-2.5">
+                        <Check />
+                        {slug ? (
+                          <Link
+                            href={`/uslugi/${slug}`}
+                            className="font-sans text-sm leading-snug text-cream/80 underline decoration-cream/20 underline-offset-4 transition-colors hover:text-gold hover:decoration-gold"
+                          >
+                            {item}
+                          </Link>
+                        ) : (
+                          <span className="font-sans text-sm leading-snug text-cream/80">
+                            {item}
+                          </span>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               </InfoCard>
 

@@ -4,7 +4,9 @@ import { getPackage, getPackages } from "@/lib/content";
 import { ServiceDetail } from "@/components/sections/service-detail";
 import { LeadSection } from "@/components/sections/lead-section";
 import { JsonLd } from "@/components/seo/json-ld";
-import { breadcrumbSchema, OG_SHARED } from "@/lib/seo";
+import { breadcrumbSchema, OG_SHARED, serviceSchema } from "@/lib/seo";
+import { packageFaq } from "@/lib/faq";
+import { Faq } from "@/components/sections/faq";
 
 export async function generateStaticParams() {
   return (await getPackages()).map((s) => ({ slug: s.slug }));
@@ -18,16 +20,21 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = await getPackage(slug);
   if (!service) return {};
-  const description = `${service.name} w Łodzi — ${service.short} ${service.price}.`;
+  // Price and time first: Google cuts descriptions around 155 characters.
+  const description = `Pakiet ${service.name} w Łodzi — ${service.tagline.toLowerCase()}. Cena ${service.price}, czas: ${service.duration.replace(/^~/, "ok. ")}. ${service.short}`;
+  const title = `${service.name} — ${service.tagline.toLowerCase()}, Łódź | Primero Studio`;
   return {
     title: {
-      absolute: `${service.name} — pakiet detailingu w Łodzi | Primero Studio`,
+      absolute:
+        title.length <= 65
+          ? title
+          : `${service.name} — pakiet detailingu w Łodzi | Primero Studio`,
     },
     description,
     alternates: { canonical: `/pakiety/${slug}` },
     openGraph: {
       ...OG_SHARED,
-      title: `${service.name} — PRIMERO.STUDIO`,
+      title: `Pakiet ${service.name} — ${service.tagline} | Primero Studio`,
       description,
       url: `/pakiety/${slug}`,
       type: "article",
@@ -54,7 +61,18 @@ export default async function ServicePage({
           { name: service.name, path: `/pakiety/${slug}` },
         ])}
       />
+      <JsonLd
+        schema={serviceSchema({
+          name: `Pakiet ${service.name} — ${service.tagline}`,
+          serviceType: service.tagline,
+          description: `${service.short} ${service.problem}`,
+          path: `/pakiety/${slug}`,
+          price: service.price,
+          image: service.image,
+        })}
+      />
       <ServiceDetail service={service} />
+      <Faq items={packageFaq(service)} title={`Pakiet ${service.name} — pytania.`} />
       <LeadSection />
     </>
   );

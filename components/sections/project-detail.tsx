@@ -131,7 +131,7 @@ export async function ProjectDetail({ project }: { project: Project }) {
           <Reveal delay={0.05} className="order-1 lg:order-2">
             <MediaSlot
               src={project.image}
-              alt={`${project.car} — ${project.service}`}
+              alt={`${project.car} — ${project.service.toLowerCase()}, Primero Studio Łódź`}
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="h-full min-h-[280px] w-full rounded-2xl"
@@ -143,7 +143,10 @@ export async function ProjectDetail({ project }: { project: Project }) {
         {gallery.length > 0 && (
           <Reveal>
             <div className="mt-5">
-              <Gallery images={gallery} alt={project.car} />
+              <Gallery
+                images={gallery}
+                alt={`${project.car} po detailingu w Primero Studio Łódź`}
+              />
             </div>
           </Reveal>
         )}

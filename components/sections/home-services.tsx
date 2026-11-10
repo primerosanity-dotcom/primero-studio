@@ -85,7 +85,12 @@ export async function HomeServices({ index = "03" }: { index?: string }) {
                   </div>
 
                   <h3 className="mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em] text-ink">
-                    {s.title}
+                    <Link
+                      href={`/uslugi/${s.id}`}
+                      className="transition-colors duration-300 hover:text-champagne"
+                    >
+                      {s.title}
+                    </Link>
                   </h3>
                   <p className="mt-3 flex-1 font-sans text-sm leading-relaxed text-ink/60">
                     {s.desc}
@@ -106,7 +111,8 @@ export async function HomeServices({ index = "03" }: { index?: string }) {
                       <Arrow className="transition-transform duration-500 ease-lux group-hover/btn:translate-x-1" />
                     </Link>
                     <Link
-                      href="/uslugi"
+                      href={`/uslugi/${s.id}`}
+                      aria-label={`${s.title} — szczegóły`}
                       className="shrink-0 font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-ink/50 transition-colors duration-300 hover:text-champagne"
                     >
                       Szczegóły

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { Heading } from "@/components/ui/heading";
@@ -23,6 +23,9 @@ const rise = {
 
 const KEYWORDS = ["Korekta lakieru", "Ceramika", "PPF", "Wnętrza"];
 
+// Generic on purpose: the photo is swapped in Sanity, the alt would go stale.
+const HERO_ALT = "Samochód po detailingu w Primero Studio w Łodzi";
+
 export function Hero({
   desktopSrc,
   mobileSrc,
@@ -35,6 +38,16 @@ export function Hero({
   fallbackUrl: string;
 }) {
   const [bookingOpen, setBookingOpen] = useState(false);
+  // One <picture> instead of two hidden/shown <Image>s: with two, both carried
+  // `priority`, so every phone downloaded the 2400px desktop shot as well —
+  // the LCP image. The browser now fetches only the source that matches.
+  const common = { alt: HERO_ALT, fill: true, sizes: "100vw", quality: 80 };
+  const {
+    props: { srcSet: desktopSet },
+  } = getImageProps({ ...common, src: desktopSrc });
+  const {
+    props: { srcSet: mobileSet, ...img },
+  } = getImageProps({ ...common, src: mobileSrc });
 
   return (
     <section
@@ -49,24 +62,18 @@ export function Hero({
         transition={{ duration: 1.6, ease: EASE }}
         className="absolute inset-0"
       >
-        {/* Desktop / tablet — landscape crop */}
-        <Image
-          src={desktopSrc}
-          alt="BMW M340i po detailingu w Primero Studio"
-          fill
-          priority
-          sizes="100vw"
-          className="hidden object-cover object-center sm:block"
-        />
-        {/* Mobile — dedicated portrait crop */}
-        <Image
-          src={mobileSrc}
-          alt="BMW M340i po detailingu w Primero Studio"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[center_top] sm:hidden"
-        />
+        {/* Landscape crop from 640px up, dedicated portrait crop below. */}
+        <picture>
+          <source media="(min-width: 640px)" srcSet={desktopSet} sizes="100vw" />
+          <img
+            {...img}
+            alt={HERO_ALT}
+            srcSet={mobileSet}
+            loading="eager"
+            fetchPriority="high"
+            className="object-cover object-[center_top] sm:object-center"
+          />
+        </picture>
       </motion.div>
 
       {/* Readability scrims: darken the left (text) and the bottom */}
@@ -87,8 +94,19 @@ export function Hero({
             variant="elegant"
             className="text-[clamp(1.75rem,7.6vw,4.5rem)]"
           >
+            {/* The search phrase rides in the H1 as a quiet eyebrow, so the
+                display line can stay a slogan. */}
             <motion.span
               custom={0}
+              variants={rise}
+              initial="hidden"
+              animate="show"
+              className="mb-6 block font-sans text-[11px] font-medium tracking-[0.34em] text-champagne/90"
+            >
+              Detailing samochodowy · Łódź
+            </motion.span>
+            <motion.span
+              custom={1}
               variants={rise}
               initial="hidden"
               animate="show"
@@ -97,7 +115,7 @@ export function Hero({
               Pielęgnacja aut
             </motion.span>
             <motion.span
-              custom={1}
+              custom={2}
               variants={rise}
               initial="hidden"
               animate="show"
@@ -108,7 +126,7 @@ export function Hero({
           </Heading>
 
           <motion.div
-            custom={2}
+            custom={3}
             variants={rise}
             initial="hidden"
             animate="show"
@@ -116,7 +134,7 @@ export function Hero({
           />
 
           <motion.p
-            custom={3}
+            custom={4}
             variants={rise}
             initial="hidden"
             animate="show"
@@ -127,7 +145,7 @@ export function Hero({
           </motion.p>
 
           <motion.div
-            custom={4}
+            custom={5}
             variants={rise}
             initial="hidden"
             animate="show"
@@ -159,7 +177,7 @@ export function Hero({
         >
           <div className="flex items-center gap-6">
             <span className="font-sans text-[11px] tracking-[0.3em] text-cream/60">
-              01 <span className="text-cream/30">/ 07</span>
+              01 <span className="text-cream/30">/ 08</span>
             </span>
             <span aria-hidden className="h-9 w-px bg-cream/20" />
           </div>

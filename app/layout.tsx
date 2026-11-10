@@ -37,11 +37,10 @@ export const metadata: Metadata = {
     locale: "pl_PL",
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-  },
+  // Card type only. A title here would be inherited by every page that does
+  // not override it, so X showed the home title on all of them; without one,
+  // X falls back to each page's own og:title / og:description.
+  twitter: { card: "summary_large_image" },
   robots: {
     index: true,
     follow: true,

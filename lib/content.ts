@@ -27,7 +27,7 @@ type PakietRow = {
   name: string; slug: string; order: number; tagline?: string; short?: string;
   price?: string; priceValue?: number; duration?: string; cycle?: string;
   problem?: string; effect?: string[]; includes?: string[]; popular?: boolean;
-  image?: SanityImage;
+  image?: SanityImage; _updatedAt?: string;
 };
 
 export async function getPackages(): Promise<Service[]> {
@@ -35,7 +35,7 @@ export async function getPackages(): Promise<Service[]> {
     tags: ["pakiet"],
     query: `*[_type == "pakiet"] | order(order asc){
       name, "slug": slug.current, order, tagline, short, price, priceValue,
-      duration, cycle, problem, effect, includes, popular, image
+      duration, cycle, problem, effect, includes, popular, image, _updatedAt
     }`,
   });
   if (!rows?.length) return SERVICES;
@@ -56,6 +56,7 @@ export async function getPackages(): Promise<Service[]> {
     effect: r.effect ?? [],
     includes: r.includes ?? [],
     popular: r.popular,
+    updatedAt: r._updatedAt,
   }));
 }
 
@@ -68,13 +69,14 @@ export async function getPackage(slug: string): Promise<Service | undefined> {
 type UslugaRow = {
   title: string; slug: string; order: number;
   desc?: string; price?: string; duration?: string; image?: SanityImage;
+  _updatedAt?: string;
 };
 
 export async function getPointServices(): Promise<PointService[]> {
   const rows = await sanityFetch<UslugaRow[]>({
     tags: ["usluga"],
     query: `*[_type == "usluga"] | order(order asc){
-      title, "slug": slug.current, order, desc, price, duration, image
+      title, "slug": slug.current, order, desc, price, duration, image, _updatedAt
     }`,
   });
   if (!rows?.length) return POINT_SERVICES;
@@ -87,7 +89,14 @@ export async function getPointServices(): Promise<PointService[]> {
     price: r.price ?? "",
     duration: r.duration ?? "",
     image: imageUrl(r.image as never) ?? undefined,
+    updatedAt: r._updatedAt,
   }));
+}
+
+export async function getPointService(
+  slug: string,
+): Promise<PointService | undefined> {
+  return (await getPointServices()).find((s) => s.id === slug);
 }
 
 /* ── Realizacje ──────────────────────────────────────────── */
@@ -95,7 +104,7 @@ export async function getPointServices(): Promise<PointService[]> {
 type RealizacjaRow = {
   car: string; slug: string; order: number; service?: string; short?: string;
   description?: string; steps?: string[]; duration?: string;
-  image?: SanityImage; gallery?: SanityImage[];
+  image?: SanityImage; gallery?: SanityImage[]; _updatedAt?: string;
 };
 
 export async function getProjects(): Promise<Project[]> {
@@ -103,7 +112,7 @@ export async function getProjects(): Promise<Project[]> {
     tags: ["realizacja"],
     query: `*[_type == "realizacja"] | order(order asc){
       car, "slug": slug.current, order, service, short, description, steps,
-      duration, image, gallery
+      duration, image, gallery, _updatedAt
     }`,
   });
   if (!rows?.length) return PROJECTS;
@@ -120,6 +129,7 @@ export async function getProjects(): Promise<Project[]> {
     gallery: (r.gallery ?? [])
       .map((g) => imageUrl(g as never, 2000))
       .filter((u): u is string => Boolean(u)),
+    updatedAt: r._updatedAt,
   }));
 }
 

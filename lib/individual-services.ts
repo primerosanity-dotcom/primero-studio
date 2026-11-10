@@ -9,6 +9,8 @@ export type PointService = {
   duration: string;
   /** Photo path — drop a real file in /public/images/uslugi/<id>.png */
   image?: string;
+  /** Last edit in Sanity — feeds the sitemap lastmod. */
+  updatedAt?: string;
 };
 
 /**

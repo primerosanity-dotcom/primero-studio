@@ -6,12 +6,21 @@ import { ServicesShowcase } from "@/components/sections/services-showcase";
 import { ProjectsGrid } from "@/components/sections/projects-grid";
 import { Reviews } from "@/components/sections/reviews";
 import { LeadSection } from "@/components/sections/lead-section";
-import { getSettings } from "@/lib/content";
+import { getPackages, getPointServices, getSettings } from "@/lib/content";
+import { Faq } from "@/components/sections/faq";
+import { homeFaq } from "@/lib/faq";
 import { JsonLd } from "@/components/seo/json-ld";
 import { websiteSchema } from "@/lib/seo";
 
 export default async function Home() {
-  const { heroDesktop, heroMobile, contact } = await getSettings();
+  const [{ heroDesktop, heroMobile, contact, hours }, packages, services] =
+    await Promise.all([getSettings(), getPackages(), getPointServices()]);
+  const faq = homeFaq({
+    packages,
+    services,
+    address: contact.addressLines.join(", "),
+    hours,
+  });
 
   return (
     <>
@@ -28,6 +37,7 @@ export default async function Home() {
       <HomeServices index="05" />
       <ProjectsGrid index="06" limit={3} cta />
       <Reviews index="07" />
+      <Faq items={faq} index="08" />
       <LeadSection withLocation />
     </>
   );

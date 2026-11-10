@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Pricing } from "@/components/sections/pricing";
 import { LeadSection } from "@/components/sections/lead-section";
 import { getPackages, getSettings } from "@/lib/content";
-import { OG_SHARED } from "@/lib/seo";
+import { itemListSchema, OG_SHARED } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/pakiety" },
@@ -20,6 +21,12 @@ export default async function PakietyPage() {
 
   return (
     <>
+      <JsonLd
+        schema={itemListSchema(
+          "Pakiety detailingu — Primero Studio Łódź",
+          services.map((s) => ({ name: `Pakiet ${s.name}`, path: `/pakiety/${s.slug}` })),
+        )}
+      />
       <Pricing contact={contact} services={services} />
       <LeadSection />
     </>

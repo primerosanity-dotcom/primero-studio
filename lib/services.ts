@@ -27,6 +27,8 @@ export type Service = {
   includes: string[];
   /** Highlight as the most popular pick */
   popular?: boolean;
+  /** Last edit in Sanity — feeds the sitemap lastmod. */
+  updatedAt?: string;
 };
 
 export const SERVICES: Service[] = [

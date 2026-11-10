@@ -112,10 +112,16 @@ export function toOpeningHours(
 }
 
 /** schema.org node describing the studio itself — the local-search payload. */
-export function localBusinessSchema(settings: {
-  hours: { days: string; hours: string }[];
-  aboutText: string;
-}) {
+export function localBusinessSchema(
+  settings: {
+    hours: { days: string; hours: string }[];
+    aboutText: string;
+  },
+  catalog?: {
+    packages: { name: string; slug: string; price: string }[];
+    services: { title: string; id: string; price: string }[];
+  },
+) {
   const contact = getContactConfig();
   const [street, city] = contact.addressLines;
 
@@ -157,6 +163,69 @@ export function localBusinessSchema(settings: {
     openingHoursSpecification: toOpeningHours(settings.hours),
     // Ties the site to the Google Business Profile as one and the same entity.
     sameAs: [contact.instagramUrl, COMPANY.googleProfileUrl].filter(Boolean),
+    knowsAbout: [
+      "detailing samochodowy",
+      "korekta lakieru",
+      "polerowanie lakieru",
+      "powłoka ceramiczna",
+      "folia ochronna PPF",
+      "pranie tapicerki samochodowej",
+    ],
+    ...(catalog
+      ? {
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "Detailing samochodowy — Łódź",
+            itemListElement: [
+              offerCatalog(
+                "Usługi detailingowe",
+                catalog.services.map((s) => ({
+                  name: s.title,
+                  path: `/uslugi/${s.id}`,
+                  price: s.price,
+                })),
+              ),
+              offerCatalog(
+                "Pakiety detailingu",
+                catalog.packages.map((p) => ({
+                  name: `Pakiet ${p.name}`,
+                  path: `/pakiety/${p.slug}`,
+                  price: p.price,
+                })),
+              ),
+            ],
+          },
+        }
+      : {}),
+  };
+}
+
+function offerCatalog(
+  name: string,
+  items: { name: string; path: string; price: string }[],
+) {
+  return {
+    "@type": "OfferCatalog",
+    name,
+    itemListElement: items.map((item) => {
+      const amount = parsePrice(item.price);
+      return {
+        "@type": "Offer",
+        url: absoluteUrl(item.path),
+        priceCurrency: "PLN",
+        ...(amount
+          ? {
+              price: amount,
+              priceSpecification: {
+                "@type": "PriceSpecification",
+                priceCurrency: "PLN",
+                minPrice: amount,
+              },
+            }
+          : {}),
+        itemOffered: { "@type": "Service", name: item.name },
+      };
+    }),
   };
 }
 
@@ -188,6 +257,89 @@ export function breadcrumbSchema(
       position: i + 1,
       name: item.name,
       item: absoluteUrl(item.path),
+    })),
+  };
+}
+
+/** "od 1 490 zł" → 1490. Null when the text carries no number. */
+export function parsePrice(text: string): number | null {
+  const match = text.replace(/\s/g, "").match(/\d+(?:[.,]\d+)?/);
+  return match ? Number(match[0].replace(",", ".")) : null;
+}
+
+/**
+ * A service the studio sells, with its starting price. Prices are "from"
+ * prices, so they go out as a minPrice on a PriceSpecification rather than a
+ * fixed `price` Google would read as the exact amount.
+ */
+export function serviceSchema(input: {
+  name: string;
+  description: string;
+  path: string;
+  price: string;
+  image?: string;
+  serviceType?: string;
+}) {
+  const amount = parsePrice(input.price);
+  const url = absoluteUrl(input.path);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name: input.name,
+    serviceType: input.serviceType ?? input.name,
+    description: input.description,
+    url,
+    ...(input.image ? { image: absoluteUrl(input.image) } : {}),
+    provider: { "@id": `${SITE_URL}/#studio` },
+    areaServed: { "@type": "City", name: "Łódź" },
+    ...(amount
+      ? {
+          offers: {
+            "@type": "Offer",
+            url,
+            priceCurrency: "PLN",
+            price: amount,
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "PLN",
+              minPrice: amount,
+            },
+            availability: "https://schema.org/InStock",
+            seller: { "@id": `${SITE_URL}/#studio` },
+          },
+        }
+      : {}),
+  };
+}
+
+export function faqSchema(items: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}
+
+/** A listing page (all services, all packages, all projects) as an ItemList. */
+export function itemListSchema(
+  name: string,
+  items: { name: string; path: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      url: absoluteUrl(item.path),
     })),
   };
 }

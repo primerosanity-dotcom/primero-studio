@@ -18,14 +18,21 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
   if (!project) return {};
-  const description = `${project.car} — ${project.short} Realizacja Primero Studio w Łodzi.`;
+  const short = project.short.trim().replace(/[.!]?$/, ".");
+  const description = `${project.car} — ${short} Realizacja studia detailingu Primero Studio w Łodzi.`;
   return {
-    title: `${project.car} — ${project.service}`,
+    // Brand suffix only while it fits — Google cuts titles near 60 chars.
+    title: (() => {
+      const base = `${project.car} — ${project.service.toLowerCase()} w Łodzi`;
+      return base.length + " — Primero Studio".length <= 60
+        ? base
+        : { absolute: base };
+    })(),
     description,
     alternates: { canonical: `/realizacje/${slug}` },
     openGraph: {
       ...OG_SHARED,
-      title: `${project.car} — ${project.service}`,
+      title: `${project.car} — ${project.service} | Primero Studio Łódź`,
       description,
       url: `/realizacje/${slug}`,
       type: "article",

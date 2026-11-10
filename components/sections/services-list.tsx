@@ -82,9 +82,9 @@ export function ServicesList({ services }: { services: PointService[] }) {
                 <div className="flex flex-col justify-between p-6 sm:p-8">
                   <div>
                     <div className="flex items-baseline justify-between gap-4">
-                      <h3 className="font-display text-xl font-semibold uppercase tracking-[0.1em] text-ink transition-colors duration-300 group-hover:text-champagne sm:text-2xl">
-                        {s.title}
-                      </h3>
+                      <h2 className="font-display text-xl font-semibold uppercase tracking-[0.1em] text-ink transition-colors duration-300 group-hover:text-champagne sm:text-2xl">
+                        <Link href={`/uslugi/${s.id}`}>{s.title}</Link>
+                      </h2>
                       <span className="hidden shrink-0 font-sans text-[11px] tracking-[0.3em] text-champagne sm:block">
                         {s.n}
                       </span>
@@ -116,6 +116,13 @@ export function ServicesList({ services }: { services: PointService[] }) {
                     <span className="font-display text-2xl font-semibold text-ink">
                       {s.price}
                     </span>
+                    <div className="flex items-center gap-5">
+                    <Link
+                      href={`/uslugi/${s.id}`}
+                      className="hidden font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-ink/50 transition-colors duration-300 hover:text-champagne sm:inline"
+                    >
+                      Szczegóły
+                    </Link>
                     <Link
                       href="#kontakt-form"
                       onClick={() =>
@@ -128,6 +135,7 @@ export function ServicesList({ services }: { services: PointService[] }) {
                       Zapytaj
                       <Arrow className="transition-transform duration-500 ease-lux group-hover/btn:translate-x-1" />
                     </Link>
+                    </div>
                   </div>
                 </div>
               </article>

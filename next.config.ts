@@ -9,7 +9,13 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/cennik", destination: "/pakiety", permanent: true },
-      { source: "/uslugi/:slug", destination: "/pakiety/:slug", permanent: true },
+      // Packages used to live under /uslugi/<package>; /uslugi/<slug> is now
+      // the single-service landing page, so only the old package URLs move.
+      {
+        source: "/uslugi/:slug(essential|protect|restore|ceramic|signature)",
+        destination: "/pakiety/:slug",
+        permanent: true,
+      },
     ];
   },
 };
