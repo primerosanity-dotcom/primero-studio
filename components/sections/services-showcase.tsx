@@ -4,12 +4,23 @@ import { Heading } from "@/components/ui/heading";
 import { Monogram } from "@/components/ui/monogram";
 import { Reveal } from "@/components/reveal";
 import { getPackages, getSettings } from "@/lib/content";
-import { PROMO, PROMO_OLD_PRICE } from "@/lib/promo";
+import { ArrowButton } from "@/components/ui/arrow-button";
 import { PackageBookingButton } from "@/components/package-booking-button";
+import { isWinterPricing, WINTER_BADGE, WINTER_NOTE } from "@/lib/pricing";
 import type { Service } from "@/lib/services";
 
-/** RESTORE (hard wax) is hidden on the homepage while the promo runs. */
-const HIDDEN_ON_HOME = new Set(["restore"]);
+/**
+ * The homepage shows a short pick of the packages; the full list lives on
+ * /pakiety. The featured card is the package marked "Najczęściej wybierany"
+ * in Studio; these follow it, in this order.
+ */
+const HOME_SLUGS = [
+  "mycie-wnetrze",
+  "pranie-wnetrza",
+  "ochrona-na-zime",
+  "polerowanie-ceramika-3-lata",
+];
+const HOME_COUNT = HOME_SLUGS.length;
 
 /** Same checkmark as the "W pakiecie" list on the package pages. */
 function Check() {
@@ -48,27 +59,16 @@ function Includes({ items }: { items: string[] }) {
 /** Price row + buttons, matching the Usługi cards on the homepage. */
 function CardFooter({
   service,
-  oldPrice,
   deliveryEnabled,
   fallbackUrl,
 }: {
   service: Service;
-  oldPrice?: string;
   deliveryEnabled: boolean;
   fallbackUrl: string;
 }) {
   return (
     <>
       <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-cream/10 pt-6">
-        {oldPrice && (
-          <span className="relative inline-block font-display text-xl font-semibold text-cream/40">
-            {oldPrice}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute left-[-6%] top-1/2 h-[2px] w-[112%] -rotate-[14deg] bg-gold"
-            />
-          </span>
-        )}
         <span className="font-display text-3xl font-bold text-cream">
           {service.price}
         </span>
@@ -104,7 +104,14 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
     getPackages(),
     getSettings(),
   ]);
-  const SERVICES = all.filter((s) => !HIDDEN_ON_HOME.has(s.slug));
+  const featured = all.find((s) => s.popular);
+  const rest = all.filter((s) => s !== featured);
+  const picked = HOME_SLUGS.map((slug) => rest.find((s) => s.slug === slug)).filter(
+    (s): s is Service => Boolean(s),
+  );
+  // If Studio slugs change, fall back to the first packages instead of an empty row.
+  const SERVICES = picked.length === HOME_COUNT ? picked : rest.slice(0, HOME_COUNT);
+  const winter = isWinterPricing() && all.some((s) => s.priceSeason);
   const deliveryEnabled = contact.leadDeliveryEnabled;
   const fallbackUrl = contact.whatsappUrl ?? contact.instagramUrl;
 
@@ -143,32 +150,40 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
               renowację i ochronę ceramiczną. Zobacz zakres i orientacyjną cenę.
             </p>
           </Reveal>
+          {winter && (
+            <Reveal delay={0.12}>
+              <p className="mt-4 font-sans text-[11px] uppercase tracking-[0.18em] text-champagne">
+                {WINTER_NOTE}
+              </p>
+            </Reveal>
+          )}
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
-          {/* Opening promo — the site's "featured" card style (see /pakiety) */}
-          <Reveal delay={0.05}>
-            <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-gold/[0.05] transition-[translate,border-color,box-shadow] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-gold hover:shadow-[0_18px_44px_-28px_rgba(217,184,114,0.4)]">
-              <div className="flex flex-1 flex-col p-6">
-                <span className="self-start rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
-                  Promocja otwarcia · -50%
-                </span>
-                <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-gold sm:text-xl">
-                  {PROMO.name}
-                </h3>
-                <p className="mt-2 font-sans text-sm leading-relaxed text-cream/55">
-                  {PROMO.short}
-                </p>
-                <Includes items={PROMO.includes} />
-                <CardFooter
-                  service={PROMO}
-                  oldPrice={PROMO_OLD_PRICE}
-                  deliveryEnabled={deliveryEnabled}
-                  fallbackUrl={fallbackUrl}
-                />
-              </div>
-            </article>
-          </Reveal>
+          {/* Featured package — the site's "featured" card style (see /pakiety) */}
+          {featured && (
+            <Reveal delay={0.05}>
+              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-gold/[0.05] transition-[translate,border-color,box-shadow] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-gold hover:shadow-[0_18px_44px_-28px_rgba(217,184,114,0.4)]">
+                <div className="flex flex-1 flex-col p-6">
+                  <span className="self-start rounded-full bg-gold px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.24em] text-wine-deep">
+                    {winter ? WINTER_BADGE : "Najczęściej wybierany"}
+                  </span>
+                  <h3 className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.14em] text-gold sm:text-xl">
+                    {featured.name}
+                  </h3>
+                  <p className="mt-2 font-sans text-sm leading-relaxed text-cream/55">
+                    {featured.short}
+                  </p>
+                  <Includes items={featured.includes} />
+                  <CardFooter
+                    service={featured}
+                    deliveryEnabled={deliveryEnabled}
+                    fallbackUrl={fallbackUrl}
+                  />
+                </div>
+              </article>
+            </Reveal>
+          )}
 
           {SERVICES.map((s, i) => (
             <Reveal key={s.slug} delay={0.11 + i * 0.06}>
@@ -194,7 +209,7 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
             </Reveal>
           ))}
 
-          {/* CTA fills the empty sixth cell */}
+          {/* CTA closes the grid */}
           <Reveal delay={0.05 + SERVICES.length * 0.06}>
             <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-champagne/30 bg-wine p-7 text-cream sm:p-8">
               <Monogram className="pointer-events-none absolute -right-8 -top-10 h-44 w-44 text-gold/[0.06]" />
@@ -248,6 +263,16 @@ export async function ServicesShowcase({ index = "03" }: { index?: string }) {
             </div>
           </Reveal>
         </div>
+
+        <Reveal delay={0.25}>
+          <ArrowButton
+            href="/pakiety"
+            variant="outline"
+            className="mt-10 w-full justify-between lg:mt-12"
+          >
+            Wszystkie pakiety
+          </ArrowButton>
+        </Reveal>
       </div>
     </section>
   );
