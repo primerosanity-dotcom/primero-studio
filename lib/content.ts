@@ -11,6 +11,8 @@ import {
   type Review,
 } from "./reviews";
 import { getContactConfig, type ContactConfig } from "./site-config";
+import { isWinterPricing } from "./pricing";
+import { parsePrice } from "./seo";
 
 /**
  * Content comes from Sanity and is shaped into the same types the components
@@ -25,7 +27,8 @@ const num = (order?: number) => String(order ?? 0).padStart(2, "0");
 
 type PakietRow = {
   name: string; slug: string; order: number; tagline?: string; short?: string;
-  price?: string; priceValue?: number; duration?: string; cycle?: string;
+  price?: string; priceValue?: number; priceSeason?: string;
+  duration?: string; cycle?: string;
   problem?: string; effect?: string[]; includes?: string[]; popular?: boolean;
   image?: SanityImage; _updatedAt?: string;
 };
@@ -35,12 +38,11 @@ export async function getPackages(): Promise<Service[]> {
     tags: ["pakiet"],
     query: `*[_type == "pakiet"] | order(order asc){
       name, "slug": slug.current, order, tagline, short, price, priceValue,
-      duration, cycle, problem, effect, includes, popular, image, _updatedAt
+      priceSeason, duration, cycle, problem, effect, includes, popular, image, _updatedAt
     }`,
   });
-  if (!rows?.length) return SERVICES;
-
-  return rows.map((r) => ({
+  const list: Service[] = rows?.length
+    ? rows.map((r) => ({
     slug: r.slug,
     n: num(r.order),
     name: r.name,
@@ -48,6 +50,7 @@ export async function getPackages(): Promise<Service[]> {
     short: r.short ?? "",
     price: r.price ?? "",
     priceValue: r.priceValue ?? 0,
+    priceSeason: r.priceSeason || undefined,
     duration: r.duration ?? "",
     cycle: r.cycle ?? "",
     prefill: r.slug,
@@ -57,7 +60,27 @@ export async function getPackages(): Promise<Service[]> {
     includes: r.includes ?? [],
     popular: r.popular,
     updatedAt: r._updatedAt,
-  }));
+  }))
+    : SERVICES;
+
+  return applySeasonPrices(list);
+}
+
+/**
+ * Until WINTER_LAST_DAY the "Cena" field (winter price) is shown. From the
+ * next day every package with a "Cena sezonowa" switches to it on its own.
+ */
+function applySeasonPrices(list: Service[]): Service[] {
+  if (isWinterPricing()) return list;
+  return list.map((s) =>
+    s.priceSeason
+      ? {
+          ...s,
+          price: s.priceSeason,
+          priceValue: parsePrice(s.priceSeason) ?? s.priceValue,
+        }
+      : s,
+  );
 }
 
 export async function getPackage(slug: string): Promise<Service | undefined> {

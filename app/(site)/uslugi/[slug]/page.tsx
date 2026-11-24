@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getPackages, getPointService, getPointServices } from "@/lib/content";
 import { SERVICE_PAGES } from "@/lib/service-pages";
+import { REMOVED_SERVICES } from "@/lib/individual-services";
 import { serviceName, servicePageFaq } from "@/lib/faq";
 import { PointServiceDetail } from "@/components/sections/point-service-detail";
 import { Faq } from "@/components/sections/faq";
@@ -56,7 +57,12 @@ export default async function UslugaPage({
     getPointServices(),
     getPackages(),
   ]);
-  if (!service) notFound();
+  if (!service) {
+    // Services dropped from the price list → the nearest service or package.
+    const target = REMOVED_SERVICES[slug];
+    if (target) permanentRedirect(target);
+    notFound();
+  }
 
   const page = SERVICE_PAGES[slug];
   const inPackages = (page?.packages ?? [])

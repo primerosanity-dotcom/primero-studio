@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getPackage, getPackages } from "@/lib/content";
+import { OLD_PACKAGES } from "@/lib/services";
 import { ServiceDetail } from "@/components/sections/service-detail";
 import { LeadSection } from "@/components/sections/lead-section";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -50,7 +51,12 @@ export default async function ServicePage({
 }) {
   const { slug } = await params;
   const service = await getPackage(slug);
-  if (!service) notFound();
+  if (!service) {
+    // Packages from the old price list (ESSENTIAL, PROTECT…) → their successor.
+    const successor = OLD_PACKAGES[slug];
+    if (successor) permanentRedirect(`/pakiety/${successor.slug}`);
+    notFound();
+  }
 
   return (
     <>

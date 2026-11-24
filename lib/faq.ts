@@ -32,8 +32,11 @@ export function homeFaq({
 }): FaqItem[] {
   const items: FaqItem[] = [];
   const wash = byId(services, "mycie-detailingowe");
-  const ceramic = byId(services, "powloka-ceramiczna");
+  const ceramic1 = bySlug(packages, "polerowanie-ceramika-1-rok");
+  const ceramic3 = bySlug(packages, "polerowanie-ceramika-3-lata");
+  const ceramic5 = bySlug(packages, "polerowanie-ceramika-5-lat");
   const polish = byId(services, "polerowanie");
+  const polish2 = byId(services, "polerowanie-dwuetapowe");
   const sorted = [...packages].sort((a, b) => a.priceValue - b.priceValue);
   const cheapest = sorted[0];
   const fullest = sorted[sorted.length - 1];
@@ -41,27 +44,34 @@ export function homeFaq({
   if (wash && cheapest && fullest) {
     items.push({
       q: "Ile kosztuje detailing auta w Łodzi?",
-      a: `Mycie detailingowe kosztuje ${wash.price}, a pakiety zaczynają się od pakietu ${cheapest.name} (${cheapest.price}) i kończą na pełnym detailingu ${fullest.name} (${fullest.price}). Ostateczna cena zależy od wielkości i stanu auta — wycenę przygotujemy bezpłatnie po zgłoszeniu.`,
+      a: `Mycie detailingowe kosztuje ${wash.price}, a pakiety zaczynają się od pakietu „${cheapest.name}” (${cheapest.price}) i kończą na pakiecie „${fullest.name}” (${fullest.price}). Ostateczna cena zależy od wielkości i stanu auta — wycenę przygotujemy bezpłatnie po zgłoszeniu.`,
     });
   }
 
-  if (ceramic) {
+  const ceramics = [ceramic1, ceramic3, ceramic5].filter(
+    (p): p is Service => Boolean(p),
+  );
+  if (ceramics.length) {
     items.push({
       q: "Ile kosztuje i ile trwa powłoka ceramiczna?",
-      a: `Powłoka ceramiczna kosztuje ${ceramic.price}, a jej wykonanie zajmuje ${ceramic.duration}. Przed aplikacją lakier przechodzi mycie i dekontaminację, a w pakiecie CERAMIC także polerowanie.`,
+      a: `Ceramikę wykonujemy razem z polerowaniem lakieru: ${ceramics
+        .map((p) => `${lower(p.name)} — ${p.price} (${lower(p.duration)})`)
+        .join(", ")}. Przed aplikacją lakier przechodzi mycie, dekontaminację i polerowanie, bo powłoka utrwala stan lakieru pod nią.`,
     });
   }
 
   if (polish) {
     items.push({
       q: "Ile trwa polerowanie lakieru?",
-      a: `Polerowanie karoserii trwa ${polish.duration} i kosztuje ${polish.price}. Wykonujemy je zawsze po dekontaminacji lakieru, a po nim warto zabezpieczyć lakier woskiem lub ceramiką.`,
+      a: `Polerowanie jednoetapowe trwa ${polish.duration} i kosztuje ${polish.price}${
+        polish2 ? `, a dwuetapowe — ${polish2.duration}, ${polish2.price}` : ""
+      }. Wykonujemy je zawsze po dekontaminacji lakieru, a po nim warto zabezpieczyć lakier woskiem lub ceramiką.`,
     });
   }
 
   const cycles = packages
     .filter((p) => p.cycle)
-    .map((p) => `${p.name} — ${lower(p.cycle)}`)
+    .map((p) => `„${p.name}” — ${lower(p.cycle)}`)
     .join(", ");
   if (cycles) {
     items.push({
@@ -121,7 +131,7 @@ export function servicePageFaq(
     items.push({
       q: `Czy ${name} jest w którymś pakiecie?`,
       a: `Tak — ${name} jest częścią ${inPackages.length > 1 ? "pakietów" : "pakietu"} ${inPackages
-        .map((p) => `${p.name} (${p.price})`)
+        .map((p) => `„${p.name}” (${p.price})`)
         .join(", ")}. W pakiecie łączymy kilka usług w jednej wizycie.`,
     });
   }
@@ -132,15 +142,15 @@ export function servicePageFaq(
 export function packageFaq(pkg: Service): FaqItem[] {
   return [
     {
-      q: `Ile kosztuje pakiet ${pkg.name}?`,
-      a: `Pakiet ${pkg.name} kosztuje ${pkg.price}. Ostateczna cena zależy od wielkości i stanu auta — wycenę przygotujemy bezpłatnie.`,
+      q: `Ile kosztuje pakiet „${pkg.name}”?`,
+      a: `Pakiet „${pkg.name}” kosztuje ${pkg.price}. Ostateczna cena zależy od wielkości i stanu auta — wycenę przygotujemy bezpłatnie.`,
     },
     {
-      q: `Ile trwa pakiet ${pkg.name}?`,
+      q: `Ile trwa pakiet „${pkg.name}”?`,
       a: `Orientacyjny czas realizacji to ${lower(pkg.duration)}. Zalecana częstotliwość: ${lower(pkg.cycle)}.`,
     },
     {
-      q: `Co obejmuje pakiet ${pkg.name}?`,
+      q: `Co obejmuje pakiet „${pkg.name}”?`,
       a: `W pakiecie: ${pkg.includes.map(lower).join(", ")}.`,
     },
   ];

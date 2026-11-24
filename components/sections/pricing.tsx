@@ -11,6 +11,7 @@ import { cn } from "@/lib/cn";
 import { BookingModal, type BookingSummary } from "@/components/booking-modal";
 import type { Service } from "@/lib/services";
 import type { ContactConfig } from "@/lib/site-config";
+import { WINTER_NOTE } from "@/lib/pricing";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -159,9 +160,12 @@ function PackageCard({
 export function Pricing({
   contact,
   services,
+  winter,
 }: {
   contact: ContactConfig;
   services: Service[];
+  /** Show the winter price-list note next to the prices. */
+  winter: boolean;
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [active, setActive] = useState<Service>(
@@ -204,10 +208,15 @@ export function Pricing({
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-cream/60">
-              Pięć kompleksowych pakietów — od regularnej pielęgnacji po pełną
-              renowację i ochronę. Ceny orientacyjne, ostateczną wycenę
-              potwierdzamy po ocenie stanu auta.
+              Kompleksowe pakiety — od regularnej pielęgnacji po pełną
+              renowację i ochronę ceramiczną. Ceny orientacyjne, ostateczną
+              wycenę potwierdzamy po ocenie stanu auta.
             </p>
+            {winter && (
+              <p className="mt-4 font-sans text-[11px] uppercase tracking-[0.18em] text-champagne">
+                {WINTER_NOTE}
+              </p>
+            )}
           </Reveal>
         </div>
 
@@ -218,12 +227,12 @@ export function Pricing({
             </Reveal>
           ))}
 
-          {/* Consultation card fills the 6th cell */}
+          {/* Consultation card closes the grid */}
           <Reveal delay={0.05 + services.length * 0.05}>
             <div className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-cream/20 bg-transparent p-7 sm:p-8">
               <div>
                 <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
-                  06
+                  {String(services.length + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-5 font-display text-2xl font-semibold uppercase tracking-[0.12em] text-cream">
                   Nie wiesz,
@@ -263,8 +272,8 @@ export function Pricing({
           transition={{ duration: 0.6, ease: EASE }}
           className="mt-10 font-sans text-[11px] leading-relaxed text-cream/35"
         >
-          Ceny orientacyjne brutto. Zależą od rozmiaru i stanu auta — ostateczną
-          wycenę potwierdzamy w studio.
+          {winter && `${WINTER_NOTE} `}Ceny orientacyjne brutto. Zależą od
+          rozmiaru i stanu auta — ostateczną wycenę potwierdzamy w studio.
         </motion.p>
       </div>
 

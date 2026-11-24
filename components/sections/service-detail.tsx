@@ -6,6 +6,7 @@ import { ArrowButton } from "@/components/ui/arrow-button";
 import { Reveal } from "@/components/reveal";
 import type { Service } from "@/lib/services";
 import { getPackages } from "@/lib/content";
+import { isWinterPricing, WINTER_NOTE } from "@/lib/pricing";
 
 function Check() {
   return (
@@ -27,13 +28,17 @@ function Check() {
 /** Package line items that have their own service page, matched by wording. */
 const SERVICE_LINKS: [RegExp, string][] = [
   [/^mycie detailingowe/i, "mycie-detailingowe"],
-  [/^podstawowa pielęgnacja wnętrza/i, "pielegnacja-wnetrza"],
-  [/^pranie wnętrza/i, "pranie-wnetrza"],
-  [/^dekontaminacja/i, "dekontaminacja"],
-  [/^polerowanie/i, "polerowanie"],
-  [/^powłoka ceramiczna/i, "powloka-ceramiczna"],
   [/^twardy wosk/i, "twardy-wosk"],
-  [/^czyszczenie szyb/i, "czyszczenie-szyb"],
+  [/^jednoetapowe polerowanie/i, "polerowanie"],
+  [/^dwuetapowe polerowanie/i, "polerowanie-dwuetapowe"],
+  [/^polerowanie reflektorów/i, "polerowanie-reflektorow"],
+  [/^powłoka antydeszcz|^szyby \+ antydeszcz/i, "antideszcz"],
+  [/^ceramika na (wszystkie )?szyby|^powłoka na wszystkie szyby/i, "ceramika-szyby"],
+  [/^ceramika na felgi/i, "ceramika-felgi"],
+  [/^czyszczenie i impregnacja skóry/i, "impregnacja-skory"],
+  [/^impregnacja tapicerki/i, "impregnacja-tapicerki"],
+  [/^ozonowanie/i, "ozonowanie"],
+  [/^detailing komory silnika/i, "komora-silnika"],
 ];
 
 function serviceHref(item: string): string | null {
@@ -57,15 +62,9 @@ function InfoCard({
   );
 }
 
-export async function ServiceDetail({
-  service,
-  oldPrice,
-}: {
-  service: Service;
-  /** Price before a promo discount, shown crossed out next to the price. */
-  oldPrice?: string;
-}) {
+export async function ServiceDetail({ service }: { service: Service }) {
   const others = (await getPackages()).filter((s) => s.slug !== service.slug);
+  const winter = isWinterPricing() && Boolean(service.priceSeason);
 
   const meta = [
     { label: "Cena od", value: service.price },
@@ -123,19 +122,15 @@ export async function ServiceDetail({
             </Reveal>
             <Reveal delay={0.15}>
               <div className="mt-8 flex flex-wrap items-center gap-6">
-                <span className="flex items-baseline gap-4">
-                  {oldPrice && (
-                    <span className="relative inline-block font-display text-xl font-semibold text-cream/40">
-                      {oldPrice}
-                      <span
-                        aria-hidden
-                        className="pointer-events-none absolute left-[-6%] top-1/2 h-[2px] w-[112%] -rotate-[14deg] bg-gold"
-                      />
-                    </span>
-                  )}
+                <span className="flex flex-col gap-1">
                   <span className="font-display text-3xl font-semibold text-cream">
                     {service.price}
                   </span>
+                  {winter && (
+                    <span className="font-sans text-[11px] uppercase tracking-[0.18em] text-champagne">
+                      {WINTER_NOTE}
+                    </span>
+                  )}
                 </span>
                 <ArrowButton href="#kontakt-form" tone="dark">
                   Umów ten pakiet
