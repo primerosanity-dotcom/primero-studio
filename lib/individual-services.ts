@@ -3,7 +3,7 @@ export type PointService = {
   n: string;
   title: string;
   desc: string;
-  /** Display price, random placeholders until confirmed */
+  /** Display price, e.g. "od 199 zł" — the same all year round */
   price: string;
   /** Estimated time */
   duration: string;
@@ -14,8 +14,8 @@ export type PointService = {
 };
 
 /**
- * Pojedyncze usługi (nie pakiety) — z briefu klienta.
- * Ceny są tymczasowe / orientacyjne do potwierdzenia.
+ * Pojedyncze usługi (nie pakiety) — cennik z listopada 2026.
+ * Ceny są takie same przez cały rok (zimowy cennik dotyczy tylko pakietów).
  */
 export const POINT_SERVICES: PointService[] = [
   {
@@ -23,80 +23,147 @@ export const POINT_SERVICES: PointService[] = [
     n: "01",
     title: "Mycie detailingowe",
     desc: "Bezpieczne dwufazowe mycie karoserii z dbałością o lakier: czyszczenie felg, ręczne suszenie i nałożenie wosku w płynie.",
-    price: "od 149 zł",
+    price: "od 199 zł",
     duration: "1–1,5 godziny",
     image: "/images/uslugi/1.png",
   },
   {
-    id: "pielegnacja-wnetrza",
-    n: "02",
-    title: "Podstawowa pielęgnacja wnętrza",
-    desc: "Regularne czyszczenie kabiny: odkurzanie wnętrza i bagażnika, czyszczenie plastików, boczków, konsoli i szyb oraz kondycjonowanie powierzchni.",
-    price: "od 129 zł",
-    duration: "45–90 minut",
-    image: "/images/uslugi/2.png",
-  },
-  {
-    id: "pranie-wnetrza",
-    n: "03",
-    title: "Pranie / czyszczenie wnętrza",
-    desc: "Głębokie czyszczenie tapicerki profesjonalną chemią. Dostępne warianty Standard (bez demontażu) i Premium (z częściowym demontażem).",
-    price: "od 499 zł",
-    duration: "4–8 godzin",
-    image: "/images/uslugi/3.png",
-  },
-  {
-    id: "dekontaminacja",
-    n: "04",
-    title: "Dekontaminacja lakieru",
-    desc: "Usuwanie bitumu, wtrąceń metalicznych i innych zanieczyszczeń przed dalszą obróbką (wosk, polerowanie, powłoki).",
-    price: "od 249 zł",
-    duration: "1–2 godziny",
-    image: "/images/uslugi/4.png",
-  },
-  {
-    id: "polerowanie",
-    n: "05",
-    title: "Polerowanie karoserii",
-    desc: "Przywrócenie głębi koloru i połysku lakieru. Wykonywane po dekontaminacji karoserii.",
-    price: "od 1 200 zł",
-    duration: "8–12 godzin",
-    image: "/images/uslugi/5.png",
-  },
-  {
-    id: "powloka-ceramiczna",
-    n: "06",
-    title: "Powłoka ceramiczna",
-    desc: "Długotrwała ochrona lakieru z wyraźnym efektem hydrofobowym. Nakładana po dekontaminacji karoserii.",
-    price: "od 1 490 zł",
-    duration: "1–2 dni",
-    image: "/images/uslugi/6.png",
-  },
-  {
     id: "twardy-wosk",
-    n: "07",
-    title: "Twardy wosk",
-    desc: "Powłoka ochronna z efektem głębokiego połysku i właściwościami hydrofobowymi. Nakładana po dekontaminacji.",
-    price: "od 199 zł",
-    duration: "40–60 minut",
+    n: "02",
+    title: "Mycie + twardy wosk",
+    desc: "Mycie detailingowe i twardy wosk ochronny — głęboki połysk, efekt hydrofobowy i ochrona lakieru na kilka miesięcy.",
+    price: "od 449 zł",
+    duration: "2–3 godziny",
     image: "/images/uslugi/7.png",
   },
   {
-    id: "czyszczenie-szyb",
-    n: "08",
-    title: "Czyszczenie szyb",
-    desc: "Profesjonalne czyszczenie wewnętrznej i zewnętrznej powierzchni szyb.",
-    price: "od 79 zł",
-    duration: "30–40 minut",
-    image: "/images/uslugi/8.png",
+    id: "polerowanie",
+    n: "03",
+    title: "Polerowanie jednoetapowe",
+    desc: "Polerowanie karoserii jednym etapem — usuwa większość drobnych rys i zmatowień i przywraca połysk lakieru.",
+    price: "od 990 zł",
+    duration: "6–8 godzin",
+    image: "/images/uslugi/5.png",
+  },
+  {
+    id: "polerowanie-dwuetapowe",
+    n: "04",
+    title: "Polerowanie dwuetapowe",
+    desc: "Korekta lakieru w dwóch etapach: najpierw usuwamy głębsze rysy i swirle, potem wykańczamy lakier do głębokiego połysku.",
+    price: "od 1 490 zł",
+    duration: "1–2 dni",
+  },
+  {
+    id: "polerowanie-punktowe",
+    n: "05",
+    title: "Polerowanie punktowe",
+    desc: "Usunięcie lub złagodzenie pojedynczej rysy albo polerowanie jednego elementu karoserii.",
+    price: "od 199 zł",
+    duration: "1–2 godziny",
+  },
+  {
+    id: "polerowanie-reflektorow",
+    n: "06",
+    title: "Polerowanie reflektorów",
+    desc: "Polerowanie zmatowiałych i pożółkłych kloszy reflektorów (para) — lepszy wygląd auta i lepsze światło na drodze.",
+    price: "od 249 zł",
+    duration: "1–1,5 godziny",
   },
   {
     id: "antideszcz",
-    n: "09",
-    title: "Powłoka antideszcz",
-    desc: "Hydrofobowa powłoka na szyby poprawiająca widoczność podczas deszczu — „niewidzialna wycieraczka”.",
-    price: "od 99 zł",
+    n: "07",
+    title: "Antydeszcz — przednia szyba",
+    desc: "Hydrofobowa powłoka na przednią szybę poprawiająca widoczność podczas deszczu — „niewidzialna wycieraczka”.",
+    price: "od 149 zł",
     duration: "30 minut",
     image: "/images/uslugi/9.png",
   },
+  {
+    id: "ceramika-szyby",
+    n: "08",
+    title: "Ceramika na wszystkie szyby",
+    desc: "Trwała powłoka ceramiczna na wszystkie szyby — woda spływa sama, a szyby dłużej pozostają czyste.",
+    price: "od 299 zł",
+    duration: "1–1,5 godziny",
+    image: "/images/uslugi/8.png",
+  },
+  {
+    id: "ceramika-felgi",
+    n: "09",
+    title: "Ceramika na felgi",
+    desc: "Powłoka ceramiczna na felgi — pył z klocków hamulcowych i brud słabiej się przyczepiają, a felgi łatwiej umyć.",
+    price: "od 399 zł",
+    duration: "2–3 godziny",
+  },
+  {
+    id: "impregnacja-skory",
+    n: "10",
+    title: "Czyszczenie i impregnacja skóry",
+    desc: "Delikatne czyszczenie skórzanej tapicerki i impregnacja, która chroni skórę przed wycieraniem i pękaniem.",
+    price: "od 299 zł",
+    duration: "2–3 godziny",
+    image: "/images/uslugi/2.png",
+  },
+  {
+    id: "impregnacja-tapicerki",
+    n: "11",
+    title: "Impregnacja tapicerki materiałowej",
+    desc: "Zabezpieczenie foteli i kanapy z tkaniny — płyny i brud słabiej wnikają w materiał, a plamy łatwiej usunąć.",
+    price: "od 249 zł",
+    duration: "1–2 godziny",
+  },
+  {
+    id: "pranie-podsufitki",
+    n: "12",
+    title: "Pranie podsufitki",
+    desc: "Bezpieczne czyszczenie podsufitki z plam i zabrudzeń, bez ryzyka odklejenia materiału.",
+    price: "od 149 zł",
+    duration: "1–1,5 godziny",
+    image: "/images/uslugi/3.png",
+  },
+  {
+    id: "ozonowanie",
+    n: "13",
+    title: "Ozonowanie",
+    desc: "Usuwanie nieprzyjemnych zapachów z kabiny i odświeżenie układu wentylacji ozonem.",
+    price: "od 99 zł",
+    duration: "30–60 minut",
+  },
+  {
+    id: "komora-silnika",
+    n: "14",
+    title: "Detailing komory silnika",
+    desc: "Bezpieczne czyszczenie komory silnika z kurzu i osadów oraz zabezpieczenie plastików i gum.",
+    price: "od 249 zł",
+    duration: "1–2 godziny",
+  },
+  {
+    id: "usuwanie-smoly",
+    n: "15",
+    title: "Usuwanie smoły / żywicy",
+    desc: "Usunięcie smoły, bitumu i żywicy z lakieru bez ryzyka jego uszkodzenia.",
+    price: "od 149 zł",
+    duration: "1 godzina",
+    image: "/images/uslugi/4.png",
+  },
+  {
+    id: "powloka-ceramiczna",
+    n: "16",
+    title: "Powłoka ceramiczna (bez polerowania)",
+    desc: "Powłoka ceramiczna na lakier bez polerowania — dla aut do 1 roku, z lakierem w bardzo dobrym stanie. Długotrwała ochrona i efekt hydrofobowy.",
+    price: "od 1 290 zł",
+    duration: "1–2 dni",
+    image: "/images/uslugi/6.png",
+  },
 ];
+
+/**
+ * Services removed in the November 2026 price list, mapped to where their old
+ * pages now redirect (the nearest service or package).
+ */
+export const REMOVED_SERVICES: Record<string, string> = {
+  "pielegnacja-wnetrza": "/pakiety/mycie-wnetrze",
+  "pranie-wnetrza": "/pakiety/pranie-wnetrza",
+  dekontaminacja: "/uslugi/usuwanie-smoly",
+  "czyszczenie-szyb": "/uslugi/ceramika-szyby",
+};
