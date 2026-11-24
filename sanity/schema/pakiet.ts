@@ -14,8 +14,15 @@ export const pakiet = defineType({
     defineField({ name: "order", title: "Kolejność", type: "number", validation: (r) => r.required() }),
     defineField({ name: "tagline", title: "Podtytuł", type: "string" }),
     defineField({ name: "short", title: "Krótki opis (karta)", type: "text", rows: 2 }),
-    defineField({ name: "price", title: "Cena (tekst, np. od 349 zł)", type: "string" }),
+    defineField({
+      name: "price", title: "Cena (tekst, np. od 349 zł)", type: "string",
+      description: "Do 31.03.2027 wpisz tu cenę zimową.",
+    }),
     defineField({ name: "priceValue", title: "Cena (liczba, do sortowania)", type: "number" }),
+    defineField({
+      name: "priceSeason", title: "Cena sezonowa od 1.04.2027 (tekst, np. od 1 290 zł)", type: "string",
+      description: "Od 1 kwietnia 2027 strona sama pokaże tę cenę zamiast ceny zimowej.",
+    }),
     defineField({ name: "duration", title: "Czas realizacji", type: "string" }),
     defineField({ name: "cycle", title: "Częstotliwość", type: "string" }),
     defineField({ name: "image", title: "Zdjęcie", type: "image", options: { hotspot: true } }),
