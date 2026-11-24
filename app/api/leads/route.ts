@@ -1,9 +1,14 @@
-import { SERVICES as PACKAGES } from "@/lib/services";
+import { OLD_PACKAGES, SERVICES as PACKAGES } from "@/lib/services";
 import { getKommoConfig, sendKommo } from "@/lib/kommo";
 
-// service value → human label for the notification
+// service value → human label for the notification. Old package slugs stay
+// valid so a page cached before the price-list change can still send a lead.
 const SERVICE_LABELS: Record<string, string> = {
+  ...Object.fromEntries(
+    Object.entries(OLD_PACKAGES).map(([slug, p]) => [slug, p.name]),
+  ),
   ...Object.fromEntries(PACKAGES.map((s) => [s.prefill, s.name])),
+  "promocja-otwarcia": "Polerowanie + ceramika 1 rok",
   inne: "Konsultacja / nie wiem",
 };
 const VALID_SERVICES = new Set(Object.keys(SERVICE_LABELS));
