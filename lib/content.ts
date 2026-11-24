@@ -1,7 +1,11 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { imageUrl } from "@/sanity/lib/image";
 import { SERVICES, type Service } from "./services";
-import { POINT_SERVICES, type PointService } from "./individual-services";
+import {
+  POINT_SERVICES,
+  REMOVED_SERVICES,
+  type PointService,
+} from "./individual-services";
 import { PROJECTS, type Project } from "./projects";
 import {
   GOOGLE_URL,
@@ -104,7 +108,11 @@ export async function getPointServices(): Promise<PointService[]> {
   });
   if (!rows?.length) return POINT_SERVICES;
 
-  return rows.map((r) => ({
+  return rows
+    // Services dropped from the price list stay in Sanity (nothing deleted)
+    // but are hidden here; their old URLs redirect (see REMOVED_SERVICES).
+    .filter((r) => !(r.slug in REMOVED_SERVICES))
+    .map((r) => ({
     id: r.slug,
     n: num(r.order),
     title: r.title,
