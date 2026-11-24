@@ -9,15 +9,12 @@ import {
   LEAD_PREFILL_EVENT,
   type LeadPrefill,
 } from "@/lib/lead-prefill";
+import { SERVICES as PACKAGES } from "@/lib/services";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const SERVICE_OPTIONS = [
-  { value: "essential", label: "ESSENTIAL — Regularny detailing" },
-  { value: "protect", label: "PROTECT — Ochrona lakieru" },
-  { value: "restore", label: "RESTORE — Odnowa połysku" },
-  { value: "ceramic", label: "CERAMIC — Powłoka ceramiczna" },
-  { value: "signature", label: "SIGNATURE — Pełny detailing" },
+  ...PACKAGES.map((p) => ({ value: p.prefill, label: p.name })),
   { value: "inne", label: "Konsultacja / nie wiem" },
 ];
 
