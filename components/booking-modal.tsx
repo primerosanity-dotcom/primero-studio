@@ -8,10 +8,10 @@ import { LeadForm } from "@/components/lead-form";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export type BookingSummary = {
-  /** Package name, e.g. CERAMIC */
+  /** Package name, e.g. "Polerowanie + ceramika 3 lata" */
   name: string;
   tagline: string;
-  /** Display price, e.g. "od 2 990 zł" */
+  /** Display price, e.g. "od 1 900 zł" */
   price: string;
   cycle: string;
   duration: string;
