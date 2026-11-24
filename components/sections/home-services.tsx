@@ -9,8 +9,8 @@ import { getPointServices } from "@/lib/content";
 // The three services we lead with on the home page.
 const POPULAR_IDS = [
   "mycie-detailingowe",
-  "powloka-ceramiczna",
-  "pranie-wnetrza",
+  "polerowanie",
+  "twardy-wosk",
 ];
 
 function Arrow({ className }: { className?: string }) {
