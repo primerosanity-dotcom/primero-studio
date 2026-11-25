@@ -37,7 +37,6 @@ const SERVICE_LINKS: [RegExp, string][] = [
   [/^ceramika na felgi/i, "ceramika-felgi"],
   [/^czyszczenie i impregnacja skóry/i, "impregnacja-skory"],
   [/^impregnacja tapicerki/i, "impregnacja-tapicerki"],
-  [/^ozonowanie/i, "ozonowanie"],
   [/^detailing komory silnika/i, "komora-silnika"],
 ];
 

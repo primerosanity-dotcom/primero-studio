@@ -70,7 +70,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
         a: "Tak — to właśnie zalecany sposób mycia auta z powłoką ceramiczną lub woskiem. Używamy chemii, która nie osłabia warstwy ochronnej.",
       },
     ],
-    related: ["twardy-wosk", "usuwanie-smoly", "ozonowanie"],
+    related: ["twardy-wosk", "usuwanie-smoly", "pranie-podsufitki"],
   },
 
   polerowanie: {

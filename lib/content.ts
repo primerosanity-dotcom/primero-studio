@@ -108,7 +108,8 @@ export async function getPointServices(): Promise<PointService[]> {
       title, "slug": slug.current, order, desc, price, duration, image, _updatedAt
     }`,
   });
-  if (!rows?.length) return POINT_SERVICES;
+  if (!rows?.length)
+    return POINT_SERVICES.filter((s) => !(s.id in REMOVED_SERVICES));
 
   return rows
     // Services dropped from the price list stay in Sanity (nothing deleted)

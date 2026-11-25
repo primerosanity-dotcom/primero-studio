@@ -172,7 +172,7 @@ export const SERVICES: Service[] = [
       "Kupujący ocenia auto po pierwszym wrażeniu — na zdjęciach w ogłoszeniu i przy oględzinach. Czyste wnętrze, odświeżony lakier i przejrzyste reflektory sprawiają, że auto wygląda na zadbane.",
     effect: [
       "Auto gotowe do zdjęć i oględzin",
-      "Czyste wnętrze bez zapachów",
+      "Czyste, odświeżone wnętrze",
       "Przejrzyste reflektory",
     ],
     includes: [
@@ -181,7 +181,6 @@ export const SERVICES: Service[] = [
       "Pranie foteli i kanapy",
       "Czyszczenie wnętrza i bagażnika",
       "Polerowanie reflektorów",
-      "Ozonowanie",
       "Dressing opon i plastików",
       "Opcja: polerowanie odświeżające +500 zł",
     ],
@@ -192,7 +191,7 @@ export const SERVICES: Service[] = [
     name: "Wnętrze jak nowe",
     tagline: "Pełny detailing wnętrza",
     short:
-      "Pranie całej tapicerki z podsufitką, impregnacja skóry i tkanin oraz ozonowanie.",
+      "Pranie całej tapicerki z podsufitką oraz impregnacja skóry i tkanin.",
     price: "od 649 zł",
     priceSeason: "od 899 zł",
     priceValue: 649,
@@ -205,14 +204,13 @@ export const SERVICES: Service[] = [
     effect: [
       "Czysta cała tapicerka, podsufitka i podłoga",
       "Zabezpieczona skóra i tkaniny",
-      "Kabina bez nieprzyjemnych zapachów",
+      "Świeża, czysta kabina",
     ],
     includes: [
       "Pranie całej tapicerki z podsufitką i podłogą",
       "Częściowy demontaż",
       "Czyszczenie i impregnacja skóry",
       "Impregnacja tapicerki materiałowej",
-      "Ozonowanie",
       "Dressing plastików",
     ],
   },

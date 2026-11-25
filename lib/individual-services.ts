@@ -166,4 +166,6 @@ export const REMOVED_SERVICES: Record<string, string> = {
   "pranie-wnetrza": "/pakiety/pranie-wnetrza",
   dekontaminacja: "/uslugi/usuwanie-smoly",
   "czyszczenie-szyb": "/uslugi/ceramika-szyby",
+  // Removed later in November 2026 — the studio does not offer it.
+  ozonowanie: "/uslugi",
 };
