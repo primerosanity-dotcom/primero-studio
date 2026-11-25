@@ -5,7 +5,7 @@ import { SITE_NAME, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 // Kept under 60 characters — Google rewrites long titles wholesale.
-const TITLE = "Detailing Łódź — powłoki ceramiczne i PDR | Primero Studio";
+const TITLE = "Detailing Łódź — korekta lakieru i ceramika | Primero Studio";
 const DESCRIPTION =
   "Studio detailingu w Łodzi. Powłoki ceramiczne, korekta lakieru, usuwanie wgnieceń bez lakierowania (PDR) i detailing wnętrza. Bezpłatna wycena — ul. Papiernicza 7R.";
 
