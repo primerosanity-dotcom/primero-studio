@@ -170,7 +170,7 @@ export async function Faq({
                     <details
                       key={item.q}
                       className={cn(
-                        "group border-b",
+                        "faq-item group border-b",
                         dark ? "border-cream/12" : "border-ink/12",
                       )}
                     >
@@ -200,7 +200,7 @@ export async function Faq({
                       </summary>
                       <p
                         className={cn(
-                          "max-w-2xl pb-7 pl-11 pr-12 font-sans text-[15px] leading-relaxed sm:pl-14",
+                          "faq-answer max-w-2xl pb-7 pl-11 pr-12 font-sans text-[15px] leading-relaxed sm:pl-14",
                           dark ? "text-cream/70" : "text-ink/65",
                         )}
                       >
