@@ -209,11 +209,11 @@ export function Nav({ contact }: { contact: ContactConfig }) {
               })}
             </nav>
 
-            {/* Social shortcuts — visible on every screen size */}
+            {/* Social shortcuts — desktop only; on mobile they sit in the menu */}
             <div
               className={cn(
-                "flex items-center gap-4 lg:border-l lg:pl-6 xl:pl-8",
-                dark ? "lg:border-cream/15" : "lg:border-ink/15",
+                "hidden items-center gap-4 border-l pl-6 lg:flex xl:pl-8",
+                dark ? "border-cream/15" : "border-ink/15",
               )}
             >
               <a
@@ -361,10 +361,25 @@ export function Nav({ contact }: { contact: ContactConfig }) {
                   href={contact.instagramUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-gold"
+                  className="inline-flex items-center gap-2.5 hover:text-gold"
                 >
+                  <InstagramIcon />
                   {contact.instagramHandle}
                 </a>
+                {contact.whatsappUrl && (
+                  <>
+                    <span className="text-cream/25">·</span>
+                    <a
+                      href={contact.whatsappUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2.5 hover:text-gold"
+                    >
+                      <WhatsAppIcon />
+                      WhatsApp
+                    </a>
+                  </>
+                )}
                 <span className="text-cream/25">·</span>
                 <span>Łódź</span>
               </motion.div>
