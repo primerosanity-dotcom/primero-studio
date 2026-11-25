@@ -157,6 +157,16 @@ export const POINT_SERVICES: PointService[] = [
   },
 ];
 
+// PDR — added in November 2026; the price is set after a free inspection.
+POINT_SERVICES.push({
+  id: "usuwanie-wgniecen",
+  n: String(POINT_SERVICES.length + 1).padStart(2, "0"),
+  title: "PDR — usuwanie wgnieceń",
+  desc: "Usuwanie wgnieceń bez lakierowania: po parkingu, gradzie i drobnych uderzeniach. Fabryczny lakier zostaje, bez szpachli.",
+  price: "Wycena indywidualna",
+  duration: "Ustalany po oględzinach",
+});
+
 /**
  * Services removed in the November 2026 price list, mapped to where their old
  * pages now redirect (the nearest service or package).

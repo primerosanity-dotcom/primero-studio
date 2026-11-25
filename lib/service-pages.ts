@@ -215,4 +215,46 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     faq: [],
     related: ["ceramika-szyby", "mycie-detailingowe", "twardy-wosk"],
   },
+
+  "usuwanie-wgniecen": {
+    h1: "Usuwanie wgnieceń bez lakierowania (PDR) w Łodzi",
+    metaTitle: "Usuwanie wgnieceń PDR Łódź",
+    metaDescription:
+      "Usuwanie wgnieceń bez lakierowania metodą PDR w Łodzi — po parkingu, gradzie i drobnych stłuczkach. Fabryczny lakier zostaje, bez szpachli.",
+    intro: [
+      "PDR (Paintless Dent Repair) to usuwanie wgnieceń bez lakierowania. Blachę wypychamy od środka specjalnymi narzędziami albo wyciągamy z zewnątrz na klejonych uchwytach, aż wróci do pierwotnego kształtu.",
+      "Nie szlifujemy, nie szpachlujemy i nie lakierujemy, więc na elemencie zostaje fabryczny lakier, bez różnicy koloru i śladów naprawy. Auto nie traci na wartości, jak po wizycie u lakiernika.",
+    ],
+    includes: [
+      "Bezpłatne oględziny i ocena, czy wgniecenie da się usunąć metodą PDR",
+      "Usunięcie wgniecenia bez szpachli i lakierowania",
+      "Kontrola efektu w świetle",
+    ],
+    when: [
+      "Wgniecenie po drzwiach innego auta na parkingu",
+      "Szkoda gradowa na masce, dachu lub klapie",
+      "Wgniecenie po uderzeniu wózkiem, piłką albo gałęzią",
+      "Przed sprzedażą auta, gdy nie chcesz lakierować elementu",
+    ],
+    packages: [],
+    faq: [
+      {
+        q: "Jakie wgniecenia da się usunąć metodą PDR?",
+        a: "Najlepiej wgniecenia płytkie i średnie, w których lakier nie jest pęknięty: po drzwiach innego auta, po gradzie, po uderzeniu wózkiem czy piłką. Dużo zależy od miejsca — do wgniecenia trzeba dostać się narzędziem od środka albo przykleić uchwyt z zewnątrz.",
+      },
+      {
+        q: "Kiedy PDR nie pomoże?",
+        a: "Gdy lakier w miejscu wgniecenia pękł albo odprysnął, gdy blacha jest mocno rozciągnięta albo załamana na ostrej krawędzi oraz gdy element był wcześniej szpachlowany. Wtedy potrzebny jest lakiernik — powiemy to uczciwie przy oględzinach.",
+      },
+      {
+        q: "Czy po naprawie będzie widać ślad?",
+        a: "Przy wgnieceniach, które kwalifikują się do PDR, zwykle nie — blacha wraca do kształtu, a fabryczny lakier zostaje nietknięty, bez różnicy koloru. Przy oględzinach powiemy, jakiego efektu możesz się spodziewać przy Twoim wgnieceniu.",
+      },
+      {
+        q: "Ile trwa usuwanie wgnieceń?",
+        a: "To zależy od liczby, wielkości i miejsca wgnieceń — inaczej wygląda jedno wgniecenie w drzwiach, a inaczej cała maska po gradzie. Dokładny czas podamy po oględzinach.",
+      },
+    ],
+    related: ["polerowanie-punktowe", "polerowanie", "mycie-detailingowe"],
+  },
 };

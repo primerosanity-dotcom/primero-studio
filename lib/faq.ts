@@ -79,13 +79,20 @@ export function servicePageFaq(
   const name = lower(serviceName(service));
   const items: FaqItem[] = [];
 
-  if (service.price) {
+  // A price or duration without a number ("Wycena indywidualna") cannot be
+  // read as an amount, so those questions are worded differently or skipped.
+  if (service.price && /\d/.test(service.price)) {
     items.push({
       q: `Ile kosztuje ${name} w Łodzi?`,
       a: `${serviceName(service)} w Primero Studio kosztuje ${service.price}. Ostateczna cena zależy od wielkości i stanu auta — dokładną podamy po bezpłatnych oględzinach w studiu.`,
     });
+  } else if (service.price) {
+    items.push({
+      q: `Ile kosztuje ${name} w Łodzi?`,
+      a: `Cenę ustalamy indywidualnie, po bezpłatnych oględzinach auta w studiu — zależy od wielkości, liczby i miejsca uszkodzeń.`,
+    });
   }
-  if (service.duration) {
+  if (service.duration && /\d/.test(service.duration)) {
     items.push({
       q: `Ile trwa ${name}?`,
       a: `Orientacyjny czas wykonania to ${service.duration}. Dokładny termin odbioru ustalimy przy umawianiu wizyty.`,

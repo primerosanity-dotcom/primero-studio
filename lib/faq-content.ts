@@ -52,6 +52,10 @@ export const HOME_FAQ_AFTER_PRICE: FaqItem[] = [
     a: "Tak, na życzenie odbierzemy auto i odwieziemy je po usłudze. Szczegóły ustalimy przy zapisie.",
   },
   {
+    q: "Czy usuwacie wgniecenia bez lakierowania?",
+    a: "Tak — metodą PDR wyciągamy wgniecenia od środka, bez szpachli i lakierowania, więc zostaje fabryczny lakier. Działa to, gdy lakier w miejscu wgniecenia nie jest pęknięty. Cenę ustalamy indywidualnie po bezpłatnych oględzinach.",
+  },
+  {
     q: "Czy detailing ma sens zimą?",
     a: "Tak, a niektóre rzeczy szczególnie zimą: zabezpieczenie lakieru przed solą, pranie wnętrza z błota i soli, antydeszcz na szyby. Pracujemy w ogrzewanym studiu, więc pogoda nie ma wpływu na efekt, a wyprane wnętrze schnie w cieple, nie na mrozie.",
   },
@@ -173,7 +177,7 @@ export const PACKAGE_FAQ: Record<string, FaqItem[]> = {
 const CERAMIC_PACKAGE_FAQ: FaqItem[] = [
   {
     q: "Czy ceramika chroni przed rysami i odpryskami?",
-    a: "Częściowo. Ceramika lepiej znosi mycie i drobne otarcia, chroni przed solą, ptasimi odchodami, żywicą i UV. Nie zatrzyma jednak kamienia, klucza ani szczotek myjni automatycznej — przed odpryskami chroni dopiero folia PPF.",
+    a: "Częściowo. Ceramika lepiej znosi mycie i drobne otarcia, chroni przed solą, ptasimi odchodami, żywicą i UV. Nie zatrzyma jednak uderzenia kamienia, klucza ani szczotek myjni automatycznej.",
   },
   {
     q: "Czym różnią się warianty 1, 3 i 5 lat?",
