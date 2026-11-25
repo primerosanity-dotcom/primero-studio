@@ -101,37 +101,54 @@ export function Gallery({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: EASE }}
-            className="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-8"
+            className="fixed inset-0 z-[80]"
             role="dialog"
             aria-modal="true"
             aria-label={alt}
           >
             <div
-              className="absolute inset-0 bg-wine-deep/92 backdrop-blur-md"
+              className="absolute inset-0 bg-wine-deep/95 backdrop-blur-md"
               onClick={close}
             />
 
-            <motion.div
-              key={openAt}
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.35, ease: EASE }}
-              className="relative z-10 max-h-[88vh] w-full max-w-5xl"
+            {/* Photo fills the screen: full width on phones, room for the side
+                arrows on larger screens. Swipe left/right to page on touch. */}
+            <div
+              className="absolute inset-x-0 bottom-24 top-16 sm:inset-x-24 sm:bottom-14 sm:top-16"
+              onClick={(e) => {
+                if (e.target === e.currentTarget) close();
+              }}
             >
-              <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl">
+              <motion.div
+                key={openAt}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.35, ease: EASE }}
+                drag={images.length > 1 ? "x" : false}
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.5}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -60) step(1);
+                  else if (info.offset.x > 60) step(-1);
+                }}
+                className="relative h-full w-full touch-pan-y"
+              >
                 <Image
                   src={images[openAt]}
                   alt={`${alt} — zdjęcie ${openAt + 1}`}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 1024px"
-                  className="object-contain"
+                  sizes="100vw"
+                  quality={90}
+                  draggable={false}
+                  className="select-none object-contain"
                   priority
                 />
-              </div>
-              <span className="mt-4 block text-center font-sans text-[11px] uppercase tracking-[0.28em] text-cream/50">
-                {openAt + 1} / {images.length}
-              </span>
-            </motion.div>
+              </motion.div>
+            </div>
+
+            <span className="pointer-events-none absolute inset-x-0 bottom-10 z-20 block text-center font-sans text-[11px] uppercase tracking-[0.28em] text-cream/60 sm:bottom-5">
+              {openAt + 1} / {images.length}
+            </span>
 
             <button
               ref={closeRef}
@@ -160,7 +177,7 @@ export function Gallery({
                   type="button"
                   onClick={() => step(-1)}
                   aria-label="Poprzednie zdjęcie"
-                  className="absolute left-3 z-20 grid h-11 w-11 place-items-center rounded-full border border-cream/20 text-cream/70 transition-colors duration-300 hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold sm:left-6"
+                  className="absolute bottom-6 left-6 z-20 grid h-11 w-11 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 place-items-center rounded-full border border-cream/20 text-cream/70 transition-colors duration-300 hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
                 >
                   <svg width="18" height="12" viewBox="0 0 26 12" fill="none" aria-hidden>
                     <path d="M26 6H2M7 1L2 6l5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -170,7 +187,7 @@ export function Gallery({
                   type="button"
                   onClick={() => step(1)}
                   aria-label="Następne zdjęcie"
-                  className="absolute right-3 z-20 grid h-11 w-11 place-items-center rounded-full border border-cream/20 text-cream/70 transition-colors duration-300 hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold sm:right-6"
+                  className="absolute bottom-6 right-6 z-20 grid h-11 w-11 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 place-items-center rounded-full border border-cream/20 text-cream/70 transition-colors duration-300 hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
                 >
                   <svg width="18" height="12" viewBox="0 0 26 12" fill="none" aria-hidden>
                     <path d="M0 6h24M19 1l5 5-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
