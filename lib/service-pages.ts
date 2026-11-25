@@ -257,4 +257,47 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     ],
     related: ["polerowanie-punktowe", "polerowanie", "mycie-detailingowe"],
   },
+  "polerowanie-wnetrza": {
+    h1: "Polerowanie elementów wnętrza w Łodzi",
+    metaTitle: "Polerowanie elementów wnętrza Łódź",
+    metaDescription:
+      "Polerowanie błyszczących elementów wnętrza w Łodzi: błyszczące listwy, konsola, ramki ekranu i osłona zegarów. Usuwamy rysy i przywracamy połysk.",
+    intro: [
+      "Błyszczące plastiki w kabinie — listwy drzwi, konsola środkowa, ramki ekranu i osłona zegarów — rysują się od kluczy, pierścionków, a nawet od zwykłej ściereczki. Po kilku latach zamiast lustrzanej czerni widać siatkę rys i zmatowienia.",
+      "Polerujemy te elementy maszynowo, delikatnymi padami i pastami do tworzyw, na niskich obrotach, żeby nie przegrzać plastiku. Rysy znikają, a powierzchnia znów wygląda jak w nowym aucie.",
+    ],
+    includes: [
+      "Oględziny elementów i ocena, które rysy da się usunąć",
+      "Dokładne oczyszczenie i zabezpieczenie taśmą sąsiednich powierzchni",
+      "Maszynowe polerowanie błyszczących listew, konsoli i dekorów",
+      "Polerowanie osłony zegarów (szybki licznika)",
+      "Kontrola efektu w świetle",
+    ],
+    when: [
+      "Listwy i konsola w siatce rys i zmatowień",
+      "Porysowana osłona zegarów, przez którą gorzej widać wskazania",
+      "Po zakupie używanego auta, żeby wnętrze wyglądało świeżo",
+      "Przed sprzedażą auta — wnętrze robi pierwsze wrażenie",
+    ],
+    packages: [],
+    faq: [
+      {
+        q: "Jakie elementy wnętrza polerujecie?",
+        a: "Błyszczące elementy z tworzywa: listwy drzwi, konsolę środkową, ramki ekranu i dekory oraz osłonę zegarów. Przy oględzinach pokażemy, co da się wypolerować w Twoim aucie.",
+      },
+      {
+        q: "Czy da się usunąć wszystkie rysy?",
+        a: "Mikrorysy i zmatowienia zwykle znikają całkowicie. Głębokie rysy, wyczuwalne paznokciem, da się mocno spłycić, ale nie zawsze usunąć w 100% — powiemy to uczciwie, zanim zaczniemy.",
+      },
+      {
+        q: "Czy polerowanie nie zniszczy plastiku?",
+        a: "Nie. Pracujemy delikatnymi padami i pastami do tworzyw, na niskich obrotach, i pilnujemy temperatury elementu. Sąsiednie powierzchnie zabezpieczamy taśmą.",
+      },
+      {
+        q: "Jak dbać o wypolerowane elementy?",
+        a: "Przecieraj je tylko czystą, miękką mikrofibrą, bez suchego kurzu i papierowych ręczników. Nie kładź na nich kluczy ani telefonu — to najczęstsze źródło nowych rys.",
+      },
+    ],
+    related: ["impregnacja-skory", "pranie-podsufitki", "polerowanie-reflektorow"],
+  },
 };

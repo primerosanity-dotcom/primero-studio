@@ -167,6 +167,17 @@ POINT_SERVICES.push({
   duration: "Ustalany po oględzinach",
 });
 
+// Polishing of glossy interior trims — added in November 2026.
+POINT_SERVICES.push({
+  id: "polerowanie-wnetrza",
+  n: String(POINT_SERVICES.length + 1).padStart(2, "0"),
+  title: "Polerowanie elementów wnętrza",
+  desc: "Usuwamy rysy i zmatowienia z błyszczących elementów kabiny — listew drzwi, konsoli, ramek ekranu i osłony zegarów — i przywracamy im lustrzany połysk.",
+  price: "od 59 zł",
+  duration: "1–3 godziny",
+  image: "/images/uslugi/polerowanie-wnetrza.jpg",
+});
+
 /**
  * Services removed in the November 2026 price list, mapped to where their old
  * pages now redirect (the nearest service or package).
