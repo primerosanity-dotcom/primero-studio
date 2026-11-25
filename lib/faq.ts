@@ -1,6 +1,13 @@
 import type { Service } from "./services";
 import type { PointService } from "./individual-services";
 import { SERVICE_PAGES } from "./service-pages";
+import {
+  HOME_FAQ_AFTER_PRICE,
+  HOME_FAQ_BEFORE_PRICE,
+  HOME_FAQ_END,
+  PACKAGE_FAQ,
+  SERVICE_FAQ,
+} from "./faq-content";
 
 export type FaqItem = { q: string; a: string };
 
@@ -30,13 +37,8 @@ export function homeFaq({
   address: string;
   hours: { days: string; hours: string }[];
 }): FaqItem[] {
-  const items: FaqItem[] = [];
+  const items: FaqItem[] = [...HOME_FAQ_BEFORE_PRICE];
   const wash = byId(services, "mycie-detailingowe");
-  const ceramic1 = bySlug(packages, "polerowanie-ceramika-1-rok");
-  const ceramic3 = bySlug(packages, "polerowanie-ceramika-3-lata");
-  const ceramic5 = bySlug(packages, "polerowanie-ceramika-5-lat");
-  const polish = byId(services, "polerowanie");
-  const polish2 = byId(services, "polerowanie-dwuetapowe");
   const sorted = [...packages].sort((a, b) => a.priceValue - b.priceValue);
   const cheapest = sorted[0];
   const fullest = sorted[sorted.length - 1];
@@ -44,53 +46,19 @@ export function homeFaq({
   if (wash && cheapest && fullest) {
     items.push({
       q: "Ile kosztuje detailing auta w Łodzi?",
-      a: `Mycie detailingowe kosztuje ${wash.price}, a pakiety zaczynają się od pakietu „${cheapest.name}” (${cheapest.price}) i kończą na pakiecie „${fullest.name}” (${fullest.price}). Ostateczna cena zależy od wielkości i stanu auta — wycenę przygotujemy bezpłatnie po zgłoszeniu.`,
+      a: `Mycie detailingowe kosztuje ${wash.price}, a pakiety zaczynają się od pakietu „${cheapest.name}” (${cheapest.price}) i kończą na pakiecie „${fullest.name}” (${fullest.price}). Dokładną cenę podamy po bezpłatnych oględzinach auta w studiu.`,
     });
   }
 
-  const ceramics = [ceramic1, ceramic3, ceramic5].filter(
-    (p): p is Service => Boolean(p),
-  );
-  if (ceramics.length) {
-    items.push({
-      q: "Ile kosztuje i ile trwa powłoka ceramiczna?",
-      a: `Ceramikę wykonujemy razem z polerowaniem lakieru: ${ceramics
-        .map((p) => `${lower(p.name)} — ${p.price} (${lower(p.duration)})`)
-        .join(", ")}. Przed aplikacją lakier przechodzi mycie, dekontaminację i polerowanie, bo powłoka utrwala stan lakieru pod nią.`,
-    });
-  }
-
-  if (polish) {
-    items.push({
-      q: "Ile trwa polerowanie lakieru?",
-      a: `Polerowanie jednoetapowe trwa ${polish.duration} i kosztuje ${polish.price}${
-        polish2 ? `, a dwuetapowe — ${polish2.duration}, ${polish2.price}` : ""
-      }. Wykonujemy je zawsze po dekontaminacji lakieru, a po nim warto zabezpieczyć lakier woskiem lub ceramiką.`,
-    });
-  }
-
-  const cycles = packages
-    .filter((p) => p.cycle)
-    .map((p) => `„${p.name}” — ${lower(p.cycle)}`)
-    .join(", ");
-  if (cycles) {
-    items.push({
-      q: "Jak często robić detailing auta?",
-      a: `To zależy od zakresu. Zalecana częstotliwość dla naszych pakietów: ${cycles}.`,
-    });
-  }
-
-  items.push({
-    q: "Czym różni się studio detailingu od myjni?",
-    a: "Myjnia ma umyć auto szybko. Studio detailingu dba o to, żeby lakier i wnętrze były w lepszym stanie po wizycie niż przed nią: myjemy ręcznie metodami bezpiecznymi dla lakieru, usuwamy zanieczyszczenia, polerujemy i zabezpieczamy karoserię woskiem lub ceramiką.",
-  });
+  items.push(...HOME_FAQ_AFTER_PRICE);
 
   const open = hours.map((h) => `${h.days}: ${h.hours}`).join(", ");
   items.push({
-    q: "Gdzie znajduje się studio i jak umówić wizytę?",
-    a: `Studio Primero mieści się pod adresem ${address}. Wizytę umówisz telefonicznie, przez WhatsApp lub formularzem na stronie.${open ? ` Godziny otwarcia: ${open}.` : ""}`,
+    q: "Jak umówić termin? Czy trzeba wpłacić zaliczkę?",
+    a: `Zadzwoń albo napisz na WhatsApp — umówimy bezpłatne oględziny albo od razu termin usługi. Zaliczki nie pobieramy. Studio mieści się pod adresem ${address}.${open ? ` Godziny otwarcia: ${open}.` : ""}`,
   });
 
+  items.push(...HOME_FAQ_END);
   return items;
 }
 
@@ -114,7 +82,7 @@ export function servicePageFaq(
   if (service.price) {
     items.push({
       q: `Ile kosztuje ${name} w Łodzi?`,
-      a: `${serviceName(service)} w Primero Studio kosztuje ${service.price}. Ostateczna cena zależy od wielkości i stanu auta — wycenę przygotujemy bezpłatnie.`,
+      a: `${serviceName(service)} w Primero Studio kosztuje ${service.price}. Ostateczna cena zależy od wielkości i stanu auta — dokładną podamy po bezpłatnych oględzinach w studiu.`,
     });
   }
   if (service.duration) {
@@ -136,14 +104,14 @@ export function servicePageFaq(
     });
   }
 
-  return [...items, ...(page?.faq ?? [])];
+  return [...items, ...(page?.faq ?? []), ...(SERVICE_FAQ[service.id] ?? [])];
 }
 
 export function packageFaq(pkg: Service): FaqItem[] {
   return [
     {
       q: `Ile kosztuje pakiet „${pkg.name}”?`,
-      a: `Pakiet „${pkg.name}” kosztuje ${pkg.price}. Ostateczna cena zależy od wielkości i stanu auta — wycenę przygotujemy bezpłatnie.`,
+      a: `Pakiet „${pkg.name}” kosztuje ${pkg.price}. Ostateczna cena zależy od wielkości i stanu auta — dokładną podamy po bezpłatnych oględzinach w studiu.`,
     },
     {
       q: `Ile trwa pakiet „${pkg.name}”?`,
@@ -153,5 +121,6 @@ export function packageFaq(pkg: Service): FaqItem[] {
       q: `Co obejmuje pakiet „${pkg.name}”?`,
       a: `W pakiecie: ${pkg.includes.map(lower).join(", ")}.`,
     },
+    ...(PACKAGE_FAQ[pkg.slug] ?? []),
   ];
 }

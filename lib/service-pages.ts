@@ -143,7 +143,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     faq: [
       {
         q: "Wosk czy powłoka ceramiczna — co wybrać?",
-        a: "Twardy wosk daje piękny połysk, ale zmywa się po kilku miesiącach. Powłoka ceramiczna jest znacznie trwalsza — oferujemy ją z gwarancją 1, 3 lub 5 lat. Jeśli zależy Ci na długiej ochronie, wybierz ceramikę.",
+        a: "Twardy wosk daje piękny połysk i trzyma zwykle do roku, zależnie od eksploatacji. Powłoka ceramiczna jest twardsza i trwalsza — oferujemy ją z gwarancją 1, 3 lub 5 lat. Jeśli zależy Ci na długiej ochronie, wybierz ceramikę.",
       },
       {
         q: "Czy przed ceramiką trzeba polerować lakier?",
@@ -181,7 +181,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     faq: [
       {
         q: "Jak często woskować auto?",
-        a: "Twardy wosk zmywa się stopniowo i po kilku miesiącach traci właściwości ochronne. Zalecamy odnawianie ochrony co sezon — przed zimą i przed latem.",
+        a: "Twardy wosk Soft99 trzyma zwykle do roku — ile dokładnie, zależy od eksploatacji: jak często i czym myjesz auto, ile jeździsz zimą po soli. Najlepiej odnawiać go przed zimą.",
       },
     ],
     related: ["mycie-detailingowe", "usuwanie-smoly", "powloka-ceramiczna"],
