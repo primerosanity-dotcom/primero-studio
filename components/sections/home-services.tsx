@@ -77,7 +77,7 @@ export async function HomeServices({ index = "03" }: { index?: string }) {
                 <div className="flex flex-1 flex-col p-7 sm:p-8">
                   <div className="flex items-center justify-between">
                     <span className="font-sans text-[11px] tracking-[0.3em] text-champagne">
-                      {s.n}
+                      {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-ink/45">
                       {s.duration}

@@ -27,6 +27,14 @@ import { parsePrice } from "./seo";
 type SanityImage = { asset?: { _ref?: string } } | null;
 const num = (order?: number) => String(order ?? 0).padStart(2, "0");
 
+/**
+ * Numbers shown on the cards follow the visible order (01, 02, 03…), so hiding
+ * a package or service never leaves a gap in the numbering.
+ */
+function renumber<T extends { n: string }>(list: T[]): T[] {
+  return list.map((item, i) => ({ ...item, n: num(i + 1) }));
+}
+
 /* ── Pakiety ─────────────────────────────────────────────── */
 
 type PakietRow = {
@@ -69,7 +77,9 @@ export async function getPackages(): Promise<Service[]> {
 
   // Packages dropped from the offer stay in Sanity (nothing deleted) but are
   // hidden here; their old URLs redirect (see OLD_PACKAGES).
-  return applySeasonPrices(list.filter((s) => !(s.slug in OLD_PACKAGES)));
+  return applySeasonPrices(
+    renumber(list.filter((s) => !(s.slug in OLD_PACKAGES))),
+  );
 }
 
 /**
@@ -109,9 +119,9 @@ export async function getPointServices(): Promise<PointService[]> {
     }`,
   });
   if (!rows?.length)
-    return POINT_SERVICES.filter((s) => !(s.id in REMOVED_SERVICES));
+    return renumber(POINT_SERVICES.filter((s) => !(s.id in REMOVED_SERVICES)));
 
-  return rows
+  return renumber(rows
     // Services dropped from the price list stay in Sanity (nothing deleted)
     // but are hidden here; their old URLs redirect (see REMOVED_SERVICES).
     .filter((r) => !(r.slug in REMOVED_SERVICES))
@@ -124,7 +134,7 @@ export async function getPointServices(): Promise<PointService[]> {
     duration: r.duration ?? "",
     image: imageUrl(r.image as never) ?? undefined,
     updatedAt: r._updatedAt,
-  }));
+  })));
 }
 
 export async function getPointService(
