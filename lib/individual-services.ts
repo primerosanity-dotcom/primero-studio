@@ -31,7 +31,7 @@ export const POINT_SERVICES: PointService[] = [
     id: "twardy-wosk",
     n: "02",
     title: "Mycie + twardy wosk",
-    desc: "Mycie detailingowe i twardy wosk ochronny — głęboki połysk, efekt hydrofobowy i ochrona lakieru na kilka miesięcy.",
+    desc: "Mycie detailingowe i twardy wosk ochronny — głęboki połysk, efekt hydrofobowy i ochrona lakieru do roku, zależnie od eksploatacji.",
     price: "od 449 zł",
     duration: "2–3 godziny",
     image: "/images/uslugi/7.png",
