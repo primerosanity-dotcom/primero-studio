@@ -10,6 +10,40 @@ import type { FaqItem } from "./faq";
  * generated questions in faq.ts take them from Sanity.
  */
 
+/** Topics the home page FAQ is split into, in display order. */
+export const HOME_GROUPS = [
+  "Lakier i efekty",
+  "Cena i wizyta",
+  "Auto w studiu",
+  "Ochrona i pielęgnacja",
+] as const;
+
+const GROUP_OF: Record<string, (typeof HOME_GROUPS)[number]> = {
+  "Czy polerowanie nie zniszczy mi lakieru?": "Lakier i efekty",
+  "Czy usuniecie wszystkie rysy?": "Lakier i efekty",
+  "Czy usuwacie wgniecenia bez lakierowania?": "Lakier i efekty",
+  "Co jeśli nie będę zadowolony z efektu?": "Lakier i efekty",
+  "Mam zwykłe auto, nie nowe ani drogie. Czy to ma sens?": "Lakier i efekty",
+  "Ile kosztuje detailing auta w Łodzi?": "Cena i wizyta",
+  "Czy cena na miejscu może być wyższa niż na stronie?": "Cena i wizyta",
+  "Czy możecie podać cenę przez telefon albo po zdjęciach?": "Cena i wizyta",
+  "Jak umówić termin? Czy trzeba wpłacić zaliczkę?": "Cena i wizyta",
+  "Jak można zapłacić? Czy wystawiacie fakturę?": "Cena i wizyta",
+  "Czy moje auto jest bezpieczne, gdy zostaje u was?": "Auto w studiu",
+  "Czy muszę zostawić auto na cały dzień?": "Auto w studiu",
+  "Czy możecie odebrać auto spod domu?": "Auto w studiu",
+  "Jak przygotować auto do wizyty?": "Auto w studiu",
+  "Czy detailing ma sens zimą?": "Auto w studiu",
+  "Czym różni się mycie u was od myjni?": "Ochrona i pielęgnacja",
+  "Wosk czy ceramika — co wybrać?": "Ochrona i pielęgnacja",
+  "Czy po waszej usłudze mogę myć auto na myjni automatycznej?": "Ochrona i pielęgnacja",
+};
+
+/** Topic of a home question; anything new lands under „Cena i wizyta”. */
+export function homeGroup(q: string): (typeof HOME_GROUPS)[number] {
+  return GROUP_OF[q] ?? "Cena i wizyta";
+}
+
 /** Home page — general questions, in the order they are shown. */
 export const HOME_FAQ_BEFORE_PRICE: FaqItem[] = [
   {

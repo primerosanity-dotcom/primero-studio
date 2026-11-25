@@ -159,3 +159,46 @@
   background-clip: text;
   color: transparent;
 }
+
+/* FAQ — smooth open/close of native <details>.
+   Height animates where the browser supports ::details-content and
+   interpolate-size (Chrome, Edge); elsewhere the answer still fades and
+   slides in, and the content stays plain HTML for search engines. */
+.faq-item {
+  interpolate-size: allow-keywords;
+}
+.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 0.55s var(--ease-lux),
+    content-visibility 0.55s var(--ease-lux) allow-discrete;
+}
+.faq-item[open]::details-content {
+  block-size: auto;
+}
+.faq-item .faq-answer {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.45s var(--ease-lux),
+    transform 0.55s var(--ease-lux);
+}
+.faq-item[open] .faq-answer {
+  opacity: 1;
+  transform: none;
+  animation: faq-answer-in 0.55s var(--ease-lux);
+}
+@keyframes faq-answer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-item::details-content,
+  .faq-item .faq-answer {
+    transition: none;
+    animation: none;
+  }
+}
