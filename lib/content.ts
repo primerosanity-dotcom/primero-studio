@@ -1,6 +1,6 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { imageUrl } from "@/sanity/lib/image";
-import { SERVICES, type Service } from "./services";
+import { OLD_PACKAGES, SERVICES, type Service } from "./services";
 import {
   POINT_SERVICES,
   REMOVED_SERVICES,
@@ -67,7 +67,9 @@ export async function getPackages(): Promise<Service[]> {
   }))
     : SERVICES;
 
-  return applySeasonPrices(list);
+  // Packages dropped from the offer stay in Sanity (nothing deleted) but are
+  // hidden here; their old URLs redirect (see OLD_PACKAGES).
+  return applySeasonPrices(list.filter((s) => !(s.slug in OLD_PACKAGES)));
 }
 
 /**

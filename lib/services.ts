@@ -420,4 +420,6 @@ export const OLD_PACKAGES: Record<string, { slug: string; name: string }> = {
   restore: { slug: "polerowanie-wosk", name: "RESTORE" },
   ceramic: { slug: "polerowanie-ceramika-3-lata", name: "CERAMIC" },
   signature: { slug: "pelny-detailing", name: "SIGNATURE" },
+  // Removed from the offer in November 2026 (kept in Sanity, hidden on the site).
+  "serwis-ceramiki": { slug: "polerowanie-ceramika-1-rok", name: "Serwis ceramiki" },
 };

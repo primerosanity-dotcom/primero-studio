@@ -59,7 +59,6 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
       "ochrona-na-zime",
       "polerowanie-wosk",
       "polerowanie-ceramika-1-rok",
-      "serwis-ceramiki",
     ],
     faq: [
       {
