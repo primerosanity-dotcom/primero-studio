@@ -2,6 +2,8 @@ import type { Service } from "./services";
 import type { PointService } from "./individual-services";
 import { SERVICE_PAGES } from "./service-pages";
 import {
+  HOME_GROUPS,
+  homeGroup,
   HOME_FAQ_AFTER_PRICE,
   HOME_FAQ_BEFORE_PRICE,
   HOME_FAQ_END,
@@ -9,7 +11,12 @@ import {
   SERVICE_FAQ,
 } from "./faq-content";
 
-export type FaqItem = { q: string; a: string };
+export type FaqItem = {
+  q: string;
+  a: string;
+  /** Heading the question is listed under (home page only). */
+  group?: string;
+};
 
 /**
  * FAQ answers are assembled from the live prices, durations and hours, so the
@@ -59,7 +66,10 @@ export function homeFaq({
   });
 
   items.push(...HOME_FAQ_END);
-  return items;
+  // Shown grouped by topic; within a group the order above is kept.
+  return HOME_GROUPS.flatMap((group) =>
+    items.filter((item) => homeGroup(item.q) === group),
+  ).map((item) => ({ ...item, group: homeGroup(item.q) }));
 }
 
 /**
