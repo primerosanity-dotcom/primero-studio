@@ -31,7 +31,7 @@ export const POINT_SERVICES: PointService[] = [
     id: "twardy-wosk",
     n: "02",
     title: "Mycie + twardy wosk",
-    desc: "Mycie detailingowe i twardy wosk ochronny — głęboki połysk, efekt hydrofobowy i ochrona lakieru na kilka miesięcy.",
+    desc: "Mycie detailingowe i twardy wosk ochronny — głęboki połysk, efekt hydrofobowy i ochrona lakieru do roku, zależnie od eksploatacji.",
     price: "od 449 zł",
     duration: "2–3 godziny",
     image: "/images/uslugi/7.png",
@@ -156,6 +156,16 @@ export const POINT_SERVICES: PointService[] = [
     image: "/images/uslugi/6.png",
   },
 ];
+
+// PDR — added in November 2026; the price is set after a free inspection.
+POINT_SERVICES.push({
+  id: "usuwanie-wgniecen",
+  n: String(POINT_SERVICES.length + 1).padStart(2, "0"),
+  title: "PDR — usuwanie wgnieceń",
+  desc: "Usuwanie wgnieceń bez lakierowania: po parkingu, gradzie i drobnych uderzeniach. Fabryczny lakier zostaje, bez szpachli.",
+  price: "Wycena indywidualna",
+  duration: "Ustalany po oględzinach",
+});
 
 /**
  * Services removed in the November 2026 price list, mapped to where their old

@@ -15,7 +15,9 @@ export async function generateStaticParams() {
 }
 
 function describe(base: string, price: string) {
-  return price ? `${base} Cena ${price}.` : base;
+  if (!price) return base;
+  // "Wycena indywidualna" has no amount, so it is not prefixed with "Cena".
+  return /\d/.test(price) ? `${base} Cena ${price}.` : `${base} ${price}.`;
 }
 
 export async function generateMetadata({

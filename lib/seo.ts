@@ -168,7 +168,7 @@ export function localBusinessSchema(
       "korekta lakieru",
       "polerowanie lakieru",
       "powłoka ceramiczna",
-      "folia ochronna PPF",
+      "usuwanie wgnieceń bez lakierowania (PDR)",
       "pranie tapicerki samochodowej",
     ],
     ...(catalog

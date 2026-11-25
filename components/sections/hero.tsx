@@ -21,7 +21,7 @@ const rise = {
   }),
 };
 
-const KEYWORDS = ["Korekta lakieru", "Ceramika", "PPF", "Wnętrza"];
+const KEYWORDS = ["Korekta lakieru", "Ceramika", "PDR", "Wnętrza"];
 
 // Generic on purpose: the photo is swapped in Sanity, the alt would go stale.
 const HERO_ALT = "Samochód po detailingu w Primero Studio w Łodzi";

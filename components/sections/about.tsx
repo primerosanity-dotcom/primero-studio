@@ -7,7 +7,7 @@ import { getSettings } from "@/lib/content";
 const CAPABILITIES = [
   "Korekta lakieru",
   "Powłoki ceramiczne",
-  "Ochrona PPF",
+  "Usuwanie wgnieceń PDR",
   "Pielęgnacja wnętrza",
 ];
 
