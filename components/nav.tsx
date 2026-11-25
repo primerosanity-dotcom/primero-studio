@@ -19,8 +19,34 @@ const LINKS = [
   { n: "04", label: "Pakiety", href: "/pakiety" },
   { n: "05", label: "Realizacje", href: "/realizacje" },
   { n: "06", label: "Opinie", href: "/opinie" },
-  { n: "07", label: "Kontakt", href: "/kontakt" },
+  { n: "07", label: "FAQ", href: "/#faq" },
+  { n: "08", label: "Kontakt", href: "/kontakt" },
 ];
+
+// Same outline icons as the contact section, so the header matches the site.
+const ICON = { stroke: "currentColor", strokeWidth: 1.3, fill: "none" } as const;
+
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden {...ICON}>
+      <rect x="4" y="4" width="16" height="16" rx="4.5" />
+      <circle cx="12" cy="12" r="3.4" />
+      <circle cx="16.6" cy="7.4" r="0.5" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden {...ICON}>
+      <path
+        d="M4 20l1.3-3.3A7.2 7.2 0 1 1 8.4 19L4 20z"
+        strokeLinejoin="round"
+      />
+      <path d="M9 9.5c0 3 2.5 5.5 5.5 5.5" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -158,7 +184,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
             {/* Desktop horizontal menu */}
             <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
               {LINKS.filter((l) => l.href !== "/").map((l) => {
-                const active = pathname.startsWith(l.href);
+                const active = !l.href.includes("#") && pathname.startsWith(l.href);
                 return (
                   <Link
                     key={l.href}
@@ -178,6 +204,41 @@ export function Nav({ contact }: { contact: ContactConfig }) {
                 );
               })}
             </nav>
+
+            {/* Social shortcuts — visible on every screen size */}
+            <div
+              className={cn(
+                "flex items-center gap-4 lg:border-l lg:pl-6 xl:pl-8",
+                dark ? "lg:border-cream/15" : "lg:border-ink/15",
+              )}
+            >
+              <a
+                href={contact.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className={cn(
+                  "transition-colors duration-300 hover:text-gold",
+                  dark ? "text-cream/70" : "text-ink/65",
+                )}
+              >
+                <InstagramIcon />
+              </a>
+              {contact.whatsappUrl && (
+                <a
+                  href={contact.whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="WhatsApp"
+                  className={cn(
+                    "transition-colors duration-300 hover:text-gold",
+                    dark ? "text-cream/70" : "text-ink/65",
+                  )}
+                >
+                  <WhatsAppIcon />
+                </a>
+              )}
+            </div>
 
             <button
               ref={menuButtonRef}
@@ -236,7 +297,7 @@ export function Nav({ contact }: { contact: ContactConfig }) {
                   const active =
                     l.href === "/"
                       ? pathname === "/"
-                      : pathname.startsWith(l.href);
+                      : !l.href.includes("#") && pathname.startsWith(l.href);
                   return (
                     <MotionLink
                       key={l.href}
