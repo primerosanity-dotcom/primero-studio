@@ -15,8 +15,8 @@ function toTile(lat: number, lng: number, z: number) {
 
 /**
  * Small dark map of the studio's neighbourhood with a gold pin. Built from
- * CARTO "Dark Matter" tiles (OpenStreetMap data) laid out around the pin, so
- * it matches the site without an interactive map script; the whole map links
+ * OpenStreetMap tiles laid out around the pin and darkened with a CSS filter,
+ * so it matches the site without an interactive map script; the whole map links
  * to Google Maps for directions.
  */
 export function StudioMap({
@@ -39,10 +39,9 @@ export function StudioMap({
     for (let dy = -1; dy <= 1; dy++) {
       const x = tx + dx;
       const y = ty + dy;
-      const sub = "abcd"[(x + y) % 4];
       tiles.push({
         key: `${x}-${y}`,
-        src: `https://${sub}.basemaps.cartocdn.com/dark_all/${ZOOM}/${x}/${y}@2x.png`,
+        src: `https://tile.openstreetmap.org/${ZOOM}/${x}/${y}.png`,
         left: dx * TILE - ox,
         top: dy * TILE - oy,
       });
@@ -56,12 +55,16 @@ export function StudioMap({
       rel="noreferrer"
       aria-label="Primero Studio na mapie Łodzi — otwórz w Mapach Google"
       className={cn(
-        "group relative block h-48 overflow-hidden rounded-xl border border-cream/10 bg-[#0e0e0e] transition-colors duration-500 hover:border-champagne/50",
+        "group relative block h-48 overflow-hidden rounded-xl border border-cream/10 bg-[#141414] transition-colors duration-500 hover:border-champagne/50",
         className,
       )}
     >
       {/* Tiles positioned around the centre of the frame (the pin). */}
-      <div aria-hidden className="absolute left-1/2 top-1/2">
+      {/* OSM tiles turned into a dark map with a CSS filter. */}
+      <div
+        aria-hidden
+        className="absolute left-1/2 top-1/2 [filter:invert(1)_hue-rotate(180deg)_grayscale(0.9)_brightness(0.8)_contrast(1.2)]"
+      >
         {tiles.map((t) => (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -93,7 +96,7 @@ export function StudioMap({
       </span>
 
       <span className="pointer-events-none absolute bottom-1.5 right-2 font-sans text-[9px] text-cream/40">
-        © OpenStreetMap © CARTO
+        © OpenStreetMap
       </span>
     </a>
   );
