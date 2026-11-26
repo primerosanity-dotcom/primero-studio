@@ -95,7 +95,7 @@ export default function PolitykaPrywatnosciPage() {
         },
         {
           list: [
-            "Formularz zgłoszeniowy: imię, numer telefonu, wybrana usługa lub pakiet oraz treść uwag, które wpiszesz.",
+            "Formularz zgłoszeniowy: imię, numer telefonu, wybrana usługa lub pakiet oraz treść uwag, które wpiszesz. Razem ze zgłoszeniem zapisujemy ogólną informację, skąd trafiłeś na stronę (np. Google Maps, wyszukiwarka, Instagram) — przeglądarka pamięta ją do 30 dni i wysyła tylko wtedy, gdy sam wyślesz formularz.",
             "Kontakt bezpośredni: dane, które przekażesz nam w rozmowie telefonicznej, na WhatsAppie, mailem lub przez Instagram.",
             "Dane techniczne: adres IP, rodzaj przeglądarki i urządzenia, źródło wejścia, odwiedzone podstrony — zbierane przez narzędzia analityczne opisane w punkcie 07.",
           ],

@@ -257,6 +257,9 @@ export type SiteSettings = {
 
 /** Primero Studio's Microsoft Clarity project; Studio can override it. */
 const CLARITY_PROJECT_ID = "z8gh9h8bzy";
+// GA4 measurement id (property "primero-studio.com" on the studio Google account).
+// Sanity "gaId" overrides it, like the Clarity id above.
+const GA4_MEASUREMENT_ID = "G-Q710HRFMKW";
 
 const FALLBACK_HOURS = [
   { days: "Pon – Pt", hours: "10:00 – 17:00" },
@@ -306,7 +309,7 @@ export async function getSettings(): Promise<SiteSettings> {
     aboutImage: imageUrl(s?.aboutImage as never, 1600) ?? "/images/about.png",
     analytics: {
       gtmId: s?.gtmId?.trim() ?? "",
-      gaId: s?.gaId?.trim() ?? "",
+      gaId: s?.gaId?.trim() || GA4_MEASUREMENT_ID,
       metaPixelId: s?.metaPixelId?.trim() ?? "",
       clarityId: s?.clarityId?.trim() || CLARITY_PROJECT_ID,
     },

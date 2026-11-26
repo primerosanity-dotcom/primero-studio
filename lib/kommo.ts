@@ -13,6 +13,7 @@ export type KommoLead = {
   phone: string;
   serviceLabel: string | null;
   details: string;
+  source?: string;
 };
 
 function positiveInt(value: string | undefined): number | undefined {
@@ -81,6 +82,7 @@ export async function sendKommo(
   const info = [
     lead.serviceLabel ? `Usługa: ${lead.serviceLabel}` : null,
     lead.details ? `Uwagi: ${lead.details}` : null,
+    lead.source ? `Źródło: ${lead.source}` : null,
   ]
     .filter(Boolean)
     .join("\n");
@@ -129,6 +131,7 @@ export async function sendKommo(
     `Telefon: ${lead.phone}`,
     lead.serviceLabel ? `Usługa: ${lead.serviceLabel}` : null,
     lead.details ? `Uwagi: ${lead.details}` : null,
+    lead.source ? `Źródło: ${lead.source}` : null,
   ]
     .filter(Boolean)
     .join("\n");

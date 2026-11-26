@@ -10,6 +10,8 @@ import {
   type LeadPrefill,
 } from "@/lib/lead-prefill";
 import { OLD_PACKAGES, SERVICES as PACKAGES } from "@/lib/services";
+import { leadSource } from "@/lib/attribution";
+import { trackEvent } from "@/lib/track";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -161,6 +163,7 @@ export function LeadForm({
           phone,
           service: serviceToSend,
           details: detailsToSend,
+          source: leadSource(),
           website,
         }),
       });
@@ -177,6 +180,12 @@ export function LeadForm({
         .fbq;
       if (!website && typeof fbq === "function") {
         fbq("track", "Lead", { content_name: serviceToSend ?? "kontakt" });
+      }
+      if (!website) {
+        trackEvent("generate_lead", {
+          service: serviceToSend ?? "kontakt",
+          page_path: window.location.pathname,
+        });
       }
       setSent(true);
     } catch {

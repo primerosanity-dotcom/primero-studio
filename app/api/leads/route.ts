@@ -18,6 +18,7 @@ type LeadBody = {
   phone?: unknown;
   service?: unknown;
   details?: unknown;
+  source?: unknown;
   website?: unknown;
 };
 
@@ -44,6 +45,7 @@ type Lead = {
   phone: string;
   service: string;
   details: string;
+  source: string;
 };
 
 async function sendTelegram(
@@ -59,6 +61,7 @@ async function sendTelegram(
     `📞 <b>Telefon:</b> ${esc(lead.phone)}`,
     label ? `🧴 <b>Usługa:</b> ${esc(label)}` : null,
     lead.details ? `📝 <b>Uwagi:</b>\n${esc(lead.details)}` : null,
+    lead.source ? `📍 <b>Źródło:</b> ${esc(lead.source)}` : null,
   ]
     .filter(Boolean)
     .join("\n");
@@ -105,6 +108,7 @@ async function sendWebhook(webhook: string, lead: Lead): Promise<void> {
         phone: lead.phone,
         service: lead.service || null,
         details: lead.details || null,
+        source: lead.source || null,
       },
       source: "primero.studio",
       createdAt: new Date().toISOString(),
@@ -136,6 +140,7 @@ export async function POST(request: Request) {
   const phone = text(body.phone, 30);
   const service = text(body.service, 30);
   const details = text(body.details, 1000);
+  const source = text(body.source, 200);
 
   if (name.length < 2 || !validPhone(phone)) {
     return Response.json(
@@ -148,7 +153,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Nieprawidłowa usługa." }, { status: 400 });
   }
 
-  const lead: Lead = { name, phone, service, details };
+  const lead: Lead = { name, phone, service, details, source };
 
   const tgToken = process.env.TELEGRAM_BOT_TOKEN?.trim();
   const tgChat = process.env.TELEGRAM_CHAT_ID?.trim();
@@ -171,6 +176,7 @@ export async function POST(request: Request) {
         phone,
         serviceLabel: service ? (SERVICE_LABELS[service] ?? null) : null,
         details,
+        source,
       }),
     });
   }

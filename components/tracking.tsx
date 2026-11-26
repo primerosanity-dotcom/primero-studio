@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { SiteEvents } from "./site-events";
 
 /**
  * Both components decide what to render from localStorage, which exists only
@@ -27,6 +28,7 @@ export function Tracking(props: {
 }) {
   return (
     <>
+      <SiteEvents />
       <Analytics {...props} />
       <CookieConsent />
     </>
