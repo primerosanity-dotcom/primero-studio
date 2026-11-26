@@ -3,6 +3,7 @@ import { Heading } from "@/components/ui/heading";
 import { Monogram } from "@/components/ui/monogram";
 import { LeadForm } from "@/components/lead-form";
 import { Reveal } from "@/components/reveal";
+import { StudioMap } from "@/components/ui/studio-map";
 import type { ContactConfig } from "@/lib/site-config";
 
 const S = { stroke: "currentColor", strokeWidth: 1.3, fill: "none" } as const;
@@ -207,6 +208,11 @@ export function Contact({
             ))}
           </ul>
 
+          {contact.mapsUrl && (
+            <Reveal delay={0.5}>
+              <StudioMap href={contact.mapsUrl} className="mt-6 max-w-md" />
+            </Reveal>
+          )}
         </div>
 
         {/* Right — lead form */}

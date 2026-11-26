@@ -3,6 +3,7 @@ import { Heading } from "@/components/ui/heading";
 import { LeadForm } from "@/components/lead-form";
 import { Reveal } from "@/components/reveal";
 import { getSettings } from "@/lib/content";
+import { StudioMap } from "@/components/ui/studio-map";
 
 function Pin() {
   return (
@@ -87,6 +88,8 @@ export async function LeadSection({ withLocation = false }: { withLocation?: boo
                     </address>
                   </div>
                 </div>
+
+                <StudioMap href={mapsUrl} className="mt-5" />
 
                 <div className="mt-5 grid grid-cols-3 gap-3 border-t border-cream/10 pt-5">
                   {hours.map((row) => (

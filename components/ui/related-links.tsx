@@ -60,12 +60,12 @@ export function RelatedLinks({
               </div>
 
               <div className="flex flex-1 flex-col justify-between gap-3 p-3.5 sm:p-4">
-                <span className="font-display text-[0.8rem] font-medium uppercase leading-snug tracking-[0.02em] text-cream/85 transition-colors duration-300 group-hover:text-gold sm:text-[0.95rem]">
+                <span className="font-display text-[0.85rem] font-semibold uppercase leading-snug tracking-[0.02em] text-cream transition-colors duration-300 group-hover:text-gold sm:text-[0.95rem]">
                   {item.title}
                 </span>
                 <span className="flex items-center justify-between gap-2">
                   {item.meta ? (
-                    <span className="truncate font-sans text-[10px] uppercase tracking-[0.2em] text-champagne/80 sm:text-[11px]">
+                    <span className="truncate font-display text-sm font-semibold text-gold sm:text-base">
                       {item.meta}
                     </span>
                   ) : (

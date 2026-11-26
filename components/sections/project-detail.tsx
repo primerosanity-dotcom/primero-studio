@@ -176,7 +176,6 @@ export async function ProjectDetail({ project }: { project: Project }) {
             href: `/realizacje/${o.slug}`,
             title: o.car,
             image: o.image,
-            meta: o.service,
           }))}
         />
       </div>
