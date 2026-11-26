@@ -107,6 +107,7 @@ async function sendWebhook(webhook: string, lead: Lead): Promise<void> {
         name: lead.name,
         phone: lead.phone,
         service: lead.service || null,
+        serviceLabel: lead.service ? (SERVICE_LABELS[lead.service] ?? null) : null,
         details: lead.details || null,
         source: lead.source || null,
       },
