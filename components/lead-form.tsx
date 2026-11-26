@@ -60,6 +60,7 @@ export function LeadForm({
   extraDetails,
   compact = false,
   hideDetails = false,
+  frameless = false,
 }: {
   deliveryEnabled: boolean;
   fallbackUrl: string;
@@ -73,6 +74,8 @@ export function LeadForm({
   compact?: boolean;
   /** Hide the free-text notes field (name + phone only). */
   hideDetails?: boolean;
+  /** Keep the intro copy but drop the card border (the parent draws it). */
+  frameless?: boolean;
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -187,6 +190,7 @@ export function LeadForm({
     <div
       className={cn(
         !compact &&
+          !frameless &&
           "rounded-2xl border border-champagne/25 bg-wine px-6 py-7 sm:px-8 sm:py-8",
       )}
     >

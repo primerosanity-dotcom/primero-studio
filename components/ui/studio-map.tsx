@@ -1,7 +1,6 @@
 import { COMPANY } from "@/lib/site-config";
 import { cn } from "@/lib/cn";
 
-const ZOOM = 13;
 const TILE = 256;
 
 /** Web-Mercator position of a point, in tile units at the given zoom. */
@@ -14,56 +13,50 @@ function toTile(lat: number, lng: number, z: number) {
 }
 
 /**
- * Small dark map of the studio's neighbourhood with a gold pin. Built from
- * OpenStreetMap tiles laid out around the pin and darkened with a CSS filter,
- * so it matches the site without an interactive map script; the whole map links
- * to Google Maps for directions.
+ * Dark map of the studio's neighbourhood with a gold pin. OpenStreetMap tiles
+ * laid out around the pin and darkened with a CSS filter, so it matches the
+ * site without an interactive map script. With `href` the whole map is a link
+ * (Google Maps); without it, it is a plain picture and the parent can lay its
+ * own links over it.
  */
 export function StudioMap({
   href,
   className,
+  zoom = 13,
 }: {
-  href: string;
+  href?: string;
   className?: string;
+  zoom?: number;
 }) {
   const { lat, lng } = COMPANY.geo;
-  const p = toTile(lat, lng, ZOOM);
+  const p = toTile(lat, lng, zoom);
   const tx = Math.floor(p.x);
   const ty = Math.floor(p.y);
   // Pixel offset of the pin inside its own tile.
   const ox = (p.x - tx) * TILE;
   const oy = (p.y - ty) * TILE;
 
+  // 5×5 tiles around the pin cover frames up to ~1000×1000 px.
   const tiles: { key: string; src: string; left: number; top: number }[] = [];
   for (let dx = -2; dx <= 2; dx++) {
-    for (let dy = -1; dy <= 1; dy++) {
+    for (let dy = -2; dy <= 2; dy++) {
       const x = tx + dx;
       const y = ty + dy;
       tiles.push({
         key: `${x}-${y}`,
-        src: `https://tile.openstreetmap.org/${ZOOM}/${x}/${y}.png`,
+        src: `https://tile.openstreetmap.org/${zoom}/${x}/${y}.png`,
         left: dx * TILE - ox,
         top: dy * TILE - oy,
       });
     }
   }
 
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Primero Studio na mapie Łodzi — otwórz w Mapach Google"
-      className={cn(
-        "group relative block h-48 overflow-hidden rounded-xl border border-cream/10 bg-[#141414] transition-colors duration-500 hover:border-champagne/50",
-        className,
-      )}
-    >
-      {/* Tiles positioned around the centre of the frame (the pin). */}
+  const body = (
+    <>
       {/* OSM tiles turned into a dark map with a CSS filter. */}
       <div
         aria-hidden
-        className="absolute left-1/2 top-1/2 [filter:invert(1)_hue-rotate(180deg)_grayscale(0.9)_brightness(0.8)_contrast(1.2)]"
+        className="absolute left-1/2 top-1/2 [filter:invert(1)_hue-rotate(180deg)_grayscale(0.9)_brightness(0.85)_contrast(1.2)]"
       >
         {tiles.map((t) => (
           // eslint-disable-next-line @next/next/no-img-element
@@ -84,20 +77,39 @@ export function StudioMap({
 
       {/* Warm tint and soft vignette so the map sits in the wine palette. */}
       <div className="pointer-events-none absolute inset-0 bg-wine-deep/25 mix-blend-multiply" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(18,6,9,0.7)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(18,6,9,0.75)_100%)]" />
 
       {/* Pin */}
       <span className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <span className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-gold/30" />
-        <span className="relative block h-4 w-4 rounded-full border-2 border-wine-deep bg-gold shadow-[0_0_0_4px_rgba(222,196,140,0.25)]" />
+        <span className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-gold/25" />
+        <span className="relative block h-5 w-5 rounded-full border-[3px] border-wine-deep bg-gold shadow-[0_0_0_5px_rgba(222,196,140,0.22)]" />
       </span>
-      <span className="pointer-events-none absolute left-1/2 top-1/2 ml-4 -translate-y-1/2 rounded-full border border-champagne/30 bg-wine-deep/90 px-2.5 py-1 font-sans text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">
+      <span className="pointer-events-none absolute left-1/2 top-1/2 ml-5 -translate-y-1/2 rounded-full border border-champagne/30 bg-wine-deep/90 px-3 py-1.5 font-sans text-[10px] font-semibold uppercase tracking-[0.18em] text-gold">
         Primero Studio
       </span>
 
-      <span className="pointer-events-none absolute bottom-1.5 right-2 font-sans text-[9px] text-cream/40">
+      <span className="pointer-events-none absolute right-2.5 top-2 font-sans text-[9px] text-cream/40">
         © OpenStreetMap
       </span>
+    </>
+  );
+
+  const frame = cn("relative block overflow-hidden bg-[#141414]", className);
+
+  return href ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Primero Studio na mapie Łodzi — otwórz w Mapach Google"
+      className={cn(
+        "h-48 rounded-xl border border-cream/10 transition-colors duration-500 hover:border-champagne/50",
+        frame,
+      )}
+    >
+      {body}
     </a>
+  ) : (
+    <div className={frame}>{body}</div>
   );
 }
