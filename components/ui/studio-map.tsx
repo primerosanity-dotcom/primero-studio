@@ -20,15 +20,7 @@ function toTile(lat: number, lng: number, z: number) {
  * own links over it. The pin sits in the centre unless the parent moves it
  * with the --pin-x / --pin-y CSS variables (e.g. away from an overlay card).
  */
-export function StudioMap({
-  href,
-  className,
-  zoom = 13,
-}: {
-  href?: string;
-  className?: string;
-  zoom?: number;
-}) {
+function TileLayer({ zoom, className }: { zoom: number; className?: string }) {
   const { lat, lng } = COMPANY.geo;
   const p = toTile(lat, lng, zoom);
   const tx = Math.floor(p.x);
@@ -52,29 +44,57 @@ export function StudioMap({
     }
   }
 
+  return (
+    // OSM tiles turned into a dark map with a CSS filter.
+    <div
+      aria-hidden
+      className={cn(
+        "absolute left-[var(--pin-x,50%)] top-[var(--pin-y,50%)] [filter:invert(1)_hue-rotate(180deg)_grayscale(0.9)_brightness(0.85)_contrast(1.2)]",
+        className,
+      )}
+    >
+      {tiles.map((t) => (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          key={t.key}
+          src={t.src}
+          alt=""
+          width={TILE}
+          height={TILE}
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+          className="absolute max-w-none select-none"
+          style={{ left: t.left, top: t.top, width: TILE, height: TILE }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function StudioMap({
+  href,
+  className,
+  zoom = 13,
+  mobileZoom,
+}: {
+  href?: string;
+  className?: string;
+  zoom?: number;
+  /** Zoom on phones (below lg) — lower shows the whole city. */
+  mobileZoom?: number;
+}) {
   const body = (
     <>
-      {/* OSM tiles turned into a dark map with a CSS filter. */}
-      <div
-        aria-hidden
-        className="absolute left-[var(--pin-x,50%)] top-[var(--pin-y,50%)] [filter:invert(1)_hue-rotate(180deg)_grayscale(0.9)_brightness(0.85)_contrast(1.2)]"
-      >
-        {tiles.map((t) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={t.key}
-            src={t.src}
-            alt=""
-            width={TILE}
-            height={TILE}
-            loading="lazy"
-            decoding="async"
-            draggable={false}
-            className="absolute max-w-none select-none"
-            style={{ left: t.left, top: t.top, width: TILE, height: TILE }}
-          />
-        ))}
-      </div>
+      {mobileZoom && mobileZoom !== zoom ? (
+        <>
+          {/* Hidden layers are not fetched: the tiles are lazy images. */}
+          <TileLayer zoom={mobileZoom} className="lg:hidden" />
+          <TileLayer zoom={zoom} className="hidden lg:block" />
+        </>
+      ) : (
+        <TileLayer zoom={zoom} />
+      )}
 
       {/* Warm tint and soft vignette so the map sits in the wine palette. */}
       <div className="pointer-events-none absolute inset-0 bg-wine-deep/25 mix-blend-multiply" />
@@ -88,6 +108,15 @@ export function StudioMap({
       <span className="pointer-events-none absolute left-[var(--pin-x,50%)] top-[var(--pin-y,50%)] ml-5 -translate-y-1/2 rounded-full border border-champagne/30 bg-wine-deep/90 px-3 py-1.5 font-sans text-[10px] font-semibold uppercase tracking-[0.18em] text-gold">
         Primero Studio
       </span>
+
+      {href && (
+        <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full border border-champagne/30 bg-wine-deep/85 px-3 py-1.5 font-sans text-[10px] font-medium uppercase tracking-[0.16em] text-cream/80 transition-colors duration-300 group-hover:border-gold group-hover:text-gold">
+          Otwórz mapę
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden>
+            <path d="M4 2h6v6M10 2 3 9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+          </svg>
+        </span>
+      )}
 
       <span className="pointer-events-none absolute right-2.5 top-2 font-sans text-[9px] text-cream/40">
         © OpenStreetMap
@@ -103,10 +132,7 @@ export function StudioMap({
       target="_blank"
       rel="noreferrer"
       aria-label="Primero Studio na mapie Łodzi — otwórz w Mapach Google"
-      className={cn(
-        "h-48 rounded-xl border border-cream/10 transition-colors duration-500 hover:border-champagne/50",
-        frame,
-      )}
+      className={cn("group", frame)}
     >
       {body}
     </a>

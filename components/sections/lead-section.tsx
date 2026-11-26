@@ -4,6 +4,7 @@ import { LeadForm } from "@/components/lead-form";
 import { Reveal } from "@/components/reveal";
 import { getSettings } from "@/lib/content";
 import { StudioMap } from "@/components/ui/studio-map";
+import { addressLine, displayHours } from "@/lib/display";
 
 function Pin() {
   return (
@@ -91,7 +92,10 @@ export async function LeadSection({ withLocation = false }: { withLocation?: boo
             <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-3xl border border-champagne/20 bg-wine shadow-[0_40px_120px_-40px_rgba(0,0,0,0.7)] lg:mt-14 lg:grid-cols-12">
               <div className="order-2 lg:order-1 lg:col-span-7">
                 <div className="relative h-full">
-                  <StudioMap className="h-72 border-t border-champagne/15 sm:h-96 lg:h-full lg:min-h-[620px] lg:border-t-0 lg:[--pin-x:60%] lg:[--pin-y:36%]" />
+                  <StudioMap
+                    href={mapsUrl}
+                    mobileZoom={11}
+                    className="h-72 border-t border-champagne/15 sm:h-96 lg:h-full lg:min-h-[620px] lg:border-t-0 lg:[--pin-x:60%] lg:[--pin-y:36%]" />
 
                   {/* Studio card: below the map on phones, floating on desktop */}
                   <div className="border-t border-champagne/15 bg-wine-deep p-6 sm:p-8 lg:absolute lg:bottom-6 lg:left-6 lg:w-[380px] lg:rounded-2xl lg:border lg:border-champagne/25 lg:bg-wine-deep/85 lg:p-6 lg:backdrop-blur-md">
@@ -104,22 +108,18 @@ export async function LeadSection({ withLocation = false }: { withLocation?: boo
                           PRIMERO.STUDIO
                         </h3>
                         <address className="mt-1 not-italic font-sans text-sm leading-relaxed text-cream/60">
-                          {address.map((line) => (
-                            <span key={line} className="block">
-                              {line}
-                            </span>
-                          ))}
+                          {addressLine(address)}
                         </address>
                       </div>
                     </div>
 
-                    <div className="mt-5 grid grid-cols-3 gap-3 border-t border-cream/10 pt-5">
-                      {hours.map((row) => (
+                    <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3 border-t border-cream/10 pt-5">
+                      {displayHours(hours).map((row) => (
                         <div key={row.days}>
                           <span className="block font-sans text-[9px] uppercase tracking-[0.16em] text-cream/40">
                             {row.days}
                           </span>
-                          <span className="mt-1 block font-sans text-[12px] font-medium text-cream/85">
+                          <span className="mt-1 block font-sans text-sm font-medium text-cream/85">
                             {row.hours}
                           </span>
                         </div>

@@ -4,6 +4,7 @@ import { Monogram } from "@/components/ui/monogram";
 import { LeadForm } from "@/components/lead-form";
 import { Reveal } from "@/components/reveal";
 import { StudioMap } from "@/components/ui/studio-map";
+import { addressLine, displayHours } from "@/lib/display";
 import type { ContactConfig } from "@/lib/site-config";
 
 const S = { stroke: "currentColor", strokeWidth: 1.3, fill: "none" } as const;
@@ -95,7 +96,7 @@ export function Contact({
       ? {
           icon: Icons.pin,
           label: "Adres",
-          lines: contact.addressLines,
+          lines: [addressLine(contact.addressLines)],
           href: contact.mapsUrl,
           external: Boolean(contact.mapsUrl),
         }
@@ -104,7 +105,7 @@ export function Contact({
       ? {
           icon: Icons.clock,
           label: "Godziny pracy",
-          lines: hours.map((h) => `${h.days}: ${h.hours}`),
+          lines: displayHours(hours).map((h) => `${h.days}: ${h.hours}`),
           href: null,
           external: false,
         }
@@ -210,7 +211,12 @@ export function Contact({
 
           {contact.mapsUrl && (
             <Reveal delay={0.5}>
-              <StudioMap href={contact.mapsUrl} className="mt-6 max-w-md" />
+              <StudioMap
+                href={contact.mapsUrl}
+                zoom={12}
+                mobileZoom={11}
+                className="mt-6 h-56 max-w-md rounded-xl border border-cream/10 transition-colors duration-500 hover:border-champagne/50"
+              />
             </Reveal>
           )}
         </div>

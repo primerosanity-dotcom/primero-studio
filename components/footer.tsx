@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Monogram } from "@/components/ui/monogram";
 import { Wordmark } from "@/components/ui/wordmark";
 import { getPointServices, getSettings } from "@/lib/content";
+import { addressLine, displayHours } from "@/lib/display";
 
 const NAV = [
   { label: "Studio", href: "/" },
@@ -129,15 +130,11 @@ export async function Footer() {
           <div className="mt-5 space-y-4 font-sans text-sm text-cream/70">
             {contact.addressLines.length > 0 && (
               <address className="not-italic leading-relaxed">
-                {contact.addressLines.map((line) => (
-                  <span key={line} className="block">
-                    {line}
-                  </span>
-                ))}
+                {addressLine(contact.addressLines)}
               </address>
             )}
             <div className="leading-relaxed text-cream/60">
-              {hours.map((row) => (
+              {displayHours(hours).map((row) => (
                 <span key={row.days} className="block">
                   {row.days}: {row.hours}
                 </span>
