@@ -271,11 +271,9 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
       "Dokładne oczyszczenie i zabezpieczenie taśmą sąsiednich powierzchni",
       "Maszynowe polerowanie błyszczących listew, konsoli i dekorów",
       "Kontrola efektu w świetle",
-      "Na życzenie: polerowanie osłony zegarów (wycena osobno)",
     ],
     when: [
       "Listwy i konsola w siatce rys i zmatowień",
-      "Porysowana osłona zegarów, przez którą gorzej widać wskazania (wycena osobno)",
       "Po zakupie używanego auta, żeby wnętrze wyglądało świeżo",
       "Przed sprzedażą auta — wnętrze robi pierwsze wrażenie",
     ],
@@ -283,7 +281,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     faq: [
       {
         q: "Jakie elementy wnętrza polerujecie?",
-        a: "Błyszczące elementy z tworzywa: listwy drzwi, konsolę środkową, ramki ekranu i dekory. Na życzenie polerujemy też osłonę zegarów — ta usługa jest wyceniana osobno. Przy oględzinach pokażemy, co da się wypolerować w Twoim aucie.",
+        a: "Błyszczące elementy z tworzywa: listwy drzwi, konsolę środkową, ramki ekranu i dekory. Przy oględzinach pokażemy, co da się wypolerować w Twoim aucie.",
       },
       {
         q: "Czy da się usunąć wszystkie rysy?",

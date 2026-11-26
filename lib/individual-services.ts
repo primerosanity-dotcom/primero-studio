@@ -172,7 +172,7 @@ POINT_SERVICES.push({
   id: "polerowanie-wnetrza",
   n: String(POINT_SERVICES.length + 1).padStart(2, "0"),
   title: "Polerowanie elementów wnętrza",
-  desc: "Usuwamy rysy i zmatowienia z błyszczących elementów kabiny — listew drzwi, konsoli i ramek ekranu — i przywracamy im lustrzany połysk. Osłonę zegarów polerujemy na życzenie, wycena osobno.",
+  desc: "Usuwamy rysy i zmatowienia z błyszczących elementów kabiny — listew drzwi, konsoli i ramek ekranu — i przywracamy im lustrzany połysk.",
   price: "od 59 zł",
   duration: "1–3 godziny",
   image: "/images/uslugi/polerowanie-wnetrza.jpg",
