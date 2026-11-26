@@ -115,14 +115,10 @@ export async function LeadSection({ withLocation = false }: { withLocation?: boo
 
                     <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3 border-t border-cream/10 pt-5">
                       {displayHours(hours).map((row) => (
-                        <div key={row.days}>
-                          <span className="block font-sans text-[9px] uppercase tracking-[0.16em] text-cream/40">
-                            {row.days}
-                          </span>
-                          <span className="mt-1 block font-sans text-sm font-medium text-cream/85">
-                            {row.hours}
-                          </span>
-                        </div>
+                        <p key={row.days} className="font-sans text-sm text-cream/85">
+                          <span className="text-cream/50">{row.days}:</span>{" "}
+                          <span className="font-medium">{row.hours}</span>
+                        </p>
                       ))}
                     </div>
 
