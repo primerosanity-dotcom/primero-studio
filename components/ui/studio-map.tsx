@@ -17,7 +17,8 @@ function toTile(lat: number, lng: number, z: number) {
  * laid out around the pin and darkened with a CSS filter, so it matches the
  * site without an interactive map script. With `href` the whole map is a link
  * (Google Maps); without it, it is a plain picture and the parent can lay its
- * own links over it.
+ * own links over it. The pin sits in the centre unless the parent moves it
+ * with the --pin-x / --pin-y CSS variables (e.g. away from an overlay card).
  */
 export function StudioMap({
   href,
@@ -56,7 +57,7 @@ export function StudioMap({
       {/* OSM tiles turned into a dark map with a CSS filter. */}
       <div
         aria-hidden
-        className="absolute left-1/2 top-1/2 [filter:invert(1)_hue-rotate(180deg)_grayscale(0.9)_brightness(0.85)_contrast(1.2)]"
+        className="absolute left-[var(--pin-x,50%)] top-[var(--pin-y,50%)] [filter:invert(1)_hue-rotate(180deg)_grayscale(0.9)_brightness(0.85)_contrast(1.2)]"
       >
         {tiles.map((t) => (
           // eslint-disable-next-line @next/next/no-img-element
@@ -80,11 +81,11 @@ export function StudioMap({
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(18,6,9,0.75)_100%)]" />
 
       {/* Pin */}
-      <span className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <span className="pointer-events-none absolute left-[var(--pin-x,50%)] top-[var(--pin-y,50%)] -translate-x-1/2 -translate-y-1/2">
         <span className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-gold/25" />
         <span className="relative block h-5 w-5 rounded-full border-[3px] border-wine-deep bg-gold shadow-[0_0_0_5px_rgba(222,196,140,0.22)]" />
       </span>
-      <span className="pointer-events-none absolute left-1/2 top-1/2 ml-5 -translate-y-1/2 rounded-full border border-champagne/30 bg-wine-deep/90 px-3 py-1.5 font-sans text-[10px] font-semibold uppercase tracking-[0.18em] text-gold">
+      <span className="pointer-events-none absolute left-[var(--pin-x,50%)] top-[var(--pin-y,50%)] ml-5 -translate-y-1/2 rounded-full border border-champagne/30 bg-wine-deep/90 px-3 py-1.5 font-sans text-[10px] font-semibold uppercase tracking-[0.18em] text-gold">
         Primero Studio
       </span>
 
