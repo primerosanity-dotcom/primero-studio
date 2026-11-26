@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function KontaktPage() {
-  const { contact } = await getSettings();
+  const { contact, hours } = await getSettings();
 
-  return <Contact contact={contact} />;
+  return <Contact contact={contact} hours={hours} />;
 }

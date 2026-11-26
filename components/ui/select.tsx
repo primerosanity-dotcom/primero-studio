@@ -44,6 +44,14 @@ export function Select({
     return () => window.removeEventListener("pointerdown", onDown);
   }, [open]);
 
+  // Keep the highlighted option visible when the list scrolls (keyboard).
+  useEffect(() => {
+    if (!open || active < 0) return;
+    document
+      .getElementById(`${listboxId}-option-${active}`)
+      ?.scrollIntoView({ block: "nearest" });
+  }, [open, active, listboxId]);
+
   const openList = () => {
     setActive(Math.max(0, options.findIndex((o) => o.value === value)));
     setOpen(true);
@@ -150,11 +158,12 @@ export function Select({
           <motion.ul
             id={listboxId}
             role="listbox"
+            data-lenis-prevent
             initial={{ opacity: 0, y: -8, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.985 }}
             transition={{ duration: 0.35, ease: EASE }}
-            className="absolute inset-x-0 top-full z-30 mt-2 origin-top overflow-hidden rounded-xl border border-champagne/30 bg-wine-deep/95 py-2 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.65)] backdrop-blur-xl"
+            className="absolute inset-x-0 top-full z-30 mt-2 max-h-[min(22rem,55vh)] origin-top overflow-y-auto overscroll-contain rounded-xl border border-champagne/30 bg-wine-deep/95 py-2 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.65)] backdrop-blur-xl"
           >
             {options.map((o, i) => {
               const isSelected = o.value === value;
@@ -175,7 +184,7 @@ export function Select({
                         : "text-cream/75",
                     )}
                   >
-                    <span className="truncate">{o.label}</span>
+                    <span className="min-w-0">{o.label}</span>
                     {isSelected && (
                       <svg
                         viewBox="0 0 12 12"

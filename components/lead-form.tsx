@@ -187,7 +187,7 @@ export function LeadForm({
     <div
       className={cn(
         !compact &&
-          "overflow-hidden rounded-2xl border border-champagne/25 bg-wine px-6 py-7 sm:px-8 sm:py-8",
+          "rounded-2xl border border-champagne/25 bg-wine px-6 py-7 sm:px-8 sm:py-8",
       )}
     >
       <AnimatePresence mode="wait" initial={false}>

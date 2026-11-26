@@ -47,7 +47,14 @@ const Icons = {
   ),
 };
 
-export function Contact({ contact }: { contact: ContactConfig }) {
+export function Contact({
+  contact,
+  hours = [],
+}: {
+  contact: ContactConfig;
+  /** Opening hours from the CMS settings — the same source as the footer. */
+  hours?: { days: string; hours: string }[];
+}) {
   const contacts = [
     contact.phoneHref && contact.phoneDisplay
       ? {
@@ -92,13 +99,15 @@ export function Contact({ contact }: { contact: ContactConfig }) {
           external: Boolean(contact.mapsUrl),
         }
       : null,
-    {
-      icon: Icons.clock,
-      label: "Godziny pracy",
-      lines: ["Pon – Pt: 9:00 – 19:00", "Sob: 10:00 – 15:00"],
-      href: null,
-      external: false,
-    },
+    hours.length
+      ? {
+          icon: Icons.clock,
+          label: "Godziny pracy",
+          lines: hours.map((h) => `${h.days}: ${h.hours}`),
+          href: null,
+          external: false,
+        }
+      : null,
   ].filter((item): item is NonNullable<typeof item> => Boolean(item));
 
   return (

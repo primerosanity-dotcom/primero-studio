@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RelatedLinks } from "@/components/ui/related-links";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Heading } from "@/components/ui/heading";
 import { MediaSlot } from "@/components/ui/media-slot";
@@ -243,25 +244,16 @@ export async function ServiceDetail({ service }: { service: Service }) {
         </Reveal>
 
         {/* Other packages */}
-        <div className="mt-16 border-t border-cream/10 pt-12">
-          <span className="font-sans text-[11px] uppercase tracking-[0.3em] text-cream/45">
-            Pozostałe pakiety
-          </span>
-          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-4">
-            {others.map((o) => (
-              <Link
-                key={o.slug}
-                href={`/pakiety/${o.slug}`}
-                className="group inline-flex items-center gap-3 font-display text-lg font-medium uppercase tracking-[0.02em] text-cream/70 transition-colors duration-300 hover:text-gold sm:text-xl"
-              >
-                {o.name}
-                <span className="text-gold opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  →
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
+        <RelatedLinks
+          label="Pozostałe pakiety"
+          headingAs="span"
+          items={others.map((o) => ({
+            href: `/pakiety/${o.slug}`,
+            title: o.name,
+            image: o.image,
+            meta: o.price,
+          }))}
+        />
       </div>
     </section>
   );

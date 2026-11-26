@@ -259,9 +259,9 @@ export type SiteSettings = {
 const CLARITY_PROJECT_ID = "z8gh9h8bzy";
 
 const FALLBACK_HOURS = [
-  { days: "Pon – Pt", hours: "09:00 – 19:00" },
-  { days: "Sobota", hours: "10:00 – 15:00" },
-  { days: "Niedziela", hours: "Zamknięte" },
+  { days: "Pon – Pt", hours: "10:00 – 17:00" },
+  { days: "Sobota", hours: "10:00 – 17:00" },
+  { days: "Niedziela", hours: "10:00 – 17:00" },
 ];
 
 const FALLBACK_STATS = [

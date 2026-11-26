@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RelatedLinks } from "@/components/ui/related-links";
 import { SectionLabel } from "@/components/ui/section-label";
 import { MediaSlot } from "@/components/ui/media-slot";
 import { Monogram } from "@/components/ui/monogram";
@@ -51,8 +52,7 @@ function Check() {
 
 export async function ProjectDetail({ project }: { project: Project }) {
   const others = (await getProjects())
-    .filter((p) => p.slug !== project.slug)
-    .slice(0, 3);
+    .filter((p) => p.slug !== project.slug);
   const gallery = project.gallery ?? [];
 
   return (
@@ -168,28 +168,17 @@ export async function ProjectDetail({ project }: { project: Project }) {
           </Reveal>
         )}
 
-        {/* Other projects */}
-        {others.length > 0 && (
-          <div className="mt-16 border-t border-cream/10 pt-12">
-            <span className="font-sans text-[11px] uppercase tracking-[0.3em] text-cream/45">
-              Inne realizacje
-            </span>
-            <div className="mt-6 flex flex-wrap gap-x-8 gap-y-4">
-              {others.map((o) => (
-                <Link
-                  key={o.slug}
-                  href={`/realizacje/${o.slug}`}
-                  className="group inline-flex items-center gap-3 font-display text-lg font-medium uppercase tracking-[0.02em] text-cream/70 transition-colors duration-300 hover:text-gold sm:text-xl"
-                >
-                  {o.car}
-                  <span className="text-gold opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    →
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Other projects — all of them, not just a few */}
+        <RelatedLinks
+          label="Inne realizacje"
+          headingAs="span"
+          items={others.map((o) => ({
+            href: `/realizacje/${o.slug}`,
+            title: o.car,
+            image: o.image,
+            meta: o.service,
+          }))}
+        />
       </div>
     </section>
   );
