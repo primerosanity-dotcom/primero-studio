@@ -261,21 +261,21 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     h1: "Polerowanie elementów wnętrza w Łodzi",
     metaTitle: "Polerowanie elementów wnętrza Łódź",
     metaDescription:
-      "Polerowanie błyszczących elementów wnętrza w Łodzi: błyszczące listwy, konsola, ramki ekranu i osłona zegarów. Usuwamy rysy i przywracamy połysk.",
+      "Polerowanie błyszczących elementów wnętrza w Łodzi: listwy drzwi, konsola i ramki ekranu. Usuwamy rysy i przywracamy połysk.",
     intro: [
-      "Błyszczące plastiki w kabinie — listwy drzwi, konsola środkowa, ramki ekranu i osłona zegarów — rysują się od kluczy, pierścionków, a nawet od zwykłej ściereczki. Po kilku latach zamiast lustrzanej czerni widać siatkę rys i zmatowienia.",
+      "Błyszczące plastiki w kabinie — listwy drzwi, konsola środkowa i ramki ekranu — rysują się od kluczy, pierścionków, a nawet od zwykłej ściereczki. Po kilku latach zamiast lustrzanej czerni widać siatkę rys i zmatowienia.",
       "Polerujemy te elementy maszynowo, delikatnymi padami i pastami do tworzyw, na niskich obrotach, żeby nie przegrzać plastiku. Rysy znikają, a powierzchnia znów wygląda jak w nowym aucie.",
     ],
     includes: [
       "Oględziny elementów i ocena, które rysy da się usunąć",
       "Dokładne oczyszczenie i zabezpieczenie taśmą sąsiednich powierzchni",
       "Maszynowe polerowanie błyszczących listew, konsoli i dekorów",
-      "Polerowanie osłony zegarów (szybki licznika)",
       "Kontrola efektu w świetle",
+      "Na życzenie: polerowanie osłony zegarów (wycena osobno)",
     ],
     when: [
       "Listwy i konsola w siatce rys i zmatowień",
-      "Porysowana osłona zegarów, przez którą gorzej widać wskazania",
+      "Porysowana osłona zegarów, przez którą gorzej widać wskazania (wycena osobno)",
       "Po zakupie używanego auta, żeby wnętrze wyglądało świeżo",
       "Przed sprzedażą auta — wnętrze robi pierwsze wrażenie",
     ],
@@ -283,7 +283,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     faq: [
       {
         q: "Jakie elementy wnętrza polerujecie?",
-        a: "Błyszczące elementy z tworzywa: listwy drzwi, konsolę środkową, ramki ekranu i dekory oraz osłonę zegarów. Przy oględzinach pokażemy, co da się wypolerować w Twoim aucie.",
+        a: "Błyszczące elementy z tworzywa: listwy drzwi, konsolę środkową, ramki ekranu i dekory. Na życzenie polerujemy też osłonę zegarów — ta usługa jest wyceniana osobno. Przy oględzinach pokażemy, co da się wypolerować w Twoim aucie.",
       },
       {
         q: "Czy da się usunąć wszystkie rysy?",
