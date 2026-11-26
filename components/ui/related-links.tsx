@@ -59,17 +59,21 @@ export function RelatedLinks({
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-wine-deep/60 via-transparent to-transparent" />
               </div>
 
-              <div className="flex flex-1 flex-col justify-between gap-3 p-3.5 sm:p-4">
+              <div
+                className={
+                  item.meta
+                    ? "flex flex-1 flex-col justify-between gap-3 p-3.5 sm:p-4"
+                    : "flex flex-1 items-center justify-between gap-3 p-3.5 sm:p-4"
+                }
+              >
                 <span className="font-display text-[0.85rem] font-semibold uppercase leading-snug tracking-[0.02em] text-cream transition-colors duration-300 group-hover:text-gold sm:text-[0.95rem]">
                   {item.title}
                 </span>
                 <span className="flex items-center justify-between gap-2">
-                  {item.meta ? (
+                  {item.meta && (
                     <span className="truncate font-display text-sm font-semibold text-gold sm:text-base">
                       {item.meta}
                     </span>
-                  ) : (
-                    <span />
                   )}
                   <span
                     aria-hidden
