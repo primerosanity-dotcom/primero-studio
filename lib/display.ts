@@ -1,3 +1,5 @@
+import { COMPANY } from "@/lib/site-config";
+
 type HoursRow = { days: string; hours: string };
 
 /**
@@ -11,7 +13,16 @@ export function displayHours(rows: HoursRow[]): HoursRow[] {
   return rows;
 }
 
-/** Street and city on one line: "ul. Papiernicza 7R, Łódź". */
+/**
+ * Street and city on one line: "ul. Papiernicza 7R, 92-312 Łódź". The postal
+ * code is added to the city line when it isn't there yet, so the address reads
+ * exactly like the Google Business Profile (NAP consistency).
+ */
 export function addressLine(lines: string[]): string {
-  return lines.map((l) => l.trim()).filter(Boolean).join(", ");
+  const parts = lines.map((l) => l.trim()).filter(Boolean);
+  const zip = COMPANY.postalCode;
+  if (zip && parts.length > 1 && !/\d{2}-\d{3}/.test(parts.join(" "))) {
+    parts[parts.length - 1] = `${zip} ${parts[parts.length - 1]}`;
+  }
+  return parts.join(", ");
 }

@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema, OG_SHARED, serviceSchema } from "@/lib/seo";
 import { packageFaq } from "@/lib/faq";
 import { Faq } from "@/components/sections/faq";
+import { clampDescription, PACKAGE_SEO } from "@/lib/package-seo";
 
 export async function generateStaticParams() {
   return (await getPackages()).map((s) => ({ slug: s.slug }));
@@ -21,9 +22,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = await getPackage(slug);
   if (!service) return {};
+  const seo = PACKAGE_SEO[slug];
   // Price and time first: Google cuts descriptions around 155 characters.
-  const description = `Pakiet ${service.name} w Łodzi — ${service.tagline.toLowerCase()}. Cena ${service.price}, czas: ${service.duration.replace(/^~/, "ok. ")}. ${service.short}`;
-  const title = `${service.name} — ${service.tagline.toLowerCase()}, Łódź | Primero Studio`;
+  const description = clampDescription(
+    seo
+      ? seo.description.replace("{price}", service.price)
+      : `Pakiet ${service.name} w Łodzi — ${service.tagline.toLowerCase()}. Cena ${service.price}, czas: ${service.duration.replace(/^~/, "ok. ")}. ${service.short}`,
+  );
+  const title = seo
+    ? `${seo.title} | Primero Studio`
+    : `${service.name} — ${service.tagline.toLowerCase()}, Łódź | Primero Studio`;
   return {
     title: {
       absolute:
@@ -77,7 +85,7 @@ export default async function ServicePage({
           image: service.image,
         })}
       />
-      <ServiceDetail service={service} />
+      <ServiceDetail service={service} seo={PACKAGE_SEO[slug]} />
       <Faq items={packageFaq(service)} title={`Pakiet ${service.name} — pytania.`} />
       <LeadSection />
     </>

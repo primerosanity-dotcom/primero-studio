@@ -8,6 +8,7 @@ import { Reveal } from "@/components/reveal";
 import type { Service } from "@/lib/services";
 import { getPackages } from "@/lib/content";
 import { isWinterPricing, WINTER_NOTE } from "@/lib/pricing";
+import type { PackageSeo } from "@/lib/package-seo";
 
 function Check() {
   return (
@@ -62,7 +63,14 @@ function InfoCard({
   );
 }
 
-export async function ServiceDetail({ service }: { service: Service }) {
+export async function ServiceDetail({
+  service,
+  seo,
+}: {
+  service: Service;
+  /** Optional search copy for this package (lib/package-seo.ts). */
+  seo?: PackageSeo;
+}) {
   const others = (await getPackages()).filter((s) => s.slug !== service.slug);
   const winter = isWinterPricing() && Boolean(service.priceSeason);
 
@@ -116,7 +124,7 @@ export async function ServiceDetail({ service }: { service: Service }) {
                 {/* Part of the H1 so the heading names the service and city,
                     not just the package brand. */}
                 <span className="mt-4 block max-w-md font-sans text-lg font-normal normal-case leading-relaxed tracking-normal text-cream/80">
-                  {service.tagline} — pakiet detailingu w Łodzi
+                  {seo?.h1Line ?? `${service.tagline} — pakiet detailingu w Łodzi`}
                 </span>
               </Heading>
             </Reveal>
@@ -242,6 +250,23 @@ export async function ServiceDetail({ service }: { service: Service }) {
             </div>
           </div>
         </Reveal>
+
+        {seo && (
+          <Reveal>
+            <div className="mt-6 rounded-2xl border border-cream/10 bg-wine/30 p-7 sm:p-9">
+              <h2 className="font-display text-2xl font-semibold text-cream sm:text-3xl">
+                {seo.section.heading}
+              </h2>
+              <div className="mt-4 max-w-3xl space-y-4">
+                {seo.section.paragraphs.map((p) => (
+                  <p key={p} className="font-sans text-base leading-relaxed text-cream/70">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        )}
 
         {/* Other packages */}
         <RelatedLinks

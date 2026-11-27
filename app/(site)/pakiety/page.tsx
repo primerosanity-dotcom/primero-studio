@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: { ...OG_SHARED, url: "/pakiety", type: "website" },
   title: { absolute: "Pakiety detailingu Łódź — cennik i zakres | Primero Studio" },
   description:
-    "Pakiety detailingu w Łodzi — mycie i wnętrze, pranie tapicerki, ochrona na zimę, polerowanie, ceramika 1, 3 i 5 lat, pełny detailing. Zobacz zakres i ceny, umów wizytę online.",
+    "Pakiety detailingu w Łodzi: pranie tapicerki, ochrona na zimę, polerowanie, ceramika 1, 3 i 5 lat, pełny detailing. Zakres i ceny — umów wizytę online.",
 };
 
 export default async function PakietyPage() {

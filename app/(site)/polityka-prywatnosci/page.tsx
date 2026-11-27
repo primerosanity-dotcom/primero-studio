@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { addressLine } from "@/lib/display";
 import Link from "next/link";
 import { Heading } from "@/components/ui/heading";
 import { SectionLabel } from "@/components/ui/section-label";
@@ -62,7 +63,7 @@ function Section({
 
 export default function PolitykaPrywatnosciPage() {
   const contact = getContactConfig();
-  const address = contact.addressLines.join(", ");
+  const address = addressLine(contact.addressLines);
   const privacyEmail = COMPANY.privacyEmail ?? contact.email;
   const identity = [
     COMPANY.legalName,
@@ -126,11 +127,11 @@ export default function PolitykaPrywatnosciPage() {
         },
         {
           list: [
-            "Kommo (system CRM) — tam trafia treść zgłoszenia, żebyśmy mogli je obsłużyć i nie zgubić.",
+            "Nasz system CRM (baza danych w Supabase) — tam trafia treść zgłoszenia, żebyśmy mogli je obsłużyć i nie zgubić.",
             "Telegram — powiadomienie o nowym zgłoszeniu trafia na nasz wewnętrzny czat zespołu.",
             "Vercel — hosting strony i serwery, przez które przechodzi formularz.",
             "Sanity — system zarządzania treścią strony (nie przechowuje danych ze zgłoszeń).",
-            "Google (Google Analytics, Google Tag Manager) i Meta Platforms (Meta Pixel) — statystyka ruchu i pomiar skuteczności reklam, o ile wyrazisz zgodę na pliki cookies.",
+            "Google (Google Analytics, Google Tag Manager, Google Ads) i Meta Platforms (Meta Pixel) — statystyka ruchu, pomiar skuteczności reklam i wyświetlanie naszych reklam osobom, które odwiedziły stronę, o ile wyrazisz zgodę na pliki cookies.",
             "Microsoft (Microsoft Clarity) — mapy kliknięć i anonimowe nagrania sposobu korzystania ze strony (ruch myszy, przewijanie, kliknięcia), o ile wyrazisz zgodę na pliki cookies. Treść wpisywana w formularze jest maskowana i nie trafia do nagrań.",
             "Biuro rachunkowe i dostawcy usług księgowych — w zakresie dokumentów rozliczeniowych.",
           ],
@@ -184,7 +185,7 @@ export default function PolitykaPrywatnosciPage() {
         {
           list: [
             "Cookies niezbędne — konieczne do prawidłowego działania strony i formularza. Nie wymagają zgody.",
-            "Cookies analityczne i marketingowe — Google Analytics, Google Tag Manager, Meta Pixel i Microsoft Clarity. Pozwalają nam zobaczyć, które podstrony są odwiedzane, skąd trafiasz na stronę i w którym miejscu strona sprawia trudność, oraz mierzyć skuteczność reklam. Używamy ich wyłącznie za Twoją zgodą.",
+            "Cookies analityczne i marketingowe — Google Analytics, Google Tag Manager, Google Ads, Meta Pixel i Microsoft Clarity. Pozwalają nam zobaczyć, które podstrony są odwiedzane, skąd trafiasz na stronę i w którym miejscu strona sprawia trudność, mierzyć skuteczność reklam (np. czy wizyta z reklamy zakończyła się zgłoszeniem) oraz pokazywać nasze reklamy osobom, które już odwiedziły stronę. Używamy ich wyłącznie za Twoją zgodą.",
           ],
         },
         {

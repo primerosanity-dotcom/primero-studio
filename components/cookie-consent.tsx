@@ -33,8 +33,8 @@ export function CookieConsent() {
         >
           <div className="mx-auto flex max-w-[1100px] flex-col gap-5 rounded-2xl border border-cream/12 bg-wine-deep/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md sm:p-7 lg:flex-row lg:items-center lg:gap-8">
             <p className="font-sans text-sm leading-relaxed text-cream/75">
-              Używamy plików cookies, żeby mierzyć ruch na stronie i skuteczność
-              reklam. Bez Twojej zgody nie uruchamiamy żadnych narzędzi
+              Używamy plików cookies, żeby mierzyć ruch na stronie, skuteczność
+              reklam i dopasowywać nasze reklamy. Bez Twojej zgody nie uruchamiamy żadnych narzędzi
               analitycznych. Szczegóły opisaliśmy w{" "}
               <Link
                 href="/polityka-prywatnosci"

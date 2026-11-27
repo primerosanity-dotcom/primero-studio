@@ -8,6 +8,10 @@ import { useConsent } from "@/lib/consent";
  * strony" → Analityka), so the client turns each tool on by pasting its id —
  * an empty field simply renders nothing and costs the visitor no requests.
  *
+ * Consent Mode v2 (required by Google in the EEA): the Google tag only loads
+ * after "Akceptuję", so it starts with every consent signal granted — Google
+ * Ads can then count conversions and build remarketing audiences.
+ *
  * Nothing loads until the visitor has actively accepted: GA4, GTM and the Meta
  * pixel all write cookies that EU law requires consent for, and the privacy
  * policy promises exactly that. The noscript fallbacks are inside the gate too
@@ -58,6 +62,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <Script id="ga4" strategy="afterInteractive">
             {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {ad_storage:'granted', analytics_storage:'granted', ad_user_data:'granted', ad_personalization:'granted'});
 gtag('js', new Date());
 gtag('config', '${gaId}');`}
           </Script>
